@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}} · {{TITLE_EN}}</title>
+<meta name="description" content="{{DESC}}">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#080a0e">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23121820'/%3E%3Cpath d='M8 22V10h4l4 7 4-7h4v12' stroke='%234cc9f0' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+{{CSS}}
+</style>
+</head>
+<body>
+<div class="progress" id="bar"></div>
+
+<!-- ===================== top bar: brand + table-of-contents jump rail ===================== -->
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">AI</span>
+    <span class="brand-txt">
+      <b>{{TITLE}}</b>
+      <span>Pipeline Wiki</span>
+    </span>
+  </div>
+
+  <nav class="toc-rail" id="toc-rail" aria-label="Jump to section"></nav>
+
+  <div class="topbar-tools">
+    <label class="search" title="Search sections (press / to focus)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="search-input" type="search" placeholder="Search steps / keywords" autocomplete="off">
+      <kbd>/</kbd>
+    </label>
+    <button class="icon-btn" id="to-top-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" aria-label="Back to top">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="shell">
+  <!-- ================================ HERO ================================ -->
+  <div class="hero" id="hero"></div>
+
+  <!-- ====================== body: always-pinned left rail ====================== -->
+  <div class="layout">
+
+    <aside class="side-col" aria-label="Pipeline navigation">
+      <nav class="side-nav">
+        <div class="side-title"><span>Pipeline nav</span><b id="search-hint"></b></div>
+
+        <div class="rail-progress">
+          <svg class="ring" viewBox="0 0 30 30" aria-hidden="true">
+            <circle class="bg" cx="15" cy="15" r="13"></circle>
+            <circle class="fg" cx="15" cy="15" r="13" stroke-dasharray="81.7" stroke-dashoffset="81.7"></circle>
+          </svg>
+          <div>
+            <b id="ring-txt-num">0%</b>
+            <span id="ring-txt-sub">0 / 0 tasks done</span>
+          </div>
+        </div>
+
+        <div id="sidenav-body"></div>
+
+        <div class="side-foot">
+          <a href="#hero" id="to-top">↑ Back to top</a>
+          <span style="display:block;margin-top:6px">Progress is saved in this browser</span>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="content" id="content"></main>
+  </div>
+</div>
+
+<footer class="foot" id="foot"></footer>
+
+<!-- narrow-screen drawer toggle -->
+<button class="drawer-btn" id="drawer-btn" aria-label="Open pipeline navigation">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  <span>Pipeline</span>
+  <span class="pct" id="drawer-pct">0%</span>
+</button>
+
+<!-- media lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="close" aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <div class="box">
+    <div class="stage" id="lb-stage"></div>
+    <div class="lcap">
+      <h4 id="lb-title"></h4>
+      <p id="lb-cap"></p>
+      <span class="file" id="lb-file"></span>
+      <div class="lrow" id="lb-meta"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<noscript>
+  <div style="max-width:720px;margin:60px auto;padding:24px;border:1px solid #333;border-radius:12px;font-family:sans-serif">
+    <h2>JavaScript required</h2>
+    <p style="color:#999">This is a single-page app — the content is rendered at runtime from <code>content/*.js</code>. Please enable JavaScript and reload.</p>
+  </div>
+</noscript>
+
+<script>
+/* ==== content layer (merged from src/content/*.js — add a file to add a step) ==== */
+{{CONTENT}}
+
+/* ==== application layer ==== */
+{{APP}}
+</script>
+</body>
+</html>
