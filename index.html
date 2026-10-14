@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-page-node-id="yc9AKpL9KVOxe9wZ1kAr0o">
-<head data-page-node-id="8jLMvdC6akljmNw2m2Skvz">
-<meta charset="utf-8" data-page-node-id="uUkwv3p4Y6VIHRqsn9bvtE">
-<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="8qfCb5ycINvMzU0fE8KBnt">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI-Assisted Environment Art Workflow · Lingnan Arcade Street · Unreal Engine 5</title>
-<meta name="description" content="AI-assisted environment art workflow · single-page documentation · v0.2 · REAL CONTENT" data-page-node-id="Ej5Unf8nUcrDl9xoxDhe9U">
-<meta name="color-scheme" content="dark" data-page-node-id="sEWtQMWRgwcQDeV8qK9QGh">
-<meta name="theme-color" content="#080a0e" data-page-node-id="DYx4nOpSiI4yq2WdZALACT">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23121820'/%3E%3Cpath d='M8 22V10h4l4 7 4-7h4v12' stroke='%234cc9f0' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" data-page-node-id="w3SLp4Qb74vka7iWVMEc3W">
+<meta name="description" content="AI-assisted environment art workflow · single-page documentation · v0.2.1 · REAL CONTENT">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#080a0e">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23121820'/%3E%3Cpath d='M8 22V10h4l4 7 4-7h4v12' stroke='%234cc9f0' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
 /* ============================================================================
    AI-Assisted Environment Art Workflow · documentation site stylesheet
@@ -893,6 +893,25 @@ pre.code .ph { padding: 0 3px; }
   padding: 2px 6px; border-radius: 4px;
   background: rgba(0, 0, 0, .7); color: var(--txt-1);
 }
+/* Video cards are players, not pictures. Two consequences: the card must not
+   lift on hover (it would shift the transport controls under the cursor), and
+   the duration badge moves to the top-right, because bottom-right is where the
+   native control bar lives and an overlay there steals clicks from it. */
+.media.is-video:hover { transform: none; }
+.media .frame .dur.tr { top: 9px; bottom: auto; }
+.media .cap .open-lg {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 9px; height: 26px; padding: 0 9px;
+  border-radius: 6px; border: 1px solid var(--line-2);
+  background: rgba(255, 255, 255, .03);
+  font-size: 11px; color: var(--txt-1);
+  transition: all .16s var(--ease);
+}
+.media .cap .open-lg svg { width: 12px; height: 12px; display: block; }
+.media .cap .open-lg:hover {
+  color: var(--txt-0); border-color: var(--line-3);
+  background: rgba(255, 255, 255, .07);
+}
 .media .expand {
   position: absolute; inset: 0; z-index: 4;
   display: grid; place-items: center;
@@ -1220,99 +1239,99 @@ footer.foot .sp { flex: 1; }
 
 </style>
 </head>
-<body data-page-node-id="Z3KFQb0BLcRNssPOWdUEc5">
-<div class="progress" id="bar" data-page-node-id="3ceVEVy8f4aDkWAZM2eoRU"></div>
+<body>
+<div class="progress" id="bar"></div>
 
 <!-- ===================== top bar: brand + table-of-contents jump rail ===================== -->
-<header class="topbar" data-page-node-id="kGEIr2yyGk6TKBYDyLAwR4">
-  <div class="brand" data-page-node-id="NfMxaiUGn1wxBhZQCARcIr">
-    <span class="brand-mark" data-page-node-id="980QE3FsVXmW3EG3DnjqEr">AI</span>
-    <span class="brand-txt" data-page-node-id="Yn7oPx8Cg0VuraNE1pXch4">
-      <b data-page-node-id="w39xGnGdG6R2SDUTRr9Tqr">AI-Assisted Environment Art Workflow</b>
-      <span data-page-node-id="OaacSHFZP8jKV2XWOZGzJl">Pipeline Wiki</span>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">AI</span>
+    <span class="brand-txt">
+      <b>AI-Assisted Environment Art Workflow</b>
+      <span>Pipeline Wiki</span>
     </span>
   </div>
 
-  <nav class="toc-rail" id="toc-rail" aria-label="Jump to section" data-page-node-id="vUOyOuV1Epi940LRoGbZ1d"></nav>
+  <nav class="toc-rail" id="toc-rail" aria-label="Jump to section"></nav>
 
-  <div class="topbar-tools" data-page-node-id="lk4gfexVBtNiod8zqR1ztX">
-    <label class="search" title="Search sections (press / to focus)" data-page-node-id="ILZG5Oh66bUVtEgdN9IXPJ">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" data-page-node-id="2KPQeyShnMU112g1CinUDO"><circle cx="11" cy="11" r="7" data-page-node-id="H3XWuGyYYdRMByumpM7W2t"/><path d="m20 20-3.5-3.5" data-page-node-id="8DvsTeOUA0nVg83c9cEOvy"/></svg>
-      <input id="search-input" type="search" placeholder="Search steps / keywords" autocomplete="off" data-page-node-id="7srVEWlUUORmm31ASryvb8">
-      <kbd data-page-node-id="cMTy0jOOVOkZQmaUrVQmtU">/</kbd>
+  <div class="topbar-tools">
+    <label class="search" title="Search sections (press / to focus)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="search-input" type="search" placeholder="Search steps / keywords" autocomplete="off">
+      <kbd>/</kbd>
     </label>
-    <button class="icon-btn" id="to-top-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" aria-label="Back to top" data-page-node-id="NnOyRbJwhh5WCylrApURs5">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="L1qzrjk9RbiBgtYXX5KhJC"><path d="M12 19V5M5 12l7-7 7 7" data-page-node-id="XMCI3RnYZF2mA7rcMgGpPj"/></svg>
+    <button class="icon-btn" id="to-top-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" aria-label="Back to top">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
     </button>
   </div>
 </header>
 
-<div class="shell" data-page-node-id="E66D5e5Tn3BWBvyJF0LwQq">
+<div class="shell">
   <!-- ================================ HERO ================================ -->
-  <div class="hero" id="hero" data-page-node-id="Pp9yNyeCYT71HptbLV7B6V"></div>
+  <div class="hero" id="hero"></div>
 
   <!-- ====================== body: always-pinned left rail ====================== -->
-  <div class="layout" data-page-node-id="5grhVkAmiksKBnPImqlfM9">
+  <div class="layout">
 
-    <aside class="side-col" aria-label="Pipeline navigation" data-page-node-id="8itq5rZmqGMfhJhO4JaAzE">
-      <nav class="side-nav" data-page-node-id="aAfID8UKRxd80PeSvtl0LD">
-        <div class="side-title" data-page-node-id="ROQZwOg7ja4qOrMSLVtCGI"><span data-page-node-id="Q3G56tZ69QFwPWvTjnL2rm">Pipeline nav</span><b id="search-hint" data-page-node-id="MYejDBxTqM8wMTDKldrbmQ"></b></div>
+    <aside class="side-col" aria-label="Pipeline navigation">
+      <nav class="side-nav">
+        <div class="side-title"><span>Pipeline nav</span><b id="search-hint"></b></div>
 
-        <div class="rail-progress" data-page-node-id="Jh5EBC4EgNk435DkcIduyB">
-          <svg class="ring" viewBox="0 0 30 30" aria-hidden="true" data-page-node-id="5VXCx2WiFxxAmYgz4zkNbs">
-            <circle class="bg" cx="15" cy="15" r="13" data-page-node-id="Y2oP8f3XIYdWt87FAm02SJ"></circle>
-            <circle class="fg" cx="15" cy="15" r="13" stroke-dasharray="81.7" stroke-dashoffset="81.7" data-page-node-id="gNDBaB0A7kk3RlxooqGE3h"></circle>
+        <div class="rail-progress">
+          <svg class="ring" viewBox="0 0 30 30" aria-hidden="true">
+            <circle class="bg" cx="15" cy="15" r="13"></circle>
+            <circle class="fg" cx="15" cy="15" r="13" stroke-dasharray="81.7" stroke-dashoffset="81.7"></circle>
           </svg>
-          <div data-page-node-id="0UZDytmzFh9pXBRqpmTD2g">
-            <b id="ring-txt-num" data-page-node-id="2PdhgJ3HBV2f9ZAFAGJHs1">0%</b>
-            <span id="ring-txt-sub" data-page-node-id="obxmXVs3bJyNoUqkDl4Sbt">0 / 0 tasks done</span>
+          <div>
+            <b id="ring-txt-num">0%</b>
+            <span id="ring-txt-sub">0 / 0 tasks done</span>
           </div>
         </div>
 
-        <div id="sidenav-body" data-page-node-id="Xal9hBDjYKIUCLGv7p5AZt"></div>
+        <div id="sidenav-body"></div>
 
-        <div class="side-foot" data-page-node-id="ysjOPw6trN2HcDnlTyzALU">
-          <a href="#hero" id="to-top" data-page-node-id="iGOeTxmIcm9oEKFWQjnheR">↑ Back to top</a>
-          <span style="display:block;margin-top:6px" data-page-node-id="NIzOOkrfBRWQmoEGrMp4Ft">Progress is saved in this browser</span>
+        <div class="side-foot">
+          <a href="#hero" id="to-top">↑ Back to top</a>
+          <span style="display:block;margin-top:6px">Progress is saved in this browser</span>
         </div>
       </nav>
     </aside>
 
-    <main class="content" id="content" data-page-node-id="hZQC41fg1TEFnJyQGa6Cf2"></main>
+    <main class="content" id="content"></main>
   </div>
 </div>
 
-<footer class="foot" id="foot" data-page-node-id="i77n2YdETBQylEQAxhvKip"></footer>
+<footer class="foot" id="foot"></footer>
 
 <!-- narrow-screen drawer toggle -->
-<button class="drawer-btn" id="drawer-btn" aria-label="Open pipeline navigation" data-page-node-id="z2pLkKJyZ8rDePotmukHry">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" data-page-node-id="nhSz0VP9PrngwmFjtvgN65"><path d="M4 7h16M4 12h16M4 17h16" data-page-node-id="xDteZjVWByNGX17QJN3pBF"/></svg>
-  <span data-page-node-id="PEEgfyBK9HS6Hy3da4IZfE">Pipeline</span>
-  <span class="pct" id="drawer-pct" data-page-node-id="yxB8EGPTbILCuGCD1PVO3S">0%</span>
+<button class="drawer-btn" id="drawer-btn" aria-label="Open pipeline navigation">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  <span>Pipeline</span>
+  <span class="pct" id="drawer-pct">0%</span>
 </button>
 
 <!-- media lightbox -->
-<div class="lightbox" id="lightbox" data-page-node-id="O9iN9e16ZJWI6YdeMq60KS">
-  <button class="close" aria-label="Close" data-page-node-id="vgWig4j4cbAe7mm14ZOkQM">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" data-page-node-id="YSwmqB9I4DnxVkxErJtGYS"><path d="M18 6 6 18M6 6l12 12" data-page-node-id="mDQfvuTKTglpPdOevCgvod"/></svg>
+<div class="lightbox" id="lightbox">
+  <button class="close" aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
   </button>
-  <div class="box" data-page-node-id="t5XnAnhF6c7qvhKS1RT3ly">
-    <div class="stage" id="lb-stage" data-page-node-id="EeMYcPbc9Sa8rNz9Jbxjdq"></div>
-    <div class="lcap" data-page-node-id="rCZ5mMEOHUoS9Bp0Pz44XN">
-      <h4 id="lb-title" data-page-node-id="RHBRf11amL2UwYCmy0Isro"></h4>
-      <p id="lb-cap" data-page-node-id="xKcFJjmQB6NLs4EobK5wiA"></p>
-      <span class="file" id="lb-file" data-page-node-id="unZAM0Pe9hyVKLHfFWEJkj"></span>
-      <div class="lrow" id="lb-meta" data-page-node-id="owBFVMNjtegpyIZrbM32nm"></div>
+  <div class="box">
+    <div class="stage" id="lb-stage"></div>
+    <div class="lcap">
+      <h4 id="lb-title"></h4>
+      <p id="lb-cap"></p>
+      <span class="file" id="lb-file"></span>
+      <div class="lrow" id="lb-meta"></div>
     </div>
   </div>
 </div>
 
-<div class="toasts" id="toasts" aria-live="polite" data-page-node-id="ED8JnFiU8j1EXMNwQLRq4W"></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
 
-<noscript data-page-node-id="9RofV3wEXmd4mzJL0ZdyJF">
-  <div style="max-width:720px;margin:60px auto;padding:24px;border:1px solid #333;border-radius:12px;font-family:sans-serif" data-page-node-id="eLHTBv3VxS3GgX0CRvAymb">
-    <h2 data-page-node-id="D7MILSeeZYds9IA22N1NUl">JavaScript required</h2>
-    <p style="color:#999" data-page-node-id="uEkMeEWzTdekKi4NWFyTLc">This is a single-page app — the content is rendered at runtime from <code data-page-node-id="jpZ9qEFRm9YeFxmze0s5Kb">content/*.js</code>. Please enable JavaScript and reload.</p>
+<noscript>
+  <div style="max-width:720px;margin:60px auto;padding:24px;border:1px solid #333;border-radius:12px;font-family:sans-serif">
+    <h2>JavaScript required</h2>
+    <p style="color:#999">This is a single-page app — the content is rendered at runtime from <code>content/*.js</code>. Please enable JavaScript and reload.</p>
   </div>
 </noscript>
 
@@ -1335,8 +1354,8 @@ window.WIKI = {
     titleEn: "Lingnan Arcade Street · Unreal Engine 5",
     lede: "A working record of the <strong>AI-assisted environment art pipeline</strong> used to build a Guangzhou Lingnan arcade (<code>qilou</code>) street in Unreal Engine 5 — visual research and concept development, UE5 blockout, asset generation and refinement, environment dressing, visual unification, and final delivery. Every stage carries the timings, iteration counts and generation costs that were actually logged while it ran.",
     lede2: "The pipeline was validated in <strong>Sprint 2</strong> with a focused proof of concept: one representative building component carried end to end through Procreate, TapNow, Tripo 3D and Unreal Engine 5. Steps 01–04 below are written up from that evidence, with the source figures included. Steps 05–06 still carry placeholder content.",
-    version: "v0.2 · REAL CONTENT",
-    updated: "2026-09-30",
+    version: "v0.2.1 · REAL CONTENT",
+    updated: "2026-10-14",
     badges: [
       { text: "Built from production logs", tone: "live" },
       { text: "6-step pipeline", tone: "" },
@@ -1471,7 +1490,7 @@ window.WIKI = {
 
     manifest: {
       title: "Media manifest (drop the file at the path and it appears)",
-      lead: "Every still below is a real figure extracted from the two source documents by <code>tools/extract_canva_images.py</code>. The video slots are still open — they are the recordings still to be made. Put a file at the matching path under <code>assets/</code> (or edit <code>src</code> in <code>content/*.js</code>) and the page swaps out its placeholder state automatically, with no CSS or logic changes.",
+      lead: "Every still below is a real figure extracted from the two source documents by <code>tools/extract_canva_images.py</code>. The three walkthrough recordings for steps 01–03 are in place and play in the page; the four remaining video slots are still open. Put a file at the matching path under <code>assets/</code> (or edit <code>src</code> in <code>content/*.js</code>) and the page swaps out its placeholder state automatically, with no CSS or logic changes.",
       cols: ["Step", "File path", "Type", "Source / purpose"],
       rows: [
         ["STEP 01", "assets/images/step1-sketch-sheet.jpg", "Still", "Process Book §01 — three hand-drawn concept sketches (Procreate)"],
@@ -1479,11 +1498,11 @@ window.WIKI = {
         ["STEP 01", "assets/images/step1-runninghub-batch.jpg", "Still", "Process Book §01 — Running Hub batch view, the tool that was dropped"],
         ["STEP 01", "assets/images/step1-concept-evidence.jpg", "Still", "POC 6.1.2 — evidence-pass concept art and its references"],
         ["STEP 01", "assets/images/step1-sketch-evidence.jpg", "Still", "POC 6.1.1 — evidence-pass hand-drawn sketch"],
-        ["STEP 01", "assets/video/step1-full-walkthrough.mp4", "Video", "Open slot · Procreate → TapNow → selection · suggest 1080p60 / ≤15 min"],
+        ["STEP 01", "assets/video/step1-full-walkthrough.mp4", "Video", "Delivered · 0:28 · 1280×720 · H.264, no audio"],
         ["STEP 02", "assets/images/step2-reference-plane-ue.jpg", "Still", "Process Book §02 — concept art as a reference plane in UE"],
         ["STEP 02", "assets/images/step2-refplane-material.jpg", "Still", "Process Book §02 — reference-plane master material graph"],
         ["STEP 02", "assets/images/step2-blockout-pass.jpg", "Still", "Process Book §02 — blockout pass and adjustments, four stages"],
-        ["STEP 02", "assets/video/step2-blockout-timelapse.mp4", "Video", "Open slot · reference plane → massing → scale correction · silent is fine"],
+        ["STEP 02", "assets/video/step2-blockout-timelapse.mp4", "Video", "Delivered · 1:20 · 854×480 · H.264, with audio"],
         ["STEP 03", "assets/images/step3-style-variants.jpg", "Still", "Process Book §03 — the two style-transfer methods that failed"],
         ["STEP 03", "assets/images/step3-style-description.jpg", "Still", "Process Book §03 — asking the AI to describe the target style"],
         ["STEP 03", "assets/images/step3-style-transfer-result.jpg", "Still", "Process Book §03 — style transfer after keyword compression"],
@@ -1502,7 +1521,7 @@ window.WIKI = {
         ["STEP 03", "assets/images/step3-tripo-banner.jpg", "Still", "POC 6.1.7 — evidence-pass model from four angles"],
         ["STEP 03", "assets/images/step3-ue-inspection.jpg", "Still", "POC 5.2.8 — the model inspected in Unreal Engine"],
         ["STEP 03", "assets/images/step3-topology-stats.jpg", "Still", "POC 5.2.8 — accepted topology: 9,458 faces / 9,198 vertices"],
-        ["STEP 03", "assets/video/step3-decompose-workflow.mp4", "Video", "Open slot · the 6-stage asset pipeline, with the click path"],
+        ["STEP 03", "assets/video/step3-decompose-workflow.mp4", "Video", "Delivered · 0:56 · 854×480 · H.264, no audio"],
         ["STEP 04", "assets/images/step4-building-blockout.jpg", "Still", "Process Book §04 — the building blocked out inside the assembly"],
         ["STEP 04", "assets/images/step4-components-assembly.jpg", "Still", "Process Book §04 — components assembled onto the building"],
         ["STEP 04", "assets/video/step4-dressing-walkthrough.mp4", "Video", "Open slot · Blueprint assembly, placement, repetition edit · narrated"],
@@ -1559,6 +1578,7 @@ window.WIKI = {
         { d: "2026-09-23", t: "v0.1.1 · full English pass", c: "All interface copy and step content converted to English. The left rail changed from a sticky element that faded in after the hero to a permanently fixed rail that stays pinned for the whole scroll." },
         { d: "2026-09-23", t: "v0.1.2 · navigation and scroll fixes", c: "Three real-input defects fixed: TOC jumps stopping at section boundaries, the left rail swallowing wheel events, and the search box dragging the page upward on every keystroke. Regression suite added as tools/qa_nav.mjs." },
         { d: "2026-09-30", t: "v0.2 · real content for steps 01–04", c: "Steps 01–04 rewritten from the Final Project Process Book and the Sprint 2 proof of concept, with the real prompt variants, the logged timings, iteration counts and generation costs, and 28 source figures extracted into assets/images/. Appendix gains a POC evidence block: the feasibility question, the four decision criteria, the full eight-stage log for both passes, and the resulting scope adjustment." },
+        { d: "2026-10-14", t: "v0.2.1 · walkthrough videos play in place", c: "Steps 01–03 carry the real recordings (0:28 / 1:20 / 0:56). Video cards now render a native player inline instead of a poster that only played in the lightbox, so the progress bar and transport controls work without leaving the page. Three knock-on fixes came with it: the card shell had to stop being a &lt;button&gt;, the missing-file fallback had to switch from a 2.6 s timeout to the element's own error event (a slow 20 MB file was being mistaken for a missing one), and the duration badge moved off the control bar." },
         { d: "—", t: "v0.3 · look dev and delivery (todo)", c: "Steps 05–06 are still placeholder content. They need the Alpha and Beta look-dev and delivery passes before they can be written up the same way." },
         { d: "—", t: "v0.4 · membership layer (todo)", c: "For tiered access, add a lightweight password gate or a real account layer; a bilingual build is also a straightforward addition from the separated content files." }
       ]
@@ -1801,11 +1821,10 @@ For each item, state what blockout should do instead. Be blunt; this list exists
       },
       {
         type: "video",
-        title: "Step 01 walkthrough (to be recorded)",
-        caption: "Screen recording slot: Procreate sketch → reference set-up in TapNow → generation and selection. Drop the file at this path and the placeholder swaps out automatically.",
+        title: "Step 01 walkthrough · sketch to locked concept",
+        caption: "The whole pass, unedited: the Procreate sketch, setting up both reference sets in TapNow, generation, and the hand selection that closes the step. 0:28 · 1280×720 · no audio. Plays in place — use the controls, or open it larger.",
         src: "assets/video/step1-full-walkthrough.mp4",
-        poster: "assets/video/step1-full-walkthrough.jpg",
-        dur: "—",
+        dur: "0:28",
         file: "assets/video/step1-full-walkthrough.mp4",
         wide: true
       }
@@ -2033,11 +2052,10 @@ Be concrete about where in the frame you are looking when you say something.`
       },
       {
         type: "video",
-        title: "Step 02 blockout time-lapse (to be recorded)",
-        caption: "Screen recording slot: reference plane import, master material setup, massing pass and the scale correction. Silent time-lapse is fine for this one.",
+        title: "Step 02 blockout walkthrough · planes to true scale",
+        caption: "Reference plane import, the parameterised master material, the massing pass, then the correction pass where road and walkway dimensions are rebuilt to construction standards. 1:20 · 854×480 · with audio.",
         src: "assets/video/step2-blockout-timelapse.mp4",
-        poster: "assets/video/step2-blockout-timelapse.jpg",
-        dur: "—",
+        dur: "1:20",
         file: "assets/video/step2-blockout-timelapse.mp4",
         wide: true
       }
@@ -2490,11 +2508,10 @@ State explicitly what would have to change in the reference sheet for a re-run t
       },
       {
         type: "video",
-        title: "Step 03 decomposition workflow (to be recorded)",
-        caption: "Screen recording slot: style conversion → building separation → component breakdown → cropping and grouping → Tripo upload. Include the click path; this is the step members will follow most closely.",
+        title: "Step 03 decomposition workflow · the click path",
+        caption: "Style conversion → building separation → component breakdown → cropping and grouping → Tripo upload, followed screen-by-screen, because this is the step members reproduce most directly. 0:56 · 854×480 · no audio.",
         src: "assets/video/step3-decompose-workflow.mp4",
-        poster: "assets/video/step3-decompose-workflow.jpg",
-        dur: "—",
+        dur: "0:56",
         file: "assets/video/step3-decompose-workflow.mp4",
         wide: true
       }
@@ -2714,11 +2731,9 @@ Answer in concrete numbers and named edits.`
       },
       {
         type: "video",
-        title: "Step 04 dressing walkthrough (to be recorded)",
-        caption: "Screen recording slot: Blueprint assembly, placement into the blockout, the repetition-edit pass and the camera sheet. Narrated if possible — the editing decisions are the part worth hearing explained.",
+        title: "Step 04 dressing walkthrough (not recorded yet)",
+        caption: "Planned: Blueprint assembly, placement into the blockout, the repetition-edit pass and the camera sheet. Narrated if possible — the editing decisions are the part worth hearing explained.",
         src: "assets/video/step4-dressing-walkthrough.mp4",
-        poster: "assets/video/step4-dressing-walkthrough.jpg",
-        dur: "—",
         file: "assets/video/step4-dressing-walkthrough.mp4",
         wide: true
       }
@@ -3005,11 +3020,9 @@ Then flag the two details in the reference that would be hardest to reproduce in
       },
       {
         type: "video",
-        title: "Look dev end to end: material audit → lighting → grade",
-        caption: "Narrated full recording, including how the parameter values were chosen and the failed attempts (with counter-examples).",
+        title: "Look dev end to end: material audit → lighting → grade (not recorded yet)",
+        caption: "Planned: the full narrated pass, including how the parameter values were chosen and the attempts that failed.",
         src: "assets/video/step5-lookdev.mp4",
-        poster: "assets/video/step5-lookdev.jpg",
-        dur: "21:14",
         file: "assets/video/step5-lookdev.mp4"
       },
       {
@@ -3306,11 +3319,9 @@ Tone: professional, concrete, no hype, no inflated adjectives.`
     media: [
       {
         type: "video",
-        title: "Final film · cinematic render (complete)",
-        caption: "The 75-second piece out of Movie Render Queue, graded with sound design. This is the end product of the whole pipeline.",
+        title: "Final film · cinematic render (not recorded yet)",
+        caption: "Planned: the walkthrough film out of Movie Render Queue, graded with sound design. This is the end product of the whole pipeline.",
         src: "assets/video/step6-final-cinematic.mp4",
-        poster: "assets/video/step6-final-cinematic.jpg",
-        dur: "01:15",
         file: "assets/video/step6-final-cinematic.mp4",
         wide: true
       },
@@ -3627,28 +3638,38 @@ Tone: professional, concrete, no hype, no inflated adjectives.`
   function mediaCard(m, uid) {
     var isVideo = m.type === "video";
     var badgeTxt = isVideo ? "VIDEO" : (m.type === "gif" ? "GIF · LOOP" : "IMAGE");
-    var bIcon = isVideo ? I.film : (m.type === "gif" ? I.gif : I.img);
-    var frame;
+    var frame, openBtn = "";
     if (isVideo) {
-      frame = '<video data-media playsinline preload="metadata"' +
-        (m.poster ? ' poster="' + esc(m.poster) + '"' : "") + ">" +
-        '<source src="' + esc(m.src) + '" type="video/mp4">' +
+      // A video card is a player, not a button. Native controls need the click
+      // surface, so the card cannot be a <button> (nested interactive content is
+      // invalid, and the button would swallow play / pause / scrub). "Open
+      // larger" therefore moves out of the frame into its own button in the
+      // caption row — an overlay across the frame would sit on the control bar.
+      frame = '<video data-media controls preload="metadata" playsinline' +
+        (m.poster ? ' poster="' + esc(m.poster) + '"' : "") +
+        ' src="' + esc(m.src) + '">' +
+        "Your browser cannot play this video." +
       "</video>";
+      openBtn = '<button class="open-lg" data-open="' + uid + '">' + I.expand + "Open larger</button>";
     } else {
       frame = '<img class="thumb" data-media alt="' + esc(m.title) + '" src="' + esc(m.src) + '">';
     }
-    return '<button class="media' + (m.wide ? " wide" : "") + '" data-open="' + uid + '" data-title="' + esc(m.title) +
-      '" data-cap="' + esc(m.caption || "") + '" data-src="' + esc(m.src) + '" data-poster="' + esc(m.poster || "") +
+    var shell = isVideo ? "div" : "button";
+    return "<" + shell + ' class="media' + (isVideo ? " is-video" : "") + (m.wide ? " wide" : "") + '"' +
+      (isVideo ? "" : ' data-open="' + uid + '"') +
+      ' data-title="' + esc(m.title) + '" data-cap="' + esc(m.caption || "") +
+      '" data-src="' + esc(m.src) + '" data-poster="' + esc(m.poster || "") +
       '" data-type="' + esc(m.type) + '" data-file="' + esc(m.file || m.src) + '">' +
       '<div class="frame" data-frame>' + frame +
         '<span class="badge-tl ' + (isVideo ? "video" : m.type === "gif" ? "gif" : "") + '">' + badgeTxt + "</span>" +
-        (m.dur ? '<span class="dur">' + esc(m.dur) + "</span>" : "") +
-        '<span class="expand"><span>' + I.expand + "Open larger</span></span>" +
+        (m.dur ? '<span class="dur' + (isVideo ? " tr" : "") + '">' + esc(m.dur) + "</span>" : "") +
+        (isVideo ? "" : '<span class="expand"><span>' + I.expand + "Open larger</span></span>") +
       "</div>" +
       '<div class="cap"><h5>' + esc(m.title) + "</h5>" +
         (m.caption ? "<p>" + esc(m.caption) + "</p>" : "") +
+        openBtn +
         '<span class="file">' + esc(m.file || m.src) + "</span>" +
-      "</div></button>";
+      "</div></" + shell + ">";
   }
 
   function placeholderHTML(m, file) {
@@ -3918,7 +3939,10 @@ Tone: professional, concrete, no hype, no inflated adjectives.`
     var lb = $("#lightbox");
     var stage;
     if (type === "video") {
-      stage = '<video controls autoplay playsinline' + (poster ? ' poster="' + esc(poster) + '"' : "") + '><source src="' + esc(src) + '" type="video/mp4"></video>';
+      // No `autoplay`: browsers block autoplay-with-sound, so any video that has
+      // an audio track would just sit on its first frame anyway. The user presses
+      // play — which is also what the in-place player in the grid does.
+      stage = '<video controls preload="metadata" playsinline' + (poster ? ' poster="' + esc(poster) + '"' : "") + ' src="' + esc(src) + '"></video>';
     } else {
       stage = '<img src="' + esc(src) + '" alt="">';
     }
@@ -4080,9 +4104,13 @@ Tone: professional, concrete, no hype, no inflated adjectives.`
       }
     });
 
-    // media cards
+    // media cards — stills and GIFs open in the lightbox from anywhere on the
+    // card; a video card carries its own native controls, so only its explicit
+    // "Open larger" button opens the lightbox (the rest of the card plays).
     document.addEventListener("click", function (e) {
-      var card = e.target.closest(".media");
+      var trigger = e.target.closest("[data-open]");
+      if (!trigger) return;
+      var card = trigger.closest(".media");
       if (!card) return;
       if (card.getAttribute("data-missing") === "1") {
         toast(I.alert + " <span>Nothing at this slot yet · add <b class=\"mono\">" + esc(card.getAttribute("data-file")) + "</b></span>", 3200);
@@ -4175,10 +4203,21 @@ Tone: professional, concrete, no hype, no inflated adjectives.`
 
       if (!el) { fail(); return; }
       if (type === "video") {
+        // `src` sits on the <video> itself rather than a <source> child on
+        // purpose: a failed <source> reports its error on the <source> element
+        // and leaves the <video> at NETWORK_NO_SOURCE, so a listener here would
+        // never hear about a missing file. With `src`, a 404 (or an HTML error
+        // page served in its place) fires `error` on the element, so the swap to
+        // a placeholder is immediate and reliable.
+        //
+        // No timeout fallback on purpose. The old 2.6 s "no metadata = missing"
+        // guess deleted the player from any walkthrough that was merely slow to
+        // start — and these files are up to 20 MB, where `preload="metadata"`
+        // still has to fetch the moov atom first. Trust the error event.
         var settled = false;
         el.addEventListener("loadedmetadata", function () { settled = true; });
         el.addEventListener("error", function () { if (!settled) fail(); });
-        setTimeout(function () { if (!settled) fail(); }, 2600);
+        el.addEventListener("loadeddata", function () { settled = true; });
       } else {
         el.addEventListener("error", fail);
         if (el.complete && el.naturalWidth === 0) fail();
