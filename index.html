@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en" data-page-node-id="Q9WrxIvivEduGpNCpqHcSW">
+<head data-page-node-id="DVDRUJpGDUxeKLFd1cAr47">
+<meta charset="utf-8" data-page-node-id="uw0LJitOOGIVngJk4aJFpY">
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="OVepHvmHnDuehJdZLAEYEu">
 <title>AI-Assisted Environment Art Workflow · Lingnan Arcade Street · Unreal Engine 5</title>
-<meta name="description" content="AI-assisted environment art workflow · single-page documentation · v0.2.1 · REAL CONTENT">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#080a0e">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23121820'/%3E%3Cpath d='M8 22V10h4l4 7 4-7h4v12' stroke='%234cc9f0' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="description" content="AI-assisted environment art workflow · single-page documentation · v0.2.3 · REAL CONTENT" data-page-node-id="3Po1cNEvUVIAzWZCZMsRQA">
+<meta name="color-scheme" content="dark" data-page-node-id="rwVeNkaGm73LQq3wDrmYnj">
+<meta name="theme-color" content="#080a0e" data-page-node-id="sGXPp012ltZipq9Ji79cOz">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23121820'/%3E%3Cpath d='M8 22V10h4l4 7 4-7h4v12' stroke='%234cc9f0' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" data-page-node-id="rvLJ8Y22tgISmbzsSKUF1U">
 <style>
 /* ============================================================================
    AI-Assisted Environment Art Workflow · documentation site stylesheet
@@ -899,6 +899,50 @@ pre.code .ph { padding: 0 3px; }
    native control bar lives and an overlay there steals clicks from it. */
 .media.is-video:hover { transform: none; }
 .media .frame .dur.tr { top: 9px; bottom: auto; }
+/* A YouTube card is a player surface too, so it gets the same treatment as a
+   video card: no hover lift (the whole frame is the click target and it becomes
+   an iframe with its own controls), and the duration badge stays top-right. */
+.media.is-yt:hover { transform: none; }
+.yt {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  cursor: pointer;
+  /* the gradient is the backdrop whenever the thumbnail cannot load */
+  background:
+    radial-gradient(120% 90% at 28% 18%, rgba(76, 201, 240, .10), transparent 62%),
+    linear-gradient(135deg, #14171c, #090b0e);
+}
+.yt-thumb {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover;   /* YouTube serves 16:9 and the frame is 16:9 */
+}
+/* maxresdefault is absent on some uploads, and i.ytimg.com is unreachable from
+   behind a block: the image steps down to hqdefault, and if that fails too it is
+   hidden so the gradient shows through. A broken-image glyph never appears. */
+.yt-thumb[data-broken="1"] { display: none; }
+.yt-play {
+  position: relative; z-index: 2;
+  width: 62px; height: 44px; border-radius: 11px;
+  display: grid; place-items: center;
+  color: #fff;                      /* the icon is fill="currentColor" */
+  background: rgba(226, 43, 43, .93);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, .55);
+  transition: background .16s var(--ease), transform .16s var(--ease);
+}
+.yt-play svg { width: 17px; height: 17px; }
+.yt:hover .yt-play { background: #ff2f2f; transform: scale(1.06); }
+.yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.yt.is-off {
+  cursor: default; padding: 0 18px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+}
+.yt.is-off svg { width: 20px; height: 20px; color: var(--warn); }
+.yt.is-off b { font-size: 12.5px; color: var(--txt-1); }
+.yt.is-off span { font-size: 11px; color: var(--txt-2); }
+.yt.is-off code { font-family: var(--font-mono); font-size: 10.5px; color: var(--accent); }
+/* lightbox: hold the 16:9 box so the player letterboxes the way it should */
+.lb-yt { position: relative; width: 100%; padding-top: 56.25%; }
+.lb-yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .media .cap .open-lg {
   display: inline-flex; align-items: center; gap: 6px;
   margin-top: 9px; height: 26px; padding: 0 9px;
@@ -1239,99 +1283,99 @@ footer.foot .sp { flex: 1; }
 
 </style>
 </head>
-<body>
-<div class="progress" id="bar"></div>
+<body data-page-node-id="TAD6jRAanUKBHjhdxQiTta">
+<div class="progress" id="bar" data-page-node-id="odNlA5HamyLwfOh2Ekyf3I"></div>
 
 <!-- ===================== top bar: brand + table-of-contents jump rail ===================== -->
-<header class="topbar">
-  <div class="brand">
-    <span class="brand-mark">AI</span>
-    <span class="brand-txt">
-      <b>AI-Assisted Environment Art Workflow</b>
-      <span>Pipeline Wiki</span>
+<header class="topbar" data-page-node-id="D7DNjqiG8Wkm7xDmnd9x9B">
+  <div class="brand" data-page-node-id="UiwXocvy3CRlSRTZXmLu4g">
+    <span class="brand-mark" data-page-node-id="iqiXKpcfD4cgvgRbGsO7ui">AI</span>
+    <span class="brand-txt" data-page-node-id="8g14XciB8X72J5wAsNAIu3">
+      <b data-page-node-id="ofzyZCB9by74eUk69HC2vn">AI-Assisted Environment Art Workflow</b>
+      <span data-page-node-id="hf174UbF3RUXdX8GZEMpfA">Pipeline Wiki</span>
     </span>
   </div>
 
-  <nav class="toc-rail" id="toc-rail" aria-label="Jump to section"></nav>
+  <nav class="toc-rail" id="toc-rail" aria-label="Jump to section" data-page-node-id="Ys8JCMZ6tj4BceQbTbahKF"></nav>
 
-  <div class="topbar-tools">
-    <label class="search" title="Search sections (press / to focus)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="search-input" type="search" placeholder="Search steps / keywords" autocomplete="off">
-      <kbd>/</kbd>
+  <div class="topbar-tools" data-page-node-id="I5CK6HbUFjyVpFAyUN70cA">
+    <label class="search" title="Search sections (press / to focus)" data-page-node-id="gGOBMWMqb3WxBJ4RsSuZll">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" data-page-node-id="iCVEcTlJP9NrNffCglFrNE"><circle cx="11" cy="11" r="7" data-page-node-id="OAueGQz87Gb6OYJnhxevTP"/><path d="m20 20-3.5-3.5" data-page-node-id="6snsgVZVcNiHRulWxDL0xZ"/></svg>
+      <input id="search-input" type="search" placeholder="Search steps / keywords" autocomplete="off" data-page-node-id="FFoktcq8iMKHuIfF5TFIMt">
+      <kbd data-page-node-id="xQgGE7XiAJPa9Kkcj1htNs">/</kbd>
     </label>
-    <button class="icon-btn" id="to-top-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" aria-label="Back to top">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    <button class="icon-btn" id="to-top-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" aria-label="Back to top" data-page-node-id="dISD3RFlWqnWZCtM1K4m0G">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="oRD8jDHysF5I3YHkwjBgoF"><path d="M12 19V5M5 12l7-7 7 7" data-page-node-id="efJVXu1U0A1uIkXiYCCpoy"/></svg>
     </button>
   </div>
 </header>
 
-<div class="shell">
+<div class="shell" data-page-node-id="nbIZ0V4K3c5EbYoFquUGj3">
   <!-- ================================ HERO ================================ -->
-  <div class="hero" id="hero"></div>
+  <div class="hero" id="hero" data-page-node-id="f94MW3heReasAx7DgMLQsr"></div>
 
   <!-- ====================== body: always-pinned left rail ====================== -->
-  <div class="layout">
+  <div class="layout" data-page-node-id="jxA9EpPAnV3bQC7loiuHox">
 
-    <aside class="side-col" aria-label="Pipeline navigation">
-      <nav class="side-nav">
-        <div class="side-title"><span>Pipeline nav</span><b id="search-hint"></b></div>
+    <aside class="side-col" aria-label="Pipeline navigation" data-page-node-id="OvTYyitBEOgwxhvjdDJuDm">
+      <nav class="side-nav" data-page-node-id="oJvYA4jqJgxdAVvhVr12w3">
+        <div class="side-title" data-page-node-id="PIO5RLlj7E7W7TuJdWSIMB"><span data-page-node-id="hJ8jzQCoDJsiHB60qD1HeC">Pipeline nav</span><b id="search-hint" data-page-node-id="lUGFlh5hSlGUlcISLbCYox"></b></div>
 
-        <div class="rail-progress">
-          <svg class="ring" viewBox="0 0 30 30" aria-hidden="true">
-            <circle class="bg" cx="15" cy="15" r="13"></circle>
-            <circle class="fg" cx="15" cy="15" r="13" stroke-dasharray="81.7" stroke-dashoffset="81.7"></circle>
+        <div class="rail-progress" data-page-node-id="I6nFUVy2NAW7XY1N0yxiJc">
+          <svg class="ring" viewBox="0 0 30 30" aria-hidden="true" data-page-node-id="bHHMQXUSVfWAexNZt9tf5C">
+            <circle class="bg" cx="15" cy="15" r="13" data-page-node-id="dX8BOd2IkfGb1AQmyjgkqf"></circle>
+            <circle class="fg" cx="15" cy="15" r="13" stroke-dasharray="81.7" stroke-dashoffset="81.7" data-page-node-id="yJIVKmmmZKNvbBQH2hBjW1"></circle>
           </svg>
-          <div>
-            <b id="ring-txt-num">0%</b>
-            <span id="ring-txt-sub">0 / 0 tasks done</span>
+          <div data-page-node-id="18e13se4C4lzD6e9cfhBE4">
+            <b id="ring-txt-num" data-page-node-id="GCV3JRYALHw7YIsxQ254nq">0%</b>
+            <span id="ring-txt-sub" data-page-node-id="eDGnS0HaZoky2LGgZC9HS7">0 / 0 tasks done</span>
           </div>
         </div>
 
-        <div id="sidenav-body"></div>
+        <div id="sidenav-body" data-page-node-id="Ykq4OWlMYVmFNriM7c7cp7"></div>
 
-        <div class="side-foot">
-          <a href="#hero" id="to-top">↑ Back to top</a>
-          <span style="display:block;margin-top:6px">Progress is saved in this browser</span>
+        <div class="side-foot" data-page-node-id="DkQrOIL047X26hbG70JQpi">
+          <a href="#hero" id="to-top" data-page-node-id="G4Y8PJiFarRoJsStAQEddk">↑ Back to top</a>
+          <span style="display:block;margin-top:6px" data-page-node-id="0OFDnqnjnDwRZasDDhktMg">Progress is saved in this browser</span>
         </div>
       </nav>
     </aside>
 
-    <main class="content" id="content"></main>
+    <main class="content" id="content" data-page-node-id="owvnaijUEEBp2xFXSTaF6H"></main>
   </div>
 </div>
 
-<footer class="foot" id="foot"></footer>
+<footer class="foot" id="foot" data-page-node-id="VbkGHFixHJdrlYZ1rifK1U"></footer>
 
 <!-- narrow-screen drawer toggle -->
-<button class="drawer-btn" id="drawer-btn" aria-label="Open pipeline navigation">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-  <span>Pipeline</span>
-  <span class="pct" id="drawer-pct">0%</span>
+<button class="drawer-btn" id="drawer-btn" aria-label="Open pipeline navigation" data-page-node-id="YBOY9AlCHqNWlMjB9crT2V">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" data-page-node-id="D7SYSernbsC18S2bne02ys"><path d="M4 7h16M4 12h16M4 17h16" data-page-node-id="h7vspeVBHkl3M1WKfzJCxF"/></svg>
+  <span data-page-node-id="ObirEvlbTtI3D359U2wQH6">Pipeline</span>
+  <span class="pct" id="drawer-pct" data-page-node-id="a8AOlJS9bpkDJFBw98T8Js">0%</span>
 </button>
 
 <!-- media lightbox -->
-<div class="lightbox" id="lightbox">
-  <button class="close" aria-label="Close">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+<div class="lightbox" id="lightbox" data-page-node-id="1U2iG9WdAllDZRTZWSnvqW">
+  <button class="close" aria-label="Close" data-page-node-id="c86nFIVGYHCvQwYdAjlrT0">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" data-page-node-id="wDZjGFIGxyXGszOkmBuNL3"><path d="M18 6 6 18M6 6l12 12" data-page-node-id="RVWSsTFEIaDFEZac81CpGK"/></svg>
   </button>
-  <div class="box">
-    <div class="stage" id="lb-stage"></div>
-    <div class="lcap">
-      <h4 id="lb-title"></h4>
-      <p id="lb-cap"></p>
-      <span class="file" id="lb-file"></span>
-      <div class="lrow" id="lb-meta"></div>
+  <div class="box" data-page-node-id="CCNbvvGc7T5rrEKTQRkp6Y">
+    <div class="stage" id="lb-stage" data-page-node-id="bpnGGShrA8jxSY0p5iwKOa"></div>
+    <div class="lcap" data-page-node-id="8gDuH1d9UoQFncet4d6PMz">
+      <h4 id="lb-title" data-page-node-id="s8Bm3hdQbj19tWvSkQdXWv"></h4>
+      <p id="lb-cap" data-page-node-id="0nzpVkENpB85gMedtEtlmd"></p>
+      <span class="file" id="lb-file" data-page-node-id="sgyd95tF4bkU0UQI2Kyc7i"></span>
+      <div class="lrow" id="lb-meta" data-page-node-id="xJ6lc3lxXHbSheP5D53Or6"></div>
     </div>
   </div>
 </div>
 
-<div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="toasts" id="toasts" aria-live="polite" data-page-node-id="uecfmr3dHikhUGfOmvcBhB"></div>
 
-<noscript>
-  <div style="max-width:720px;margin:60px auto;padding:24px;border:1px solid #333;border-radius:12px;font-family:sans-serif">
-    <h2>JavaScript required</h2>
-    <p style="color:#999">This is a single-page app — the content is rendered at runtime from <code>content/*.js</code>. Please enable JavaScript and reload.</p>
+<noscript data-page-node-id="Qlx85ox2gvcpLrysUjSH6n">
+  <div style="max-width:720px;margin:60px auto;padding:24px;border:1px solid #333;border-radius:12px;font-family:sans-serif" data-page-node-id="nu3uBg8dt2ayieogc9YdZN">
+    <h2 data-page-node-id="S3qk6edeCVxgLXzI0Adge2">JavaScript required</h2>
+    <p style="color:#999" data-page-node-id="vEyCDXkXjkMMlUO54RrFUc">This is a single-page app — the content is rendered at runtime from <code data-page-node-id="el9zy8JZqqALRow6rQkGLJ">content/*.js</code>. Please enable JavaScript and reload.</p>
   </div>
 </noscript>
 
@@ -1354,8 +1398,8 @@ window.WIKI = {
     titleEn: "Lingnan Arcade Street · Unreal Engine 5",
     lede: "A working record of the <strong>AI-assisted environment art pipeline</strong> used to build a Guangzhou Lingnan arcade (<code>qilou</code>) street in Unreal Engine 5 — visual research and concept development, UE5 blockout, asset generation and refinement, environment dressing, visual unification, and final delivery. Every stage carries the timings, iteration counts and generation costs that were actually logged while it ran.",
     lede2: "The pipeline was validated in <strong>Sprint 2</strong> with a focused proof of concept: one representative building component carried end to end through Procreate, TapNow, Tripo 3D and Unreal Engine 5. Steps 01–04 below are written up from that evidence, with the source figures included. Steps 05–06 still carry placeholder content.",
-    version: "v0.2.1 · REAL CONTENT",
-    updated: "2026-10-14",
+    version: "v0.2.3 · REAL CONTENT",
+    updated: "2026-10-15",
     badges: [
       { text: "Built from production logs", tone: "live" },
       { text: "6-step pipeline", tone: "" },
@@ -1490,7 +1534,7 @@ window.WIKI = {
 
     manifest: {
       title: "Media manifest (drop the file at the path and it appears)",
-      lead: "Every still below is a real figure extracted from the two source documents by <code>tools/extract_canva_images.py</code>. The three walkthrough recordings for steps 01–03 are in place and play in the page; the four remaining video slots are still open. Put a file at the matching path under <code>assets/</code> (or edit <code>src</code> in <code>content/*.js</code>) and the page swaps out its placeholder state automatically, with no CSS or logic changes.",
+      lead: "Every still below is a real figure extracted from the two source documents by <code>tools/extract_canva_images.py</code>. The three walkthrough recordings for steps 01–03 stream from YouTube instead of being served out of this repository, so a long recording no longer has to fit inside the repo. Each is embedded as a click-to-load facade — the player itself is only built when a visitor presses play. The remaining video slots are still open: put a file at the matching path under <code>assets/</code> (or set <code>yt</code> / <code>src</code> in <code>content/*.js</code>) and the page swaps out its placeholder state automatically, with no CSS or logic changes.",
       cols: ["Step", "File path", "Type", "Source / purpose"],
       rows: [
         ["STEP 01", "assets/images/step1-sketch-sheet.jpg", "Still", "Process Book §01 — three hand-drawn concept sketches (Procreate)"],
@@ -1498,11 +1542,11 @@ window.WIKI = {
         ["STEP 01", "assets/images/step1-runninghub-batch.jpg", "Still", "Process Book §01 — Running Hub batch view, the tool that was dropped"],
         ["STEP 01", "assets/images/step1-concept-evidence.jpg", "Still", "POC 6.1.2 — evidence-pass concept art and its references"],
         ["STEP 01", "assets/images/step1-sketch-evidence.jpg", "Still", "POC 6.1.1 — evidence-pass hand-drawn sketch"],
-        ["STEP 01", "assets/video/step1-full-walkthrough.mp4", "Video", "Delivered · 0:28 · 1280×720 · H.264, no audio"],
+        ["STEP 01", "youtu.be/7zcNvTVmT8I", "Video", "Embedded from YouTube · 0:28 · click-to-load"],
         ["STEP 02", "assets/images/step2-reference-plane-ue.jpg", "Still", "Process Book §02 — concept art as a reference plane in UE"],
         ["STEP 02", "assets/images/step2-refplane-material.jpg", "Still", "Process Book §02 — reference-plane master material graph"],
         ["STEP 02", "assets/images/step2-blockout-pass.jpg", "Still", "Process Book §02 — blockout pass and adjustments, four stages"],
-        ["STEP 02", "assets/video/step2-blockout-timelapse.mp4", "Video", "Delivered · 1:20 · 854×480 · H.264, with audio"],
+        ["STEP 02", "youtu.be/pdP_gEW6iEQ", "Video", "Embedded from YouTube · 1:20 · click-to-load"],
         ["STEP 03", "assets/images/step3-style-variants.jpg", "Still", "Process Book §03 — the two style-transfer methods that failed"],
         ["STEP 03", "assets/images/step3-style-description.jpg", "Still", "Process Book §03 — asking the AI to describe the target style"],
         ["STEP 03", "assets/images/step3-style-transfer-result.jpg", "Still", "Process Book §03 — style transfer after keyword compression"],
@@ -1521,7 +1565,7 @@ window.WIKI = {
         ["STEP 03", "assets/images/step3-tripo-banner.jpg", "Still", "POC 6.1.7 — evidence-pass model from four angles"],
         ["STEP 03", "assets/images/step3-ue-inspection.jpg", "Still", "POC 5.2.8 — the model inspected in Unreal Engine"],
         ["STEP 03", "assets/images/step3-topology-stats.jpg", "Still", "POC 5.2.8 — accepted topology: 9,458 faces / 9,198 vertices"],
-        ["STEP 03", "assets/video/step3-decompose-workflow.mp4", "Video", "Delivered · 0:56 · 854×480 · H.264, no audio"],
+        ["STEP 03", "youtu.be/q0Z8bKxi16M", "Video", "Embedded from YouTube · 0:56 · click-to-load"],
         ["STEP 04", "assets/images/step4-building-blockout.jpg", "Still", "Process Book §04 — the building blocked out inside the assembly"],
         ["STEP 04", "assets/images/step4-components-assembly.jpg", "Still", "Process Book §04 — components assembled onto the building"],
         ["STEP 04", "assets/video/step4-dressing-walkthrough.mp4", "Video", "Open slot · Blueprint assembly, placement, repetition edit · narrated"],
@@ -1579,6 +1623,8 @@ window.WIKI = {
         { d: "2026-09-23", t: "v0.1.2 · navigation and scroll fixes", c: "Three real-input defects fixed: TOC jumps stopping at section boundaries, the left rail swallowing wheel events, and the search box dragging the page upward on every keystroke. Regression suite added as tools/qa_nav.mjs." },
         { d: "2026-09-30", t: "v0.2 · real content for steps 01–04", c: "Steps 01–04 rewritten from the Final Project Process Book and the Sprint 2 proof of concept, with the real prompt variants, the logged timings, iteration counts and generation costs, and 28 source figures extracted into assets/images/. Appendix gains a POC evidence block: the feasibility question, the four decision criteria, the full eight-stage log for both passes, and the resulting scope adjustment." },
         { d: "2026-10-14", t: "v0.2.1 · walkthrough videos play in place", c: "Steps 01–03 carry the real recordings (0:28 / 1:20 / 0:56). Video cards now render a native player inline instead of a poster that only played in the lightbox, so the progress bar and transport controls work without leaving the page. Three knock-on fixes came with it: the card shell had to stop being a &lt;button&gt;, the missing-file fallback had to switch from a 2.6 s timeout to the element's own error event (a slow 20 MB file was being mistaken for a missing one), and the duration badge moved off the control bar." },
+        { d: "2026-10-14", t: "v0.2.2 · walkthroughs stream from YouTube", c: "The step 01–03 recordings moved off the repository and onto YouTube, so a recording is no longer bounded by what fits in a repo. Each card renders a click-to-load facade — thumbnail plus play glyph — and the player iframe is injected only on click, because every embed is about a megabyte of JS; nothing is requested from YouTube until a visitor presses play. The thumbnail steps down maxresdefault → hqdefault → hidden rather than ever showing a broken image, embeds go through www.youtube.com/embed/ with rel=0, and an entry with no link yet renders a pending panel instead of an empty box. This is the one intentional external dependency in the build." },
+        { d: "2026-10-15", t: "v0.2.3 · error 153 fixed (missing Referer)", c: "The player refused to start with &quot;Error 153 · video player configuration error&quot;. Google documents the cause plainly: embedders must send the HTTP Referer header, and without it playback is blocked outright. The iframe now carries referrerpolicy=&quot;strict-origin-when-cross-origin&quot; so the browser actually sends one, and the embed host moved to www.youtube.com/embed/ to match the snippet YouTube itself generates. Worth knowing: a file:// document sends no Referer at all, so the cards will report 153 when index.html is opened straight off disk — that is YouTube's rule, and the page is fine once served over http(s)." },
         { d: "—", t: "v0.3 · look dev and delivery (todo)", c: "Steps 05–06 are still placeholder content. They need the Alpha and Beta look-dev and delivery passes before they can be written up the same way." },
         { d: "—", t: "v0.4 · membership layer (todo)", c: "For tiered access, add a lightweight password gate or a real account layer; a bilingual build is also a straightforward addition from the separated content files." }
       ]
@@ -1820,12 +1866,11 @@ For each item, state what blockout should do instead. Be blunt; this list exists
         file: "assets/images/step1-sketch-evidence.jpg"
       },
       {
-        type: "video",
+        type: "youtube",
         title: "Step 01 walkthrough · sketch to locked concept",
-        caption: "The whole pass, unedited: the Procreate sketch, setting up both reference sets in TapNow, generation, and the hand selection that closes the step. 0:28 · 1280×720 · no audio. Plays in place — use the controls, or open it larger.",
-        src: "assets/video/step1-full-walkthrough.mp4",
+        caption: "The whole pass, unedited: the Procreate sketch, setting up both reference sets in TapNow, generation, and the hand selection that closes the step. Streams from YouTube in 0:28 — use the player's own controls, or open it larger.",
+        yt: "https://youtu.be/7zcNvTVmT8I",
         dur: "0:28",
-        file: "assets/video/step1-full-walkthrough.mp4",
         wide: true
       }
     ],
@@ -2051,12 +2096,11 @@ Be concrete about where in the frame you are looking when you say something.`
         file: "assets/images/step2-blockout-pass.jpg"
       },
       {
-        type: "video",
+        type: "youtube",
         title: "Step 02 blockout walkthrough · planes to true scale",
-        caption: "Reference plane import, the parameterised master material, the massing pass, then the correction pass where road and walkway dimensions are rebuilt to construction standards. 1:20 · 854×480 · with audio.",
-        src: "assets/video/step2-blockout-timelapse.mp4",
+        caption: "Reference plane import, the parameterised master material, the massing pass, then the correction pass where road and walkway dimensions are rebuilt to construction standards. Streams from YouTube in 1:20 — with audio.",
+        yt: "https://youtu.be/pdP_gEW6iEQ",
         dur: "1:20",
-        file: "assets/video/step2-blockout-timelapse.mp4",
         wide: true
       }
     ],
@@ -2507,12 +2551,11 @@ State explicitly what would have to change in the reference sheet for a re-run t
         file: "assets/images/step3-topology-stats.jpg"
       },
       {
-        type: "video",
+        type: "youtube",
         title: "Step 03 decomposition workflow · the click path",
-        caption: "Style conversion → building separation → component breakdown → cropping and grouping → Tripo upload, followed screen-by-screen, because this is the step members reproduce most directly. 0:56 · 854×480 · no audio.",
-        src: "assets/video/step3-decompose-workflow.mp4",
+        caption: "Style conversion → building separation → component breakdown → cropping and grouping → Tripo upload, followed screen-by-screen, because this is the step members reproduce most directly. Streams from YouTube in 0:56 — use the player's own controls, or open it larger.",
+        yt: "https://youtu.be/q0Z8bKxi16M",
         dur: "0:56",
-        file: "assets/video/step3-decompose-workflow.mp4",
         wide: true
       }
     ],
@@ -3629,15 +3672,72 @@ Tone: professional, concrete, no hype, no inflated adjectives.`
 
   function renderMedia(step) {
     if (!step.media || !step.media.length) return "";
-    return '<h3 class="sec"><span class="tagn">' + step.media.length + ' ASSETS</span>Video · Animated GIF · Stills</h3>' +
+    return '<h3 class="sec"><span class="tagn">' + step.media.length + ' ASSETS</span>Video · YouTube · Animated GIF · Stills</h3>' +
       '<div class="media-grid">' + step.media.map(function (m, i) {
         return mediaCard(m, step.id + "-m" + i);
       }).join("") + "</div>";
   }
 
+  /* --------------------------------------------------------------- youtube */
+  // A `youtube` media entry streams through the YouTube embed instead of serving
+  // a file out of assets/, so the repository is not the thing carrying the
+  // bandwidth. The entry carries `yt`, which may be a bare video id or any of
+  // the common YouTube URL shapes — a link can be pasted straight out of the
+  // browser's address bar.
+  function ytId(v) {
+    if (!v) return "";
+    var s = String(v).trim();
+    var m = s.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/|\/live\/)([A-Za-z0-9_-]{6,})/);
+    if (m) return m[1];
+    return /^[A-Za-z0-9_-]{6,}$/.test(s) ? s : "";
+  }
+
+  // nocookie host: no tracking cookie is dropped until playback actually starts
+  var YT_ALLOW = "accelerometer; autoplay; clipboard-write; encrypted-media; " +
+    "gyroscope; picture-in-picture; web-share";
+
+  function ytEmbed(id, autoplay) {
+    // www.youtube.com rather than the nocookie host: this matches the embed
+    // snippet YouTube itself hands out, which keeps the request identical to a
+    // known-good one.
+    return "https://www.youtube.com/embed/" + id +
+      "?rel=0&modestbranding=1&playsinline=1" + (autoplay ? "&autoplay=1" : "");
+  }
+
+  // YouTube refuses to play an embed that arrives without a Referer and reports
+  // it as error 153, "video player configuration error" — its terms require the
+  // embedding page to identify itself. The referrerpolicy attribute below is what
+  // makes the browser send one, so it is load-bearing, not decorative.
+  //
+  // It is also why this cannot be exercised from file://: a file:// document
+  // sends no Referer at all, so the player shows 153 when the page is opened
+  // straight off disk and plays once it is served over http/https. That is
+  // YouTube's rule, not a bug in this page.
+  function ytIframe(id, autoplay) {
+    return '<iframe src="' + esc(ytEmbed(id, autoplay)) + '" title="YouTube video player" ' +
+      'referrerpolicy="strict-origin-when-cross-origin" allow="' + YT_ALLOW + '" allowfullscreen></iframe>';
+  }
+
+  // The facade only: a thumbnail plus a play glyph. The iframe arrives on click,
+  // because every embedded player pulls roughly a megabyte of JS and a page with
+  // half a dozen eager iframes crawls while they all boot at once.
+  function ytFrame(id) {
+    if (!id) {
+      return '<div class="yt is-off">' + I.alert +
+        "<b>YouTube link pending</b><span>Set <code>yt</code> on this entry</span></div>";
+    }
+    return '<div class="yt" data-yt="' + esc(id) + '">' +
+      '<img class="yt-thumb" alt="" data-yt-thumb src="https://i.ytimg.com/vi/' + esc(id) + '/maxresdefault.jpg">' +
+      '<span class="yt-play">' + I.play + "</span>" +
+    "</div>";
+  }
+
   function mediaCard(m, uid) {
     var isVideo = m.type === "video";
-    var badgeTxt = isVideo ? "VIDEO" : (m.type === "gif" ? "GIF · LOOP" : "IMAGE");
+    var isYT = m.type === "youtube";
+    var isPlayer = isVideo || isYT;
+    var yid = isYT ? ytId(m.yt) : "";
+    var badgeTxt = isVideo ? "VIDEO" : isYT ? "YOUTUBE" : (m.type === "gif" ? "GIF · LOOP" : "IMAGE");
     var frame, openBtn = "";
     if (isVideo) {
       // A video card is a player, not a button. Native controls need the click
@@ -3651,33 +3751,44 @@ Tone: professional, concrete, no hype, no inflated adjectives.`
         "Your browser cannot play this video." +
       "</video>";
       openBtn = '<button class="open-lg" data-open="' + uid + '">' + I.expand + "Open larger</button>";
+    } else if (isYT) {
+      // Same reasoning as the video card: this is a player surface, so it is a
+      // <div> with its own click target rather than a <button>.
+      frame = ytFrame(yid);
+      openBtn = '<button class="open-lg" data-open="' + uid + '">' + I.expand + "Open larger</button>";
     } else {
       frame = '<img class="thumb" data-media alt="' + esc(m.title) + '" src="' + esc(m.src) + '">';
     }
-    var shell = isVideo ? "div" : "button";
-    return "<" + shell + ' class="media' + (isVideo ? " is-video" : "") + (m.wide ? " wide" : "") + '"' +
-      (isVideo ? "" : ' data-open="' + uid + '"') +
+    var shell = isPlayer ? "div" : "button";
+    var fileLabel = m.file || m.src || (yid ? "youtube.com/watch?v=" + yid : "");
+    return "<" + shell + ' class="media' + (isVideo ? " is-video" : isYT ? " is-yt" : "") + (m.wide ? " wide" : "") + '"' +
+      (isPlayer ? "" : ' data-open="' + uid + '"') +
       ' data-title="' + esc(m.title) + '" data-cap="' + esc(m.caption || "") +
-      '" data-src="' + esc(m.src) + '" data-poster="' + esc(m.poster || "") +
-      '" data-type="' + esc(m.type) + '" data-file="' + esc(m.file || m.src) + '">' +
+      '" data-src="' + esc(m.src || "") + '" data-poster="' + esc(m.poster || "") +
+      '" data-yt="' + esc(yid) + '"' +
+      ' data-type="' + esc(m.type) + '" data-file="' + esc(fileLabel) + '">' +
       '<div class="frame" data-frame>' + frame +
-        '<span class="badge-tl ' + (isVideo ? "video" : m.type === "gif" ? "gif" : "") + '">' + badgeTxt + "</span>" +
-        (m.dur ? '<span class="dur' + (isVideo ? " tr" : "") + '">' + esc(m.dur) + "</span>" : "") +
-        (isVideo ? "" : '<span class="expand"><span>' + I.expand + "Open larger</span></span>") +
+        '<span class="badge-tl ' + (isPlayer ? "video" : m.type === "gif" ? "gif" : "") + '">' + badgeTxt + "</span>" +
+        (m.dur ? '<span class="dur' + (isPlayer ? " tr" : "") + '">' + esc(m.dur) + "</span>" : "") +
+        (isPlayer ? "" : '<span class="expand"><span>' + I.expand + "Open larger</span></span>") +
       "</div>" +
       '<div class="cap"><h5>' + esc(m.title) + "</h5>" +
         (m.caption ? "<p>" + esc(m.caption) + "</p>" : "") +
         openBtn +
-        '<span class="file">' + esc(m.file || m.src) + "</span>" +
+        (fileLabel ? '<span class="file">' + esc(fileLabel) + "</span>" : "") +
       "</div></" + shell + ">";
   }
 
   function placeholderHTML(m, file) {
     var isVideo = m === "video";
-    var label = isVideo ? "Video slot" : (m === "gif" ? "Animated GIF slot" : "Image slot");
-    return '<div class="slot"><div class="in">' + (isVideo ? I.play : m === "gif" ? I.gif : I.img) +
+    var isYT = m === "youtube";
+    var label = isVideo ? "Video slot" : isYT ? "YouTube slot" : (m === "gif" ? "Animated GIF slot" : "Image slot");
+    var hint = isYT
+      ? "Paste the YouTube link into <code>yt</code> on this entry"
+      : "Drop the real file at this path and it renders here";
+    return '<div class="slot"><div class="in">' + (isVideo || isYT ? I.play : m === "gif" ? I.gif : I.img) +
       "<b>" + label + "</b><code>" + esc(file) + "</code>" +
-      "<span>Drop the real file at this path and it renders here</span></div></div>";
+      "<span>" + hint + "</span></div></div>";
   }
 
   function renderStep(step, idx, total) {
@@ -3943,6 +4054,13 @@ Tone: professional, concrete, no hype, no inflated adjectives.`
       // an audio track would just sit on its first frame anyway. The user presses
       // play — which is also what the in-place player in the grid does.
       stage = '<video controls preload="metadata" playsinline' + (poster ? ' poster="' + esc(poster) + '"' : "") + ' src="' + esc(src) + '"></video>';
+    } else if (type === "youtube") {
+      // `autoplay` is fine here: opening the lightbox was itself a click, so the
+      // embed starts without a second prompt.
+      var yid = card.getAttribute("data-yt") || ytId(src);
+      stage = yid
+        ? '<div class="lb-yt">' + ytIframe(yid, true) + "</div>"
+        : placeholderHTML("youtube", card.getAttribute("data-file") || "");
     } else {
       stage = '<img src="' + esc(src) + '" alt="">';
     }
@@ -3950,12 +4068,14 @@ Tone: professional, concrete, no hype, no inflated adjectives.`
     $("#lb-title").textContent = card.getAttribute("data-title") || "";
     $("#lb-cap").textContent = card.getAttribute("data-cap") || "";
     $("#lb-file").textContent = card.getAttribute("data-file") || src;
-    $("#lb-meta").innerHTML = '<span class="badge">' + (type === "video" ? "VIDEO" : type === "gif" ? "ANIMATED GIF" : "IMAGE") + "</span>" +
-      '<span class="badge">' + esc(wSizeLabel(src)) + "</span>";
+    $("#lb-meta").innerHTML = '<span class="badge">' +
+      (type === "video" ? "VIDEO" : type === "youtube" ? "YOUTUBE" : type === "gif" ? "ANIMATED GIF" : "IMAGE") + "</span>" +
+      '<span class="badge">' + esc(wSizeLabel(src, type)) + "</span>";
     lb.classList.add("on");
     document.body.style.overflow = "hidden";
   }
-  function wSizeLabel(src) {
+  function wSizeLabel(src, type) {
+    if (type === "youtube") return "EMBEDDED · YouTube";
     var ext = (src.split(".").pop() || "").toUpperCase();
     if (ext === "GIF") return "ANIMATED · LOOP";
     if (ext === "MP4") return "H.264 · MP4";
@@ -4119,6 +4239,19 @@ Tone: professional, concrete, no hype, no inflated adjectives.`
       openLightbox(card);
     });
 
+    // A YouTube card swaps its facade for the real player in place. Injecting the
+    // iframe here, on click, rather than at render time is what keeps the page
+    // light: each embedded player is roughly a megabyte of JS.
+    document.addEventListener("click", function (e) {
+      var facade = e.target.closest(".yt");
+      if (!facade || facade.classList.contains("is-off")) return;
+      if (facade.getAttribute("data-live") === "1") return;   // already swapped in
+      var id = facade.getAttribute("data-yt");
+      if (!id) return;
+      facade.setAttribute("data-live", "1");
+      facade.innerHTML = ytIframe(id, true);
+    });
+
     // accordion
     $$(".acc-q").forEach(function (q) {
       q.addEventListener("click", function () {
@@ -4199,6 +4332,28 @@ Tone: professional, concrete, no hype, no inflated adjectives.`
         } else {
           frame.innerHTML = placeholderHTML(type, file);
         }
+      }
+
+      // A youtube card has nothing local to probe: its only "missing" state is an
+      // entry with no id, which already renders its own pending panel. The one
+      // thing worth handling is the thumbnail — maxresdefault does not exist for
+      // every upload (and i.ytimg.com is unreachable from behind a block), so step
+      // down to hqdefault, then hide the image and let the gradient underneath
+      // stand in. Never a broken-image glyph.
+      if (type === "youtube") {
+        if (!card.getAttribute("data-yt")) return;
+        var thumb = $("[data-yt-thumb]", frame);
+        if (thumb) {
+          thumb.addEventListener("error", function () {
+            if (!thumb.getAttribute("data-hq")) {
+              thumb.setAttribute("data-hq", "1");
+              thumb.src = "https://i.ytimg.com/vi/" + card.getAttribute("data-yt") + "/hqdefault.jpg";
+            } else {
+              thumb.setAttribute("data-broken", "1");
+            }
+          });
+        }
+        return;
       }
 
       if (!el) { fail(); return; }
