@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI-Assisted Environment Art Workflow · Lingnan Arcade Street · Unreal Engine 5</title>
-<meta name="description" content="AI-assisted environment art workflow · single-page documentation · v0.2.3 · REAL CONTENT">
+<meta name="description" content="AI-assisted environment art workflow · single-page documentation · v0.2.4 · REAL CONTENT">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#080a0e">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23121820'/%3E%3Cpath d='M8 22V10h4l4 7 4-7h4v12' stroke='%234cc9f0' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
@@ -723,6 +723,22 @@ h3.sec .tagn {
   border-radius: 5px; padding: 3px 7px; white-space: nowrap;
 }
 
+/* A stage with no prompt library states that on purpose — see renderPrompts(). */
+.no-prompt {
+  border: 1px solid var(--line-2);
+  border-left: 2px solid var(--accent-2);
+  border-radius: var(--r-s);
+  background: rgba(255, 255, 255, .02);
+  padding: 14px 17px;
+}
+.no-prompt p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.72;
+  color: var(--txt-2);
+}
+.no-prompt code { font-family: var(--font-mono); font-size: 11.5px; color: var(--accent); }
+
 .variants {
   display: flex; align-items: center; gap: 6px; flex-wrap: wrap; row-gap: 6px;
   padding: 12px 17px;
@@ -1387,7 +1403,7 @@ footer.foot .sp { flex: 1; }
    Content model is documented in README.md. Every step-N.js pushes one record
    into WIKI.steps, so adding a step = adding a file.
 
-   Copy for steps 01–04 and for the appendix is written up from the two Canva
+   Copy for steps 01–05 and for the appendix is written up from the two Canva
    source documents (Final Project Process Book, Sprint 2 – Proof of Concept
    A4 v3). Figures in assets/images/ are cropped out of those same documents by
    tools/extract_canva_images.py — see README §8.
@@ -1396,19 +1412,19 @@ window.WIKI = {
   meta: {
     title: "AI-Assisted Environment Art Workflow",
     titleEn: "Lingnan Arcade Street · Unreal Engine 5",
-    lede: "A working record of the <strong>AI-assisted environment art pipeline</strong> used to build a Guangzhou Lingnan arcade (<code>qilou</code>) street in Unreal Engine 5 — visual research and concept development, UE5 blockout, asset generation and refinement, environment dressing, visual unification, and final delivery. Every stage carries the timings, iteration counts and generation costs that were actually logged while it ran.",
-    lede2: "The pipeline was validated in <strong>Sprint 2</strong> with a focused proof of concept: one representative building component carried end to end through Procreate, TapNow, Tripo 3D and Unreal Engine 5. Steps 01–04 below are written up from that evidence, with the source figures included. Steps 05–06 still carry placeholder content.",
-    version: "v0.2.3 · REAL CONTENT",
-    updated: "2026-10-15",
+    lede: "A working record of the <strong>AI-assisted environment art pipeline</strong> used to build a Guangzhou Lingnan arcade (<code>qilou</code>) street in Unreal Engine 5 — visual research and concept development, UE5 blockout, asset generation and refinement, component assembly, set dressing, visual unification, and final delivery. Every stage carries the timings, iteration counts and generation costs that were actually logged while it ran.",
+    lede2: "The pipeline was validated in <strong>Sprint 2</strong> with a focused proof of concept: one representative building component carried end to end through Procreate, TapNow, Tripo 3D and Unreal Engine 5. Steps 01–04 below are written up from that evidence, with the source figures included. Step 05 comes from the set-dressing chapter of the Process Book. Steps 06–07 still carry placeholder content.",
+    version: "v0.2.4 · REAL CONTENT",
+    updated: "2026-11-02",
     badges: [
       { text: "Built from production logs", tone: "live" },
-      { text: "6-step pipeline", tone: "" },
+      { text: "7-step pipeline", tone: "" },
       { text: "Single page · no page loads", tone: "" },
       { text: "Prompts copy in one click", tone: "" }
     ],
     stats: [
-      { v: "06", l: "Workflow steps" },
-      { v: "28", l: "Source figures" },
+      { v: "07", l: "Workflow steps" },
+      { v: "30", l: "Source figures" },
       { v: "55", l: "Logged iterations" },
       { v: "$10.6", l: "Generation cost logged" }
     ]
@@ -1421,7 +1437,7 @@ window.WIKI = {
       {
         icon: "menu",
         title: "Pinned rail + top jump bar",
-        text: "The chip bar at the top jumps straight to any of the 6 steps. The rail on the left stays pinned to the screen for the entire scroll, highlights the section you are reading, and expands the sub-steps of the current step."
+        text: "The chip bar at the top jumps straight to any of the 7 steps. The rail on the left stays pinned to the screen for the entire scroll, highlights the section you are reading, and expands the sub-steps of the current step."
       },
       {
         icon: "copy",
@@ -1443,14 +1459,14 @@ window.WIKI = {
 
   pipeline: {
     title: "Pipeline overview",
-    lead: "Six steps take you from reference to finished film. Click any card to jump to that section. The muted tag is the one thing that must exist when the step is done.",
+    lead: "Seven steps take you from reference to finished film. Click any card to jump to that section. The muted tag is the one thing that must exist when the step is done.",
     items: [
       /* injected by each step-N.js */
     ]
   },
 
   steps: [
-    /* injected by step-1.js … step-6.js */
+    /* injected by step-1.js … step-7.js */
   ],
 
   appendix: {}
@@ -1474,7 +1490,7 @@ window.WIKI = {
         { name: "Gemini 3.1 Flash Lite", stage: "STEP 01 · 03", use: "Text model, used for describing target-game material style in game-art terminology and for auditing reference sheets before they are uploaded to a 3D platform." },
         { name: "Running Hub", stage: "STEP 01 (dropped)", use: "Batch image generation. Tried first and rejected: images in the same batch share a style, so one style drift fails the entire run however good the best output looks." },
         { name: "Tripo 3D", stage: "STEP 03", use: "Model generation, retopology, UV unwrapping and texturing in a single pass. Auto-generates multi-view references from the upload. Logged as the cheapest, most reliable stage in the pipeline." },
-        { name: "Unreal Engine 5", stage: "STEP 02 · 03 · 04 · 05 · 06", use: "Reference planes with a parameterised master material, blockout, import and inspection of generated models, Blueprint assembly, lighting and delivery." },
+        { name: "Unreal Engine 5", stage: "STEP 02–07", use: "Reference planes with a parameterised master material, blockout, import and inspection of generated models, Blueprint assembly, lighting and delivery." },
         { name: "Reference-plane master material", stage: "STEP 02", use: "A project-side asset rather than a product: base colour and opacity exposed as parameters, colour texture multiplied by a scalar for brightness, one instance per reference plane." }
       ]
     },
@@ -1568,12 +1584,14 @@ window.WIKI = {
         ["STEP 03", "youtu.be/q0Z8bKxi16M", "Video", "Embedded from YouTube · 0:56 · click-to-load"],
         ["STEP 04", "assets/images/step4-building-blockout.jpg", "Still", "Process Book §04 — the building blocked out inside the assembly"],
         ["STEP 04", "assets/images/step4-components-assembly.jpg", "Still", "Process Book §04 — components assembled onto the building"],
-        ["STEP 04", "assets/video/step4-dressing-walkthrough.mp4", "Video", "Open slot · Blueprint assembly, placement, repetition edit · narrated"],
-        ["STEP 05", "assets/images/step5-atmosphere-variants.jpg", "Still", "Placeholder — waiting on the look-dev pass"],
-        ["STEP 05", "assets/video/step5-lookdev.mp4", "Video", "Placeholder — look-dev walkthrough"],
-        ["STEP 06", "assets/images/step6-hero-shot.jpg", "Still", "Placeholder — final hero shot"],
-        ["STEP 06", "assets/images/step6-doc-structure.jpg", "Still", "Placeholder — document structure"],
-        ["STEP 06", "assets/video/step6-final-cinematic.mp4", "Video", "Placeholder — final walkthrough film"]
+        ["STEP 04", "assets/video/step4-dressing-walkthrough.mp4", "Video", "Open slot · Blueprint assembly, facade variation, repetition edit · narrated"],
+        ["STEP 05", "assets/images/step5-store-set-dressing.jpg", "Still", "Process Book §05 — the size hierarchy in a fitted-out shop and in still-life studies"],
+        ["STEP 05", "assets/images/step5-distant-blocks.jpg", "Still", "Process Book §05 — distant blocks placed tallest-first"],
+        ["STEP 06", "assets/images/step5-atmosphere-variants.jpg", "Still", "Placeholder — waiting on the look-dev pass"],
+        ["STEP 06", "assets/video/step5-lookdev.mp4", "Video", "Placeholder — look-dev walkthrough"],
+        ["STEP 07", "assets/images/step6-hero-shot.jpg", "Still", "Placeholder — final hero shot"],
+        ["STEP 07", "assets/images/step6-doc-structure.jpg", "Still", "Placeholder — document structure"],
+        ["STEP 07", "assets/video/step6-final-cinematic.mp4", "Video", "Placeholder — final walkthrough film"]
       ]
     },
 
@@ -1581,11 +1599,11 @@ window.WIKI = {
       title: "Frequently asked questions",
       items: [
         {
-          q: "Where did the content in steps 01–04 come from?",
-          a: "From two working documents: the <strong>Final Project Process Book</strong> (sections 01–04) and <strong>Sprint 2 – Proof of Concept (A4 v3)</strong>, which logs all eight pipeline stages across a test pass and an evidence pass. The text is a write-up of what those documents record; the figures are cropped out of them by <code>tools/extract_canva_images.py</code> so they can be re-extracted whenever the source documents change."
+          q: "Where did the content in steps 01–05 come from?",
+          a: "From two working documents: the <strong>Final Project Process Book</strong> (sections 01–05) and <strong>Sprint 2 – Proof of Concept (A4 v3)</strong>, which logs all eight pipeline stages across a test pass and an evidence pass. The text is a write-up of what those documents record; the figures are cropped out of them by <code>tools/extract_canva_images.py</code> so they can be re-extracted whenever the source documents change."
         },
         {
-          q: "Why are steps 05 and 06 still placeholders?",
+          q: "Why are steps 06 and 07 still placeholders?",
           a: "Because the source documents do not cover them yet — the proof of concept stopped at asset generation, and look dev and delivery are Alpha and Beta work. They are left in their placeholder state deliberately rather than filled with invented content, so it stays obvious which parts of this wiki are backed by evidence and which are not."
         },
         {
@@ -1598,7 +1616,7 @@ window.WIKI = {
         },
         {
           q: "How do I add a step or a section?",
-          a: "Content and code are fully separated. Copy <code>src/content/step-6.js</code> to <code>step-7.js</code>, change <code>id / n / title</code> and the content, then rebuild.<strong>The top jump bar, the left rail, the pipeline cards and the progress ring all pick up the new step automatically</strong> — because the pipeline cards are derived from each step's <code>pipe</code> field."
+          a: "Content and code are fully separated. Copy <code>src/content/step-7.js</code> to <code>step-8.js</code>, change <code>id / n / title</code> and the content, then rebuild.<strong>The top jump bar, the left rail, the pipeline cards and the progress ring all pick up the new step automatically</strong> — because the pipeline cards are derived from each step's <code>pipe</code> field."
         },
         {
           q: "Where is progress stored? Does it sync across devices?",
@@ -1625,11 +1643,12 @@ window.WIKI = {
         { d: "2026-10-14", t: "v0.2.1 · walkthrough videos play in place", c: "Steps 01–03 carry the real recordings (0:28 / 1:20 / 0:56). Video cards now render a native player inline instead of a poster that only played in the lightbox, so the progress bar and transport controls work without leaving the page. Three knock-on fixes came with it: the card shell had to stop being a &lt;button&gt;, the missing-file fallback had to switch from a 2.6 s timeout to the element's own error event (a slow 20 MB file was being mistaken for a missing one), and the duration badge moved off the control bar." },
         { d: "2026-10-14", t: "v0.2.2 · walkthroughs stream from YouTube", c: "The step 01–03 recordings moved off the repository and onto YouTube, so a recording is no longer bounded by what fits in a repo. Each card renders a click-to-load facade — thumbnail plus play glyph — and the player iframe is injected only on click, because every embed is about a megabyte of JS; nothing is requested from YouTube until a visitor presses play. The thumbnail steps down maxresdefault → hqdefault → hidden rather than ever showing a broken image, embeds go through www.youtube.com/embed/ with rel=0, and an entry with no link yet renders a pending panel instead of an empty box. This is the one intentional external dependency in the build." },
         { d: "2026-10-15", t: "v0.2.3 · error 153 fixed (missing Referer)", c: "The player refused to start with &quot;Error 153 · video player configuration error&quot;. Google documents the cause plainly: embedders must send the HTTP Referer header, and without it playback is blocked outright. The iframe now carries referrerpolicy=&quot;strict-origin-when-cross-origin&quot; so the browser actually sends one, and the embed host moved to www.youtube.com/embed/ to match the snippet YouTube itself generates. Worth knowing: a file:// document sends no Referer at all, so the cards will report 153 when index.html is opened straight off disk — that is YouTube's rule, and the page is fine once served over http(s)." },
-        { d: "—", t: "v0.3 · look dev and delivery (todo)", c: "Steps 05–06 are still placeholder content. They need the Alpha and Beta look-dev and delivery passes before they can be written up the same way." },
+        { d: "2026-11-02", t: "v0.2.4 · set dressing becomes step 05 · speckle gate · prompt layers", c: "Two changes to the structure, two to the content. <strong>Set dressing is now its own step.</strong> Step 04 was called 'Environment Dressing &amp; Scene Composition' while every sub-step in it was assembly, so the step is now 'Components Assembly &amp; Facade Variation' and a new step 05 'Set Dressing &amp; Scene Composition' carries the Process Book's fifth chapter — placement by size rather than by category, the two shop types, distant blocks by height, and the signs of use. Everything after it renumbered to 06 and 07, which means every anchor id, the jump bar, the rail and the stored progress keys moved with it. <strong>A stage with no AI now says so.</strong> Step 05 renders an explicit 'no prompt library' panel and a 'Manual stage' meta tag instead of the silent gap it used to leave. <strong>Step 03 gained a speckle gate.</strong> The pre-flight audit on reference sheets now checks image quality as well as content — a seventh check for near-black speckle in the dark areas, plus a manual deep-zoom sweep — because Tripo reproduces the reference literally, so a speckled sheet becomes a speckled model and then baked texture noise. <strong>Step 01 gained the two-layer prompt idea</strong> and a fifth variant, E, that specifies the street bay by bay instead of describing a mood; it ships marked untested. Step 05 also gained the two Process Book figures for the size hierarchy and the skyline." },
+        { d: "—", t: "v0.3 · look dev and delivery (todo)", c: "Steps 06–07 are still placeholder content. They need the Alpha and Beta look-dev and delivery passes before they can be written up the same way." },
         { d: "—", t: "v0.4 · membership layer (todo)", c: "For tiered access, add a lightweight password gate or a real account layer; a bilingual build is also a straightforward addition from the separated content files." }
       ]
     },
-    note: "<b>About this page</b>: steps 01–04 and the POC block are written up from the project's own working documents, and the figures are extracted from them — nothing in those sections is invented. Steps 05–06 remain <strong>placeholder examples</strong> used to validate the information hierarchy and the interactions. Every media slot shows a placeholder state until a real file is present, and nothing errors. See the manifest above and <code>README.md</code> for the extraction workflow."
+    note: "<b>About this page</b>: steps 01–05 and the POC block are written up from the project's own working documents, and the figures are extracted from them — nothing in those sections is invented. Steps 06–07 remain <strong>placeholder examples</strong> used to validate the information hierarchy and the interactions. Every media slot shows a placeholder state until a real file is present, and nothing errors. See the manifest above and <code>README.md</code> for the extraction workflow."
   };
 })(window.WIKI);
 
@@ -1722,7 +1741,7 @@ window.WIKI = {
         id: "s1p1",
         title: "Sketch → scene concept art (Banana 2)",
         icon: "sparkles",
-        note: "The two prompts below are the ones actually run for the test and evidence passes — variant A and variant B. Variants C and D are the same structure rewritten for other settings, so the block stays reusable. Anything in {{}} is a variable; replace it with your own image slots or subject.",
+        note: "The two prompts below are the ones actually run for the test and evidence passes — variant A and variant B. Variants C and D are the same structure rewritten for other settings, so the block stays reusable. <strong>Variant E is different in kind</strong>: instead of describing a mood it specifies the street bay by bay. Anything in {{}} is a variable; replace it with your own image slots or subject.",
         variants: [
           {
             key: "A",
@@ -1773,6 +1792,45 @@ Keep the road layout and the direction of travel exactly as drawn. Fix one {{lar
 {{Image 2}} and {{Image 3}} are real photographs of the location; {{Image 4}} is the style reference. Correct perspective only — do not redesign the street. (Banana 2)
 
 [[two competing focal buildings, blocked colonnade, altered road width, game UI, watermark]]`
+          },
+          {
+            key: "E",
+            name: "Spatial spec — building by building",
+            tag: "Untested",
+            use: "When the style is right but the street is wrong: wrong building count, wrong storey heights, buildings that do not belong to this location",
+            out: "A frame where every building on both sides matches a written specification",
+            note: "Different in kind from A–D, not just longer. The style block stays compressed to a short keyword set; what expands is the <strong>content</strong> — every bay on both sides described individually. Not yet run: it is built from the critique that these prompts described a mood but never described the street, so treat the measurements as placeholders to replace with your own site.",
+            text: `Generate a concept reference image of a Guangzhou qilou (arcade) shopping street. Eye-level view down the centre of the road, 16:9.
+
+CAMERA
+Standing height 1.6 m, 35 mm equivalent, one-point perspective, vanishing point slightly left of centre. No tilt, no wide-angle distortion.
+
+LEFT SIDE, near corner to far end — five bays
+1. Three storeys, cream stucco. Ground-floor arcade 4.2 m high with round columns and a simple moulding. Dark green timber shutters on floors 2 and 3. Vertical hanging sign, faded red ground with white characters.
+2. Two storeys, grey brick. Shallower arcade, square columns. Black steel casement windows. No sign.
+3. Four storeys, pale yellow tile. Decorative parapet. Arched windows on the second floor. Horizontal sign band in dark blue above the arcade.
+4. Three storeys, whitewashed render. Exposed drainage pipe on the right edge. One air-conditioning unit under each upper window.
+5. Two storeys, weathered red brick. Arched arcade openings. Canvas awning over the ground floor.
+
+RIGHT SIDE, near corner to far end — six bays
+1. Four storeys, pale green tile. Corner unit with frontage on two sides. Ground floor open to the street.
+2. Three storeys, cream render, flat roofline. Timber-framed windows, dark brown. Small projecting sign.
+3. Two storeys, grey brick, same family as left bay 2 but lighter mortar.
+4. Three storeys, pale pink stucco. Continuous balcony on the second floor with an iron railing.
+5. Four storeys, white tile, vertical sign in dark red.
+6. Three storeys, cream stucco, matching left bay 1 — this is the repeat that makes the street read as one place.
+
+STREET SURFACE AND FURNITURE
+Grey granite paving in 600 mm courses, a wet sheen only inside the shaded arcade. Two street trees on the left at bays 1 and 4. One utility pole on the right at bay 5. No vehicles.
+
+LIGHT
+Warm overcast daylight, high-key but not blown out. Shadow gradients smooth and continuous — no hard black areas.
+
+STYLE (keep this short — this is the layer that compresses)
+Southern Chinese commercial street, muted saturated signage, clean surfaces, consistent shadow gradients.
+
+NEGATIVE
+[[black speckle, dark blotches in shadow, smeared or melted textures, text artifacts, watermark, game UI, duplicated buildings, distorted perspective, vehicles]]`
           }
         ]
       },
@@ -1876,6 +1934,8 @@ For each item, state what blockout should do instead. Be blunt; this list exists
     ],
 
     tips: [
+      { title: "Style compresses, content expands", text: "Two layers, two directions. The style layer gets shorter as you iterate — a dozen keywords beat a paragraph, because a long style description dilutes what the model latches onto. The content layer goes the other way: every bay on both sides, its storeys, its material, its colour. Confusing the two is how a prompt ends up 400 words long and still never says what is in the street." },
+      { title: "A precise prompt may also run faster", text: "Reported by a reviewer on this project, not yet measured here: prompts that specify the street bay by bay came back faster than vague ones. The plausible reason is that the model spends less effort inventing content it was never given. Worth testing on your own run — time a vague and a specific prompt on the same subject before treating it as a rule." },
       { title: "Sketch before you prompt", text: "Everything in this step is downstream of one decision: does the layout come from you or from the model? Draw it first and the answer is you." },
       { title: "Keep the two reference sets apart", text: "Real photographs define the architecture; target-game screenshots define the style. Tell the model which is which inside the prompt, or it will build the screenshot's buildings." },
       { title: "Budget from the second pass, not the first", text: "The test pass cost 36 tapies and 4 iterations; the evidence pass, with the prompt settled, cost 18 and 2. The first run on a new scene is always the expensive one — plan for it." },
@@ -1885,7 +1945,7 @@ For each item, state what blockout should do instead. Be blunt; this list exists
     pitfalls: [
       { title: "Generating without a sketch", text: "You get a good-looking image you did not design, and you will spend blockout reverse-engineering a layout out of it. This is the single most expensive shortcut in the pipeline." },
       { title: "Trusting the concept art's dimensions", text: "AI concept art of a street is not dimensionally reliable. Road width, lane count and storey height drawn in the render are wrong often enough that blockout must check them against real construction standards." },
-      { title: "Long prompts for style", text: "Asking a text model to describe the target style returns something extremely verbose, and long prompts demonstrably weaken image models. Compress to ~12 keywords before you generate (s1p2 variant B)." },
+      { title: "Long prompts for style — and the wrong lesson from it", text: "Asking a text model to describe the target style returns something extremely verbose, and long prompts demonstrably weaken image models. The wrong lesson is to write short prompts everywhere: what shrinks is the style layer, not the description of the street. A prompt that never says how many bays are on each side, or what they are made of, leaves the model to invent them — and it will, differently every run." },
       { title: "Using one view", text: "A single sketch view hides composition and massing errors. Draw two or three; the errors that survive all of them are the ones worth building on." }
     ],
     checkpoint: "You are holding a design pack: the hand-drawn sketch (high-res) + both reference sets, tagged by role + one locked AI concept frame + a written must-fix list naming every perspective and dimension error blockout should not trust. The step is done when you can point at the locked frame and say which three things in it are wrong."
@@ -2398,6 +2458,7 @@ Style: stylized PBR, semi-realistic materials with normal map effects, hand-pain
 4. PERSPECTIVE — are any components drawn in a perspective that would be wrong in 3D? Be specific about which.
 5. AI ARTEFACTS — any blurred, over-generalised or physically impossible surfaces that would be carried into the geometry.
 6. COUNT — how many components are actually visible, and does that match what I supplied?
+7. SPECKLE — look at the darkest areas. Is there isolated near-black speckle or blotchy noise in the shadows? It reads as texture at full size and as a defect once modelled. Say where, not just whether.
 
 For each problem give the fix at the sheet level (re-crop, re-space, re-generate). If the sheet is usable, say so plainly. (Gemini 3.1 Flash Lite / GPT)`
           },
@@ -2418,6 +2479,22 @@ Give me a verdict of ACCEPT, ACCEPT WITH NOTES, or REJECT, then justify it on fo
 4. UV — is there visible stretching or overlap, and would it matter at the intended texel density?
 
 State explicitly what would have to change in the reference sheet for a re-run to do better. Do not comment on aesthetic preference.`
+          },
+          {
+            key: "C",
+            name: "Deep-zoom speckle sweep (manual)",
+            tag: "QA",
+            use: "Before any sheet goes to Tripo — especially anything night-lit or low-key",
+            out: "A pass / fail on image quality, independent of what the sheet depicts",
+            note: "Not a prompt: this one is done by eye. Speckle is invisible at fit-to-screen and no text model reliably finds it, so the procedure below <strong>is</strong> the check. Run it after the audit above, not instead of it.",
+            text: `1. Open the sheet at 100%, then at 200%. Never judge this at fit-to-screen.
+2. Walk the darkest third of the image in overlapping tiles — about six tiles for a 2048 px sheet.
+3. Look for isolated pixels or 2–4 px clusters that are near-black (RGB under ~10) sitting on a surface that should read mid-tone.
+4. Check the transition zones first: where shadow meets object, and where the arcade interior meets the street. That is where the artefact concentrates.
+5. If the same speckle appears in the source photograph, it is inherited — fix the crop, not the render.
+6. Fail the sheet if the speckle is visible at 100% on a surface the camera will see. A model built from it reproduces the speckle as geometry or as baked texture noise, and it gets more obvious at every mip level.
+
+Night-lit and low-key sheets fail this most often: the model has the least information in shadow and the most freedom to fill it with near-black.`
           }
         ]
       }
@@ -2567,37 +2644,39 @@ State explicitly what would have to change in the reference sheet for a re-run t
       { title: "Part count is a real lever, not a promise", text: "The model will not deliver exactly 24 or 32 unique parts — but the number reliably shifts both the quantity and the size of what comes back. Raise it when parts arrive oversized." },
       { title: "Strip stray numerals from prompts", text: "The “8” in “8K resolution” was read as a part count and produced eight wall sections from four types. Remove any number that could be mistaken for a quantity." },
       { title: "Audit the reference before spending credits", text: "Tripo reproduces the reference literally, including its flaws. A blurred, over-generalised reference becomes blurred, over-generalised geometry. Check the sheet first — it is the cheapest QA in the step." },
-      { title: "Reject at import, not after cleanup", text: "UE import is the last cheap place to say no. If the silhouette is wrong or the UVs are unusable, fix the reference and re-run rather than starting manual cleanup on a model you will replace anyway." }
+      { title: "Reject at import, not after cleanup", text: "UE import is the last cheap place to say no. If the silhouette is wrong or the UVs are unusable, fix the reference and re-run rather than starting manual cleanup on a model you will replace anyway." },
+      { title: "Zoom before you spend credits", text: "Speckle is invisible at fit-to-screen. Two minutes at 200% on the dark third of a sheet is cheaper than a Tripo run plus the retexture that follows it." },
     ],
     pitfalls: [
       { title: "Expecting the model to respect 'no overlap'", text: "It does not, in either pass. Both batches came back with components overlapping each other despite the constraint being stated explicitly. Verify spacing by eye every time." },
       { title: "Believing the component sheet matches the building", text: "Almost every model understands “break the building into components” and almost none executes it faithfully — the parts will not match the original, and parts that never existed will appear." },
       { title: "Letting reference images bring their own props", text: "The screenshot-reference approach for style transfer imported plants from the reference into a scene that has none. Name what may be borrowed and what may not." },
       { title: "Asking AI for three-view projections too early", text: "AI struggles to interpret irregular objects in 3D space, so three-views introduce errors and invented elements. It is not required before decomposition — skip it and crop components instead." },
-      { title: "Treating generation as the risk", text: "Generation was the most reliable stage, twice, with one iteration. Decomposition is the unreliable one and it absorbed the most iterations. Put your buffer where the risk actually is." }
+      { title: "Treating generation as the risk", text: "Generation was the most reliable stage, twice, with one iteration. Decomposition is the unreliable one and it absorbed the most iterations. Put your buffer where the risk actually is." },
+      { title: "Sending a night-lit sheet straight to Tripo", text: "A low-key image gives the model the most room to fill shadow with near-black pixels. The artefact survives into geometry and texture and gets more obvious at every mip level — so the later you find it, the more of the asset you redo." },
     ],
-    checkpoint: "The asset library holds Tripo-generated components that have each been inspected in Unreal Engine against their source reference and explicitly accepted on silhouette, material, topology and UV. You have the style-transfer prompt that reproduces the target look, the grouped reference sheets that produced the models, and a written record of which components were rejected and why."
+    checkpoint: "The asset library holds Tripo-generated components that have each been inspected in Unreal Engine against their source reference and explicitly accepted on silhouette, material, topology and UV. Every reference sheet was swept at 200% for dark-area speckle before it was spent on a Tripo run, and any sheet that failed was re-cropped or re-rendered rather than cleaned up afterwards. You have the style-transfer prompt that reproduces the target look, the grouped reference sheets that produced the models, and a written record of which components were rejected and why."
   });
 })(window.WIKI);
 
 /* ---------- step-4.js ---------- */
 /* ============================================================================
-   step-4.js — 04 Environment Dressing & Scene Composition
+   step-4.js — 04 Components Assembly & Facade Variation
    Source: Final Project Process Book §04; Sprint 2 POC §7.1–7.2 (scope adjustment)
    ========================================================================== */
 (function (W) {
   W.steps.push({
     id: "step-4",
     n: "04",
-    title: "Environment Dressing & Scene Composition",
-    short: "Dressing",
+    title: "Components Assembly & Facade Variation",
+    short: "Assembly",
     en: "Blueprint · Assembly order · Facade variation · Freeze",
-    stage: "SET DRESSING",
+    stage: "ASSEMBLY",
     purpose: "Assemble the inspected components into buildings inside a Blueprint, place those buildings into the blockout level, and manage variety deliberately — because buildings are the most-reused assets in an urban scene, and the cheapest way to look rich is <strong>editing what you already have</strong> rather than generating more.",
-    duration: "2–4 weeks (schedule slot: weeks 5–7)",
+    duration: "1–2 weeks (schedule slot: weeks 5–6)",
     difficulty: "Medium-high — judgement about variety and repetition dominates",
     inputs: ["Walkable UE5 greybox with frozen massing", "Inspected Tripo components in the asset library", "Component list and storey heights from step 02"],
-    outputs: ["Reusable building Blueprints", "Dressed street with the repetition edited out", "Camera sheet and a frozen composition"],
+    outputs: ["Reusable building Blueprints", "Assembled street with the repetition edited out", "Camera sheet and a frozen composition"],
     tools: ["Unreal Engine 5 (Blueprints, placement)", "Material instances (colour variation)", "PureRef for composition reference"],
     pipe: { out: "Assembled buildings + dressed street", tool: "UE5 Blueprint" },
 
@@ -2659,7 +2738,7 @@ State explicitly what would have to change in the reference sheet for a re-run t
           "Compose the intersection and the three-to-four storefront units as the focus of the block",
           "Check the hero view and the walkthrough route against the step 01 concept frame",
           "Capture a camera sheet: hero view, walking views, and the compositions worth defending",
-          "Freeze the layout and the Blueprint parameters; hand off to step 05 for unification"
+          "Freeze the layout and the Blueprint parameters; hand off to step 05 for set dressing"
         ]
       }
     ],
@@ -2802,12 +2881,130 @@ Answer in concrete numbers and named edits.`
 
 /* ---------- step-5.js ---------- */
 /* ============================================================================
-   step-5.js — 05 Visual Unification & Atmosphere Development
+   step-5.js — 05 Set Dressing & Scene Composition
+   Source: Final Project Process Book §05 Set Dressing
+
+   No prompt library on purpose. Every decision in this stage is a placement
+   call made by hand at the camera — the props themselves were generated back in
+   step 03, and nothing here asks a model for anything new.
    ========================================================================== */
 (function (W) {
   W.steps.push({
     id: "step-5",
     n: "05",
+    title: "Set Dressing & Scene Composition",
+    short: "Dressing",
+    en: "Largest-first · Still-life depth · Shop fitting · Signs of use",
+    stage: "SET DRESSING",
+    purpose: "Turn an assembled street into a place someone could walk through. Nothing here is generated — the work is deciding <strong>what goes where, and in what order</strong>. The order is the one a still-life drawing uses: the dominant mass first, then the medium form that supports it, then the small thing further away. That hierarchy is what the eye reads as depth, and it is why this stage sorts by size instead of by prop type.",
+    duration: "1–2 weeks (schedule slot: weeks 6–7)",
+    difficulty: "Medium — no technical risk, but every call is a composition decision",
+    inputs: ["Assembled building Blueprints placed in the blockout", "Prop and fixture library from the asset stage", "Camera sheet from step 04"],
+    outputs: ["Dressed street with a readable size hierarchy", "Fitted-out shops for both mid-block and corner conditions", "Signs of use that make the block feel inhabited"],
+    tools: ["Unreal Engine 5 (placement, decals)", "Prop library from the asset stage", "The camera sheet as the review position"],
+    pipe: { out: "An inhabited, layered street", tool: "UE5 placement" },
+
+    intro: [
+      "By the end of step 04 the street is architecturally correct and completely uninhabited: every storey height is right, every column is where it should be, and nothing on the street suggests a person has ever stood on it. This stage closes that gap, and it does so by hand, one prop at a time.",
+      "The method is borrowed from <strong>still-life drawing</strong>, and it is worth taking literally. A still life is rarely a random arrangement: there is a dominant large form — a vase, a basket — a medium form beside it such as an apple or a cup, and a smaller form further back, a spoon. That hierarchy is what produces the sense of depth, not the amount of detail. The same hierarchy works on a street, which is why the placement order below is <strong>by size, not by category</strong>."
+    ],
+
+    substeps: [
+      {
+        id: "5.1",
+        title: "Place from largest to smallest — never by category",
+        detail: "Work through the block one size band at a time: large volumes first, then medium furniture, then small clutter. Two things happen at once. The spatial hierarchy is fixed before detail can blur it, and every later object already has a larger neighbour to relate to, which makes positioning faster and more consistent. Dressing by category — all the signage, then all the crates, then all the bins — loses that reference and usually ends with everything at the same visual weight.",
+        tasks: [
+          "Sort the prop list into three size bands: large volumes, medium furniture, small clutter",
+          "Place the entire large band before touching anything smaller",
+          "Check the large band alone from the camera sheet — it should already read as a composition",
+          "Add the medium band only where it supports a large form, not evenly across the street",
+          "Finish with the small band, and stop when every camera view has something for the eye to land on"
+        ]
+      },
+      {
+        id: "5.2",
+        title: "Fit out the shops — two types, one order",
+        detail: "A shop interior follows the same sequence at room scale: the volume is defined by walls, floor and ceiling, then the large fixtures go in (shelving), then the medium items (tables, cartons), then the small ones (baskets). Two shop types cover most of a street. <strong>Mid-block</strong> units sit between the building's load-bearing columns, so their frontage — and therefore their width — is set by the column spacing; that is a measurement, not a design choice. <strong>Corner</strong> units face the street on two sides and carry a larger floor area.",
+        tasks: [
+          "Measure the column spacing first — the mid-block shop's width is not a free parameter",
+          "Build the mid-block type and the corner type as separate Blueprints",
+          "Dress every interior large-first: shelving → tables and cartons → baskets",
+          "Vary how full the shops are; a street where every unit is equally stocked reads as a showroom",
+          "Check each shop from the walking route, not only from the front elevation"
+        ]
+      },
+      {
+        id: "5.3",
+        title: "Place the distant blocks by height",
+        detail: "Background buildings follow the same rule at a different scale: the tallest and largest go in first, and the shorter ones are arranged around them. This is also how real cities form — high-rise buildings cluster, and the tallest in the cluster becomes the landmark that defines the area. Once the tallest silhouette is fixed, the character of the whole background is decided; everything after that is supporting it.",
+        tasks: [
+          "Place the tallest background block first and judge the skyline from the main camera position",
+          "Cluster the shorter blocks around it instead of spreading them evenly",
+          "Keep gaps between distant blocks readable — a solid wall of buildings kills the depth the foreground just earned",
+          "Re-check the skyline from the camera sheet rather than from the editor viewport"
+        ]
+      },
+      {
+        id: "5.4",
+        title: "Add the signs of use",
+        detail: "The last pass is made of small things and decides most of the character. Rotate props a few degrees off-axis, leave a chair pulled out, wear the step where feet would land, let a sign fade unevenly. None of these are large objects and none of them are random: each one is a <strong>trace of a specific action</strong>. The rule that keeps this from turning into clutter is that every sign of use should answer one question — who did this, and why.",
+        tasks: [
+          "Rotate a handful of props off-axis — perfectly aligned rows read as a render, not a street",
+          "Add wear only where a body would actually touch: thresholds, counters, handrails",
+          "Place one or two props that imply an interrupted action — a stool moved aside, a crate left open",
+          "Stop before the street becomes a story; the goal is evidence of use, not a narrative"
+        ]
+      }
+    ],
+
+    // Nothing in this stage is generated — see noPromptNote below.
+    prompts: [],
+    noPromptNote: "This stage has no prompt library, and that is deliberate. The props and fixtures were generated in step 03; everything from here on is placed by hand and judged at the camera. A prompt would only be able to guess at what the block needs.",
+
+    media: [
+      {
+        type: "image",
+        title: "The size hierarchy, applied to a shop and to a still life",
+        caption: "Left: the fitted-out shop, with the three size bands outlined — the shelving as the large volume, the stacked cartons as the medium form, the baskets as the small one. Right: the two still-life studies the method comes from, marked the same way. The point of the comparison is that the bands are not a styling choice; they are the same three-role structure read at room scale and at drawing scale.",
+        src: "assets/images/step5-store-set-dressing.jpg",
+        file: "assets/images/step5-store-set-dressing.jpg"
+      },
+      {
+        type: "image",
+        title: "Placing the distant blocks by height",
+        caption: "Two passes over the same background. The tallest silhouette goes in first and defines the character of the cluster; the shorter blocks are then arranged around it rather than spread evenly across the horizon. An even row of towers at one distance reads as a fence — clustering is what the eye reads as a skyline.",
+        src: "assets/images/step5-distant-blocks.jpg",
+        file: "assets/images/step5-distant-blocks.jpg"
+      }
+    ],
+
+    tips: [
+      { title: "Order by size, not by category", text: "The placement order <em>is</em> the method. Sorting props by type feels tidier in the outliner and produces a flat street, because nothing was ever placed against something larger." },
+      { title: "Still life is the actual reference", text: "Large form, a medium form supporting it, a small form further away. If a view feels flat, check whether it has that hierarchy before adding another prop." },
+      { title: "Two shop types cover a street", text: "Mid-block and corner. The mid-block width is dictated by column spacing — measure it before you model anything, or the whole type has to be rebuilt." },
+      { title: "Wear goes where hands go", text: "Wear on surfaces nobody touches reads as dirt. Put it on thresholds, counters and handrails, and leave the rest clean." }
+    ],
+
+    pitfalls: [
+      { title: "Dressing by category", text: "All the signage, then all the crates, and everything ends up at the same visual weight because nothing was ever measured against a larger neighbour." },
+      { title: "Every shop stocked the same", text: "It reads as a showroom rather than a street. Deliberately under-fill a couple of units so the eye has somewhere to rest." },
+      { title: "Evenly distributed background blocks", text: "Real skylines cluster. An even row of towers at the same distance reads as a fence, not a city." },
+      { title: "Confusing clutter with detail", text: "More props is not more depth. Depth comes from the size hierarchy; clutter only raises the noise floor and makes the composition harder to read." }
+    ],
+
+    checkpoint: "The street is dressed large-to-small: the large band reads as a composition on its own from every camera in the sheet, the medium band supports it rather than spreading evenly, and the small band gives the eye a landing point in each view. Shops are fitted out in both mid-block and corner types, with at least a couple deliberately under-filled. Distant blocks cluster around a tallest silhouette with readable gaps between them. Signs of use sit only where a body would touch, the scene reads as inhabited from the walking route, and the composition is frozen for step 06."
+  });
+})(window.WIKI);
+
+/* ---------- step-6.js ---------- */
+/* ============================================================================
+   step-6.js — 06 Visual Unification & Atmosphere Development
+   ========================================================================== */
+(function (W) {
+  W.steps.push({
+    id: "step-6",
+    n: "06",
     title: "Visual Unification & Atmosphere Development",
     short: "Unify",
     en: "Materials · Light rig · LUT · Atmosphere",
@@ -3108,14 +3305,14 @@ Then flag the two details in the reference that would be hardest to reproduce in
   });
 })(window.WIKI);
 
-/* ---------- step-6.js ---------- */
+/* ---------- step-7.js ---------- */
 /* ============================================================================
-   step-6.js — 06 Workflow Documentation & Final Presentation
+   step-7.js — 07 Workflow Documentation & Final Presentation
    ========================================================================== */
 (function (W) {
   W.steps.push({
-    id: "step-6",
-    n: "06",
+    id: "step-7",
+    n: "07",
     title: "Workflow Documentation & Final Presentation",
     short: "Delivery",
     en: "Document · Storyboard · Render · Publish",
@@ -3640,7 +3837,14 @@ Tone: professional, concrete, no hype, no inflated adjectives.`
   }
 
   function renderPrompts(step) {
-    if (!step.prompts || !step.prompts.length) return "";
+    if (!step.prompts || !step.prompts.length) {
+      // Some stages are entirely manual — set dressing is the first one. A silent
+      // gap where every other step has a library reads as a broken page, so the
+      // absence gets stated rather than left blank.
+      if (!step.noPromptNote) return "";
+      return '<h3 class="sec"><span class="tagn">MANUAL</span>No prompt library</h3>' +
+        '<div class="no-prompt"><p>' + prose(step.noPromptNote) + "</p></div>";
+    }
     return '<h3 class="sec"><span class="tagn">' + step.prompts.length + ' BLOCKS</span>Prompt library · click A–E to copy</h3>' +
       step.prompts.map(function (p) {
         var first = p.variants[0];
@@ -3803,7 +4007,9 @@ Tone: professional, concrete, no hype, no inflated adjectives.`
           '<span class="meta">' + I.clock + "Est. <b>" + esc(step.duration) + "</b></span>" +
           '<span class="meta">' + I.gauge + "Difficulty <b>" + esc(step.difficulty) + "</b></span>" +
           '<span class="meta">' + I.layers + "Sub-steps <b>" + (step.substeps || []).length + "</b></span>" +
-          '<span class="meta">' + I.key + "Prompts <b>" + (step.prompts || []).length + "</b></span>" +
+          ((step.prompts || []).length
+            ? '<span class="meta">' + I.key + "Prompts <b>" + step.prompts.length + "</b></span>"
+            : '<span class="meta">' + I.key + "Manual stage</span>") +
         "</div>" +
         renderIO(step) +
       "</div>" +
