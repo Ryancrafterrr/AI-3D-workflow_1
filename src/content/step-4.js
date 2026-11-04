@@ -1,20 +1,20 @@
 /* ============================================================================
-   step-4.js — 04 Environment Dressing & Scene Composition
+   step-4.js — 04 Components Assembly & Facade Variation
    Source: Final Project Process Book §04; Sprint 2 POC §7.1–7.2 (scope adjustment)
    ========================================================================== */
 (function (W) {
   W.steps.push({
     id: "step-4",
     n: "04",
-    title: "Environment Dressing & Scene Composition",
-    short: "Dressing",
+    title: "Components Assembly & Facade Variation",
+    short: "Assembly",
     en: "Blueprint · Assembly order · Facade variation · Freeze",
-    stage: "SET DRESSING",
+    stage: "ASSEMBLY",
     purpose: "Assemble the inspected components into buildings inside a Blueprint, place those buildings into the blockout level, and manage variety deliberately — because buildings are the most-reused assets in an urban scene, and the cheapest way to look rich is <strong>editing what you already have</strong> rather than generating more.",
-    duration: "2–4 weeks (schedule slot: weeks 5–7)",
+    duration: "1–2 weeks (schedule slot: weeks 5–6)",
     difficulty: "Medium-high — judgement about variety and repetition dominates",
     inputs: ["Walkable UE5 greybox with frozen massing", "Inspected Tripo components in the asset library", "Component list and storey heights from step 02"],
-    outputs: ["Reusable building Blueprints", "Dressed street with the repetition edited out", "Camera sheet and a frozen composition"],
+    outputs: ["Reusable building Blueprints", "Assembled street with the repetition edited out", "Camera sheet and a frozen composition"],
     tools: ["Unreal Engine 5 (Blueprints, placement)", "Material instances (colour variation)", "PureRef for composition reference"],
     pipe: { out: "Assembled buildings + dressed street", tool: "UE5 Blueprint" },
 
@@ -76,7 +76,7 @@
           "Compose the intersection and the three-to-four storefront units as the focus of the block",
           "Check the hero view and the walkthrough route against the step 01 concept frame",
           "Capture a camera sheet: hero view, walking views, and the compositions worth defending",
-          "Freeze the layout and the Blueprint parameters; hand off to step 05 for unification"
+          "Freeze the layout and the Blueprint parameters; hand off to step 05 for set dressing"
         ]
       }
     ],
@@ -191,11 +191,9 @@ Answer in concrete numbers and named edits.`
       },
       {
         type: "video",
-        title: "Step 04 dressing walkthrough (to be recorded)",
-        caption: "Screen recording slot: Blueprint assembly, placement into the blockout, the repetition-edit pass and the camera sheet. Narrated if possible — the editing decisions are the part worth hearing explained.",
+        title: "Step 04 dressing walkthrough (not recorded yet)",
+        caption: "Planned: Blueprint assembly, placement into the blockout, the repetition-edit pass and the camera sheet. Narrated if possible — the editing decisions are the part worth hearing explained.",
         src: "assets/video/step4-dressing-walkthrough.mp4",
-        poster: "assets/video/step4-dressing-walkthrough.jpg",
-        dur: "—",
         file: "assets/video/step4-dressing-walkthrough.mp4",
         wide: true
       }

@@ -228,7 +228,14 @@
   }
 
   function renderPrompts(step) {
-    if (!step.prompts || !step.prompts.length) return "";
+    if (!step.prompts || !step.prompts.length) {
+      // Some stages are entirely manual — set dressing is the first one. A silent
+      // gap where every other step has a library reads as a broken page, so the
+      // absence gets stated rather than left blank.
+      if (!step.noPromptNote) return "";
+      return '<h3 class="sec"><span class="tagn">MANUAL</span>No prompt library</h3>' +
+        '<div class="no-prompt"><p>' + prose(step.noPromptNote) + "</p></div>";
+    }
     return '<h3 class="sec"><span class="tagn">' + step.prompts.length + ' BLOCKS</span>Prompt library · click A–E to copy</h3>' +
       step.prompts.map(function (p) {
         var first = p.variants[0];
@@ -260,45 +267,123 @@
 
   function renderMedia(step) {
     if (!step.media || !step.media.length) return "";
-    return '<h3 class="sec"><span class="tagn">' + step.media.length + ' ASSETS</span>Video · Animated GIF · Stills</h3>' +
+    return '<h3 class="sec"><span class="tagn">' + step.media.length + ' ASSETS</span>Video · YouTube · Animated GIF · Stills</h3>' +
       '<div class="media-grid">' + step.media.map(function (m, i) {
         return mediaCard(m, step.id + "-m" + i);
       }).join("") + "</div>";
   }
 
+  /* --------------------------------------------------------------- youtube */
+  // A `youtube` media entry streams through the YouTube embed instead of serving
+  // a file out of assets/, so the repository is not the thing carrying the
+  // bandwidth. The entry carries `yt`, which may be a bare video id or any of
+  // the common YouTube URL shapes — a link can be pasted straight out of the
+  // browser's address bar.
+  function ytId(v) {
+    if (!v) return "";
+    var s = String(v).trim();
+    var m = s.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/|\/live\/)([A-Za-z0-9_-]{6,})/);
+    if (m) return m[1];
+    return /^[A-Za-z0-9_-]{6,}$/.test(s) ? s : "";
+  }
+
+  // nocookie host: no tracking cookie is dropped until playback actually starts
+  var YT_ALLOW = "accelerometer; autoplay; clipboard-write; encrypted-media; " +
+    "gyroscope; picture-in-picture; web-share";
+
+  function ytEmbed(id, autoplay) {
+    // www.youtube.com rather than the nocookie host: this matches the embed
+    // snippet YouTube itself hands out, which keeps the request identical to a
+    // known-good one.
+    return "https://www.youtube.com/embed/" + id +
+      "?rel=0&modestbranding=1&playsinline=1" + (autoplay ? "&autoplay=1" : "");
+  }
+
+  // YouTube refuses to play an embed that arrives without a Referer and reports
+  // it as error 153, "video player configuration error" — its terms require the
+  // embedding page to identify itself. The referrerpolicy attribute below is what
+  // makes the browser send one, so it is load-bearing, not decorative.
+  //
+  // It is also why this cannot be exercised from file://: a file:// document
+  // sends no Referer at all, so the player shows 153 when the page is opened
+  // straight off disk and plays once it is served over http/https. That is
+  // YouTube's rule, not a bug in this page.
+  function ytIframe(id, autoplay) {
+    return '<iframe src="' + esc(ytEmbed(id, autoplay)) + '" title="YouTube video player" ' +
+      'referrerpolicy="strict-origin-when-cross-origin" allow="' + YT_ALLOW + '" allowfullscreen></iframe>';
+  }
+
+  // The facade only: a thumbnail plus a play glyph. The iframe arrives on click,
+  // because every embedded player pulls roughly a megabyte of JS and a page with
+  // half a dozen eager iframes crawls while they all boot at once.
+  function ytFrame(id) {
+    if (!id) {
+      return '<div class="yt is-off">' + I.alert +
+        "<b>YouTube link pending</b><span>Set <code>yt</code> on this entry</span></div>";
+    }
+    return '<div class="yt" data-yt="' + esc(id) + '">' +
+      '<img class="yt-thumb" alt="" data-yt-thumb src="https://i.ytimg.com/vi/' + esc(id) + '/maxresdefault.jpg">' +
+      '<span class="yt-play">' + I.play + "</span>" +
+    "</div>";
+  }
+
   function mediaCard(m, uid) {
     var isVideo = m.type === "video";
-    var badgeTxt = isVideo ? "VIDEO" : (m.type === "gif" ? "GIF · LOOP" : "IMAGE");
-    var bIcon = isVideo ? I.film : (m.type === "gif" ? I.gif : I.img);
-    var frame;
+    var isYT = m.type === "youtube";
+    var isPlayer = isVideo || isYT;
+    var yid = isYT ? ytId(m.yt) : "";
+    var badgeTxt = isVideo ? "VIDEO" : isYT ? "YOUTUBE" : (m.type === "gif" ? "GIF · LOOP" : "IMAGE");
+    var frame, openBtn = "";
     if (isVideo) {
-      frame = '<video data-media playsinline preload="metadata"' +
-        (m.poster ? ' poster="' + esc(m.poster) + '"' : "") + ">" +
-        '<source src="' + esc(m.src) + '" type="video/mp4">' +
+      // A video card is a player, not a button. Native controls need the click
+      // surface, so the card cannot be a <button> (nested interactive content is
+      // invalid, and the button would swallow play / pause / scrub). "Open
+      // larger" therefore moves out of the frame into its own button in the
+      // caption row — an overlay across the frame would sit on the control bar.
+      frame = '<video data-media controls preload="metadata" playsinline' +
+        (m.poster ? ' poster="' + esc(m.poster) + '"' : "") +
+        ' src="' + esc(m.src) + '">' +
+        "Your browser cannot play this video." +
       "</video>";
+      openBtn = '<button class="open-lg" data-open="' + uid + '">' + I.expand + "Open larger</button>";
+    } else if (isYT) {
+      // Same reasoning as the video card: this is a player surface, so it is a
+      // <div> with its own click target rather than a <button>.
+      frame = ytFrame(yid);
+      openBtn = '<button class="open-lg" data-open="' + uid + '">' + I.expand + "Open larger</button>";
     } else {
       frame = '<img class="thumb" data-media alt="' + esc(m.title) + '" src="' + esc(m.src) + '">';
     }
-    return '<button class="media' + (m.wide ? " wide" : "") + '" data-open="' + uid + '" data-title="' + esc(m.title) +
-      '" data-cap="' + esc(m.caption || "") + '" data-src="' + esc(m.src) + '" data-poster="' + esc(m.poster || "") +
-      '" data-type="' + esc(m.type) + '" data-file="' + esc(m.file || m.src) + '">' +
+    var shell = isPlayer ? "div" : "button";
+    var fileLabel = m.file || m.src || (yid ? "youtube.com/watch?v=" + yid : "");
+    return "<" + shell + ' class="media' + (isVideo ? " is-video" : isYT ? " is-yt" : "") + (m.wide ? " wide" : "") + '"' +
+      (isPlayer ? "" : ' data-open="' + uid + '"') +
+      ' data-title="' + esc(m.title) + '" data-cap="' + esc(m.caption || "") +
+      '" data-src="' + esc(m.src || "") + '" data-poster="' + esc(m.poster || "") +
+      '" data-yt="' + esc(yid) + '"' +
+      ' data-type="' + esc(m.type) + '" data-file="' + esc(fileLabel) + '">' +
       '<div class="frame" data-frame>' + frame +
-        '<span class="badge-tl ' + (isVideo ? "video" : m.type === "gif" ? "gif" : "") + '">' + badgeTxt + "</span>" +
-        (m.dur ? '<span class="dur">' + esc(m.dur) + "</span>" : "") +
-        '<span class="expand"><span>' + I.expand + "Open larger</span></span>" +
+        '<span class="badge-tl ' + (isPlayer ? "video" : m.type === "gif" ? "gif" : "") + '">' + badgeTxt + "</span>" +
+        (m.dur ? '<span class="dur' + (isPlayer ? " tr" : "") + '">' + esc(m.dur) + "</span>" : "") +
+        (isPlayer ? "" : '<span class="expand"><span>' + I.expand + "Open larger</span></span>") +
       "</div>" +
       '<div class="cap"><h5>' + esc(m.title) + "</h5>" +
         (m.caption ? "<p>" + esc(m.caption) + "</p>" : "") +
-        '<span class="file">' + esc(m.file || m.src) + "</span>" +
-      "</div></button>";
+        openBtn +
+        (fileLabel ? '<span class="file">' + esc(fileLabel) + "</span>" : "") +
+      "</div></" + shell + ">";
   }
 
   function placeholderHTML(m, file) {
     var isVideo = m === "video";
-    var label = isVideo ? "Video slot" : (m === "gif" ? "Animated GIF slot" : "Image slot");
-    return '<div class="slot"><div class="in">' + (isVideo ? I.play : m === "gif" ? I.gif : I.img) +
+    var isYT = m === "youtube";
+    var label = isVideo ? "Video slot" : isYT ? "YouTube slot" : (m === "gif" ? "Animated GIF slot" : "Image slot");
+    var hint = isYT
+      ? "Paste the YouTube link into <code>yt</code> on this entry"
+      : "Drop the real file at this path and it renders here";
+    return '<div class="slot"><div class="in">' + (isVideo || isYT ? I.play : m === "gif" ? I.gif : I.img) +
       "<b>" + label + "</b><code>" + esc(file) + "</code>" +
-      "<span>Drop the real file at this path and it renders here</span></div></div>";
+      "<span>" + hint + "</span></div></div>";
   }
 
   function renderStep(step, idx, total) {
@@ -313,7 +398,9 @@
           '<span class="meta">' + I.clock + "Est. <b>" + esc(step.duration) + "</b></span>" +
           '<span class="meta">' + I.gauge + "Difficulty <b>" + esc(step.difficulty) + "</b></span>" +
           '<span class="meta">' + I.layers + "Sub-steps <b>" + (step.substeps || []).length + "</b></span>" +
-          '<span class="meta">' + I.key + "Prompts <b>" + (step.prompts || []).length + "</b></span>" +
+          ((step.prompts || []).length
+            ? '<span class="meta">' + I.key + "Prompts <b>" + step.prompts.length + "</b></span>"
+            : '<span class="meta">' + I.key + "Manual stage</span>") +
         "</div>" +
         renderIO(step) +
       "</div>" +
@@ -560,7 +647,17 @@
     var lb = $("#lightbox");
     var stage;
     if (type === "video") {
-      stage = '<video controls autoplay playsinline' + (poster ? ' poster="' + esc(poster) + '"' : "") + '><source src="' + esc(src) + '" type="video/mp4"></video>';
+      // No `autoplay`: browsers block autoplay-with-sound, so any video that has
+      // an audio track would just sit on its first frame anyway. The user presses
+      // play — which is also what the in-place player in the grid does.
+      stage = '<video controls preload="metadata" playsinline' + (poster ? ' poster="' + esc(poster) + '"' : "") + ' src="' + esc(src) + '"></video>';
+    } else if (type === "youtube") {
+      // `autoplay` is fine here: opening the lightbox was itself a click, so the
+      // embed starts without a second prompt.
+      var yid = card.getAttribute("data-yt") || ytId(src);
+      stage = yid
+        ? '<div class="lb-yt">' + ytIframe(yid, true) + "</div>"
+        : placeholderHTML("youtube", card.getAttribute("data-file") || "");
     } else {
       stage = '<img src="' + esc(src) + '" alt="">';
     }
@@ -568,12 +665,14 @@
     $("#lb-title").textContent = card.getAttribute("data-title") || "";
     $("#lb-cap").textContent = card.getAttribute("data-cap") || "";
     $("#lb-file").textContent = card.getAttribute("data-file") || src;
-    $("#lb-meta").innerHTML = '<span class="badge">' + (type === "video" ? "VIDEO" : type === "gif" ? "ANIMATED GIF" : "IMAGE") + "</span>" +
-      '<span class="badge">' + esc(wSizeLabel(src)) + "</span>";
+    $("#lb-meta").innerHTML = '<span class="badge">' +
+      (type === "video" ? "VIDEO" : type === "youtube" ? "YOUTUBE" : type === "gif" ? "ANIMATED GIF" : "IMAGE") + "</span>" +
+      '<span class="badge">' + esc(wSizeLabel(src, type)) + "</span>";
     lb.classList.add("on");
     document.body.style.overflow = "hidden";
   }
-  function wSizeLabel(src) {
+  function wSizeLabel(src, type) {
+    if (type === "youtube") return "EMBEDDED · YouTube";
     var ext = (src.split(".").pop() || "").toUpperCase();
     if (ext === "GIF") return "ANIMATED · LOOP";
     if (ext === "MP4") return "H.264 · MP4";
@@ -722,15 +821,32 @@
       }
     });
 
-    // media cards
+    // media cards — stills and GIFs open in the lightbox from anywhere on the
+    // card; a video card carries its own native controls, so only its explicit
+    // "Open larger" button opens the lightbox (the rest of the card plays).
     document.addEventListener("click", function (e) {
-      var card = e.target.closest(".media");
+      var trigger = e.target.closest("[data-open]");
+      if (!trigger) return;
+      var card = trigger.closest(".media");
       if (!card) return;
       if (card.getAttribute("data-missing") === "1") {
         toast(I.alert + " <span>Nothing at this slot yet · add <b class=\"mono\">" + esc(card.getAttribute("data-file")) + "</b></span>", 3200);
         return;
       }
       openLightbox(card);
+    });
+
+    // A YouTube card swaps its facade for the real player in place. Injecting the
+    // iframe here, on click, rather than at render time is what keeps the page
+    // light: each embedded player is roughly a megabyte of JS.
+    document.addEventListener("click", function (e) {
+      var facade = e.target.closest(".yt");
+      if (!facade || facade.classList.contains("is-off")) return;
+      if (facade.getAttribute("data-live") === "1") return;   // already swapped in
+      var id = facade.getAttribute("data-yt");
+      if (!id) return;
+      facade.setAttribute("data-live", "1");
+      facade.innerHTML = ytIframe(id, true);
     });
 
     // accordion
@@ -815,12 +931,45 @@
         }
       }
 
+      // A youtube card has nothing local to probe: its only "missing" state is an
+      // entry with no id, which already renders its own pending panel. The one
+      // thing worth handling is the thumbnail — maxresdefault does not exist for
+      // every upload (and i.ytimg.com is unreachable from behind a block), so step
+      // down to hqdefault, then hide the image and let the gradient underneath
+      // stand in. Never a broken-image glyph.
+      if (type === "youtube") {
+        if (!card.getAttribute("data-yt")) return;
+        var thumb = $("[data-yt-thumb]", frame);
+        if (thumb) {
+          thumb.addEventListener("error", function () {
+            if (!thumb.getAttribute("data-hq")) {
+              thumb.setAttribute("data-hq", "1");
+              thumb.src = "https://i.ytimg.com/vi/" + card.getAttribute("data-yt") + "/hqdefault.jpg";
+            } else {
+              thumb.setAttribute("data-broken", "1");
+            }
+          });
+        }
+        return;
+      }
+
       if (!el) { fail(); return; }
       if (type === "video") {
+        // `src` sits on the <video> itself rather than a <source> child on
+        // purpose: a failed <source> reports its error on the <source> element
+        // and leaves the <video> at NETWORK_NO_SOURCE, so a listener here would
+        // never hear about a missing file. With `src`, a 404 (or an HTML error
+        // page served in its place) fires `error` on the element, so the swap to
+        // a placeholder is immediate and reliable.
+        //
+        // No timeout fallback on purpose. The old 2.6 s "no metadata = missing"
+        // guess deleted the player from any walkthrough that was merely slow to
+        // start — and these files are up to 20 MB, where `preload="metadata"`
+        // still has to fetch the moov atom first. Trust the error event.
         var settled = false;
         el.addEventListener("loadedmetadata", function () { settled = true; });
         el.addEventListener("error", function () { if (!settled) fail(); });
-        setTimeout(function () { if (!settled) fail(); }, 2600);
+        el.addEventListener("loadeddata", function () { settled = true; });
       } else {
         el.addEventListener("error", fail);
         if (el.complete && el.naturalWidth === 0) fail();

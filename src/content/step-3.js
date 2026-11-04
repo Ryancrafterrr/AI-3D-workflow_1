@@ -273,6 +273,7 @@ Style: stylized PBR, semi-realistic materials with normal map effects, hand-pain
 4. PERSPECTIVE — are any components drawn in a perspective that would be wrong in 3D? Be specific about which.
 5. AI ARTEFACTS — any blurred, over-generalised or physically impossible surfaces that would be carried into the geometry.
 6. COUNT — how many components are actually visible, and does that match what I supplied?
+7. SPECKLE — look at the darkest areas. Is there isolated near-black speckle or blotchy noise in the shadows? It reads as texture at full size and as a defect once modelled. Say where, not just whether.
 
 For each problem give the fix at the sheet level (re-crop, re-space, re-generate). If the sheet is usable, say so plainly. (Gemini 3.1 Flash Lite / GPT)`
           },
@@ -293,6 +294,22 @@ Give me a verdict of ACCEPT, ACCEPT WITH NOTES, or REJECT, then justify it on fo
 4. UV — is there visible stretching or overlap, and would it matter at the intended texel density?
 
 State explicitly what would have to change in the reference sheet for a re-run to do better. Do not comment on aesthetic preference.`
+          },
+          {
+            key: "C",
+            name: "Deep-zoom speckle sweep (manual)",
+            tag: "QA",
+            use: "Before any sheet goes to Tripo — especially anything night-lit or low-key",
+            out: "A pass / fail on image quality, independent of what the sheet depicts",
+            note: "Not a prompt: this one is done by eye. Speckle is invisible at fit-to-screen and no text model reliably finds it, so the procedure below <strong>is</strong> the check. Run it after the audit above, not instead of it.",
+            text: `1. Open the sheet at 100%, then at 200%. Never judge this at fit-to-screen.
+2. Walk the darkest third of the image in overlapping tiles — about six tiles for a 2048 px sheet.
+3. Look for isolated pixels or 2–4 px clusters that are near-black (RGB under ~10) sitting on a surface that should read mid-tone.
+4. Check the transition zones first: where shadow meets object, and where the arcade interior meets the street. That is where the artefact concentrates.
+5. If the same speckle appears in the source photograph, it is inherited — fix the crop, not the render.
+6. Fail the sheet if the speckle is visible at 100% on a surface the camera will see. A model built from it reproduces the speckle as geometry or as baked texture noise, and it gets more obvious at every mip level.
+
+Night-lit and low-key sheets fail this most often: the model has the least information in shadow and the most freedom to fill it with near-black.`
           }
         ]
       }
@@ -426,13 +443,11 @@ State explicitly what would have to change in the reference sheet for a re-run t
         file: "assets/images/step3-topology-stats.jpg"
       },
       {
-        type: "video",
-        title: "Step 03 decomposition workflow (to be recorded)",
-        caption: "Screen recording slot: style conversion → building separation → component breakdown → cropping and grouping → Tripo upload. Include the click path; this is the step members will follow most closely.",
-        src: "assets/video/step3-decompose-workflow.mp4",
-        poster: "assets/video/step3-decompose-workflow.jpg",
-        dur: "—",
-        file: "assets/video/step3-decompose-workflow.mp4",
+        type: "youtube",
+        title: "Step 03 decomposition workflow · the click path",
+        caption: "Style conversion → building separation → component breakdown → cropping and grouping → Tripo upload, followed screen-by-screen, because this is the step members reproduce most directly. Streams from YouTube in 0:56 — use the player's own controls, or open it larger.",
+        yt: "https://youtu.be/q0Z8bKxi16M",
+        dur: "0:56",
         wide: true
       }
     ],
@@ -444,15 +459,17 @@ State explicitly what would have to change in the reference sheet for a re-run t
       { title: "Part count is a real lever, not a promise", text: "The model will not deliver exactly 24 or 32 unique parts — but the number reliably shifts both the quantity and the size of what comes back. Raise it when parts arrive oversized." },
       { title: "Strip stray numerals from prompts", text: "The “8” in “8K resolution” was read as a part count and produced eight wall sections from four types. Remove any number that could be mistaken for a quantity." },
       { title: "Audit the reference before spending credits", text: "Tripo reproduces the reference literally, including its flaws. A blurred, over-generalised reference becomes blurred, over-generalised geometry. Check the sheet first — it is the cheapest QA in the step." },
-      { title: "Reject at import, not after cleanup", text: "UE import is the last cheap place to say no. If the silhouette is wrong or the UVs are unusable, fix the reference and re-run rather than starting manual cleanup on a model you will replace anyway." }
+      { title: "Reject at import, not after cleanup", text: "UE import is the last cheap place to say no. If the silhouette is wrong or the UVs are unusable, fix the reference and re-run rather than starting manual cleanup on a model you will replace anyway." },
+      { title: "Zoom before you spend credits", text: "Speckle is invisible at fit-to-screen. Two minutes at 200% on the dark third of a sheet is cheaper than a Tripo run plus the retexture that follows it." },
     ],
     pitfalls: [
       { title: "Expecting the model to respect 'no overlap'", text: "It does not, in either pass. Both batches came back with components overlapping each other despite the constraint being stated explicitly. Verify spacing by eye every time." },
       { title: "Believing the component sheet matches the building", text: "Almost every model understands “break the building into components” and almost none executes it faithfully — the parts will not match the original, and parts that never existed will appear." },
       { title: "Letting reference images bring their own props", text: "The screenshot-reference approach for style transfer imported plants from the reference into a scene that has none. Name what may be borrowed and what may not." },
       { title: "Asking AI for three-view projections too early", text: "AI struggles to interpret irregular objects in 3D space, so three-views introduce errors and invented elements. It is not required before decomposition — skip it and crop components instead." },
-      { title: "Treating generation as the risk", text: "Generation was the most reliable stage, twice, with one iteration. Decomposition is the unreliable one and it absorbed the most iterations. Put your buffer where the risk actually is." }
+      { title: "Treating generation as the risk", text: "Generation was the most reliable stage, twice, with one iteration. Decomposition is the unreliable one and it absorbed the most iterations. Put your buffer where the risk actually is." },
+      { title: "Sending a night-lit sheet straight to Tripo", text: "A low-key image gives the model the most room to fill shadow with near-black pixels. The artefact survives into geometry and texture and gets more obvious at every mip level — so the later you find it, the more of the asset you redo." },
     ],
-    checkpoint: "The asset library holds Tripo-generated components that have each been inspected in Unreal Engine against their source reference and explicitly accepted on silhouette, material, topology and UV. You have the style-transfer prompt that reproduces the target look, the grouped reference sheets that produced the models, and a written record of which components were rejected and why."
+    checkpoint: "The asset library holds Tripo-generated components that have each been inspected in Unreal Engine against their source reference and explicitly accepted on silhouette, material, topology and UV. Every reference sheet was swept at 200% for dark-area speckle before it was spent on a Tripo run, and any sheet that failed was re-cropped or re-rendered rather than cleaned up afterwards. You have the style-transfer prompt that reproduces the target look, the grouped reference sheets that produced the models, and a written record of which components were rejected and why."
   });
 })(window.WIKI);

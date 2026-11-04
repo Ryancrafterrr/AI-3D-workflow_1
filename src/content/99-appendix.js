@@ -15,7 +15,7 @@
         { name: "Gemini 3.1 Flash Lite", stage: "STEP 01 · 03", use: "Text model, used for describing target-game material style in game-art terminology and for auditing reference sheets before they are uploaded to a 3D platform." },
         { name: "Running Hub", stage: "STEP 01 (dropped)", use: "Batch image generation. Tried first and rejected: images in the same batch share a style, so one style drift fails the entire run however good the best output looks." },
         { name: "Tripo 3D", stage: "STEP 03", use: "Model generation, retopology, UV unwrapping and texturing in a single pass. Auto-generates multi-view references from the upload. Logged as the cheapest, most reliable stage in the pipeline." },
-        { name: "Unreal Engine 5", stage: "STEP 02 · 03 · 04 · 05 · 06", use: "Reference planes with a parameterised master material, blockout, import and inspection of generated models, Blueprint assembly, lighting and delivery." },
+        { name: "Unreal Engine 5", stage: "STEP 02–07", use: "Reference planes with a parameterised master material, blockout, import and inspection of generated models, Blueprint assembly, lighting and delivery." },
         { name: "Reference-plane master material", stage: "STEP 02", use: "A project-side asset rather than a product: base colour and opacity exposed as parameters, colour texture multiplied by a scalar for brightness, one instance per reference plane." }
       ]
     },
@@ -75,7 +75,7 @@
 
     manifest: {
       title: "Media manifest (drop the file at the path and it appears)",
-      lead: "Every still below is a real figure extracted from the two source documents by <code>tools/extract_canva_images.py</code>. The video slots are still open — they are the recordings still to be made. Put a file at the matching path under <code>assets/</code> (or edit <code>src</code> in <code>content/*.js</code>) and the page swaps out its placeholder state automatically, with no CSS or logic changes.",
+      lead: "Every still below is a real figure extracted from the two source documents by <code>tools/extract_canva_images.py</code>. The three walkthrough recordings for steps 01–03 stream from YouTube instead of being served out of this repository, so a long recording no longer has to fit inside the repo. Each is embedded as a click-to-load facade — the player itself is only built when a visitor presses play. The remaining video slots are still open: put a file at the matching path under <code>assets/</code> (or set <code>yt</code> / <code>src</code> in <code>content/*.js</code>) and the page swaps out its placeholder state automatically, with no CSS or logic changes.",
       cols: ["Step", "File path", "Type", "Source / purpose"],
       rows: [
         ["STEP 01", "assets/images/step1-sketch-sheet.jpg", "Still", "Process Book §01 — three hand-drawn concept sketches (Procreate)"],
@@ -83,11 +83,11 @@
         ["STEP 01", "assets/images/step1-runninghub-batch.jpg", "Still", "Process Book §01 — Running Hub batch view, the tool that was dropped"],
         ["STEP 01", "assets/images/step1-concept-evidence.jpg", "Still", "POC 6.1.2 — evidence-pass concept art and its references"],
         ["STEP 01", "assets/images/step1-sketch-evidence.jpg", "Still", "POC 6.1.1 — evidence-pass hand-drawn sketch"],
-        ["STEP 01", "assets/video/step1-full-walkthrough.mp4", "Video", "Open slot · Procreate → TapNow → selection · suggest 1080p60 / ≤15 min"],
+        ["STEP 01", "youtu.be/7zcNvTVmT8I", "Video", "Embedded from YouTube · 0:28 · click-to-load"],
         ["STEP 02", "assets/images/step2-reference-plane-ue.jpg", "Still", "Process Book §02 — concept art as a reference plane in UE"],
         ["STEP 02", "assets/images/step2-refplane-material.jpg", "Still", "Process Book §02 — reference-plane master material graph"],
         ["STEP 02", "assets/images/step2-blockout-pass.jpg", "Still", "Process Book §02 — blockout pass and adjustments, four stages"],
-        ["STEP 02", "assets/video/step2-blockout-timelapse.mp4", "Video", "Open slot · reference plane → massing → scale correction · silent is fine"],
+        ["STEP 02", "youtu.be/pdP_gEW6iEQ", "Video", "Embedded from YouTube · 1:20 · click-to-load"],
         ["STEP 03", "assets/images/step3-style-variants.jpg", "Still", "Process Book §03 — the two style-transfer methods that failed"],
         ["STEP 03", "assets/images/step3-style-description.jpg", "Still", "Process Book §03 — asking the AI to describe the target style"],
         ["STEP 03", "assets/images/step3-style-transfer-result.jpg", "Still", "Process Book §03 — style transfer after keyword compression"],
@@ -106,15 +106,17 @@
         ["STEP 03", "assets/images/step3-tripo-banner.jpg", "Still", "POC 6.1.7 — evidence-pass model from four angles"],
         ["STEP 03", "assets/images/step3-ue-inspection.jpg", "Still", "POC 5.2.8 — the model inspected in Unreal Engine"],
         ["STEP 03", "assets/images/step3-topology-stats.jpg", "Still", "POC 5.2.8 — accepted topology: 9,458 faces / 9,198 vertices"],
-        ["STEP 03", "assets/video/step3-decompose-workflow.mp4", "Video", "Open slot · the 6-stage asset pipeline, with the click path"],
+        ["STEP 03", "youtu.be/q0Z8bKxi16M", "Video", "Embedded from YouTube · 0:56 · click-to-load"],
         ["STEP 04", "assets/images/step4-building-blockout.jpg", "Still", "Process Book §04 — the building blocked out inside the assembly"],
         ["STEP 04", "assets/images/step4-components-assembly.jpg", "Still", "Process Book §04 — components assembled onto the building"],
-        ["STEP 04", "assets/video/step4-dressing-walkthrough.mp4", "Video", "Open slot · Blueprint assembly, placement, repetition edit · narrated"],
-        ["STEP 05", "assets/images/step5-atmosphere-variants.jpg", "Still", "Placeholder — waiting on the look-dev pass"],
-        ["STEP 05", "assets/video/step5-lookdev.mp4", "Video", "Placeholder — look-dev walkthrough"],
-        ["STEP 06", "assets/images/step6-hero-shot.jpg", "Still", "Placeholder — final hero shot"],
-        ["STEP 06", "assets/images/step6-doc-structure.jpg", "Still", "Placeholder — document structure"],
-        ["STEP 06", "assets/video/step6-final-cinematic.mp4", "Video", "Placeholder — final walkthrough film"]
+        ["STEP 04", "assets/video/step4-dressing-walkthrough.mp4", "Video", "Open slot · Blueprint assembly, facade variation, repetition edit · narrated"],
+        ["STEP 05", "assets/images/step5-store-set-dressing.jpg", "Still", "Process Book §05 — the size hierarchy in a fitted-out shop and in still-life studies"],
+        ["STEP 05", "assets/images/step5-distant-blocks.jpg", "Still", "Process Book §05 — distant blocks placed tallest-first"],
+        ["STEP 06", "assets/images/step5-atmosphere-variants.jpg", "Still", "Placeholder — waiting on the look-dev pass"],
+        ["STEP 06", "assets/video/step5-lookdev.mp4", "Video", "Placeholder — look-dev walkthrough"],
+        ["STEP 07", "assets/images/step6-hero-shot.jpg", "Still", "Placeholder — final hero shot"],
+        ["STEP 07", "assets/images/step6-doc-structure.jpg", "Still", "Placeholder — document structure"],
+        ["STEP 07", "assets/video/step6-final-cinematic.mp4", "Video", "Placeholder — final walkthrough film"]
       ]
     },
 
@@ -122,11 +124,11 @@
       title: "Frequently asked questions",
       items: [
         {
-          q: "Where did the content in steps 01–04 come from?",
-          a: "From two working documents: the <strong>Final Project Process Book</strong> (sections 01–04) and <strong>Sprint 2 – Proof of Concept (A4 v3)</strong>, which logs all eight pipeline stages across a test pass and an evidence pass. The text is a write-up of what those documents record; the figures are cropped out of them by <code>tools/extract_canva_images.py</code> so they can be re-extracted whenever the source documents change."
+          q: "Where did the content in steps 01–05 come from?",
+          a: "From two working documents: the <strong>Final Project Process Book</strong> (sections 01–05) and <strong>Sprint 2 – Proof of Concept (A4 v3)</strong>, which logs all eight pipeline stages across a test pass and an evidence pass. The text is a write-up of what those documents record; the figures are cropped out of them by <code>tools/extract_canva_images.py</code> so they can be re-extracted whenever the source documents change."
         },
         {
-          q: "Why are steps 05 and 06 still placeholders?",
+          q: "Why are steps 06 and 07 still placeholders?",
           a: "Because the source documents do not cover them yet — the proof of concept stopped at asset generation, and look dev and delivery are Alpha and Beta work. They are left in their placeholder state deliberately rather than filled with invented content, so it stays obvious which parts of this wiki are backed by evidence and which are not."
         },
         {
@@ -139,7 +141,7 @@
         },
         {
           q: "How do I add a step or a section?",
-          a: "Content and code are fully separated. Copy <code>src/content/step-6.js</code> to <code>step-7.js</code>, change <code>id / n / title</code> and the content, then rebuild.<strong>The top jump bar, the left rail, the pipeline cards and the progress ring all pick up the new step automatically</strong> — because the pipeline cards are derived from each step's <code>pipe</code> field."
+          a: "Content and code are fully separated. Copy <code>src/content/step-7.js</code> to <code>step-8.js</code>, change <code>id / n / title</code> and the content, then rebuild.<strong>The top jump bar, the left rail, the pipeline cards and the progress ring all pick up the new step automatically</strong> — because the pipeline cards are derived from each step's <code>pipe</code> field."
         },
         {
           q: "Where is progress stored? Does it sync across devices?",
@@ -163,10 +165,14 @@
         { d: "2026-09-23", t: "v0.1.1 · full English pass", c: "All interface copy and step content converted to English. The left rail changed from a sticky element that faded in after the hero to a permanently fixed rail that stays pinned for the whole scroll." },
         { d: "2026-09-23", t: "v0.1.2 · navigation and scroll fixes", c: "Three real-input defects fixed: TOC jumps stopping at section boundaries, the left rail swallowing wheel events, and the search box dragging the page upward on every keystroke. Regression suite added as tools/qa_nav.mjs." },
         { d: "2026-09-30", t: "v0.2 · real content for steps 01–04", c: "Steps 01–04 rewritten from the Final Project Process Book and the Sprint 2 proof of concept, with the real prompt variants, the logged timings, iteration counts and generation costs, and 28 source figures extracted into assets/images/. Appendix gains a POC evidence block: the feasibility question, the four decision criteria, the full eight-stage log for both passes, and the resulting scope adjustment." },
-        { d: "—", t: "v0.3 · look dev and delivery (todo)", c: "Steps 05–06 are still placeholder content. They need the Alpha and Beta look-dev and delivery passes before they can be written up the same way." },
+        { d: "2026-10-14", t: "v0.2.1 · walkthrough videos play in place", c: "Steps 01–03 carry the real recordings (0:28 / 1:20 / 0:56). Video cards now render a native player inline instead of a poster that only played in the lightbox, so the progress bar and transport controls work without leaving the page. Three knock-on fixes came with it: the card shell had to stop being a &lt;button&gt;, the missing-file fallback had to switch from a 2.6 s timeout to the element's own error event (a slow 20 MB file was being mistaken for a missing one), and the duration badge moved off the control bar." },
+        { d: "2026-10-14", t: "v0.2.2 · walkthroughs stream from YouTube", c: "The step 01–03 recordings moved off the repository and onto YouTube, so a recording is no longer bounded by what fits in a repo. Each card renders a click-to-load facade — thumbnail plus play glyph — and the player iframe is injected only on click, because every embed is about a megabyte of JS; nothing is requested from YouTube until a visitor presses play. The thumbnail steps down maxresdefault → hqdefault → hidden rather than ever showing a broken image, embeds go through www.youtube.com/embed/ with rel=0, and an entry with no link yet renders a pending panel instead of an empty box. This is the one intentional external dependency in the build." },
+        { d: "2026-10-15", t: "v0.2.3 · error 153 fixed (missing Referer)", c: "The player refused to start with &quot;Error 153 · video player configuration error&quot;. Google documents the cause plainly: embedders must send the HTTP Referer header, and without it playback is blocked outright. The iframe now carries referrerpolicy=&quot;strict-origin-when-cross-origin&quot; so the browser actually sends one, and the embed host moved to www.youtube.com/embed/ to match the snippet YouTube itself generates. Worth knowing: a file:// document sends no Referer at all, so the cards will report 153 when index.html is opened straight off disk — that is YouTube's rule, and the page is fine once served over http(s)." },
+        { d: "2026-11-02", t: "v0.2.4 · set dressing becomes step 05 · speckle gate · prompt layers", c: "Two changes to the structure, two to the content. <strong>Set dressing is now its own step.</strong> Step 04 was called 'Environment Dressing &amp; Scene Composition' while every sub-step in it was assembly, so the step is now 'Components Assembly &amp; Facade Variation' and a new step 05 'Set Dressing &amp; Scene Composition' carries the Process Book's fifth chapter — placement by size rather than by category, the two shop types, distant blocks by height, and the signs of use. Everything after it renumbered to 06 and 07, which means every anchor id, the jump bar, the rail and the stored progress keys moved with it. <strong>A stage with no AI now says so.</strong> Step 05 renders an explicit 'no prompt library' panel and a 'Manual stage' meta tag instead of the silent gap it used to leave. <strong>Step 03 gained a speckle gate.</strong> The pre-flight audit on reference sheets now checks image quality as well as content — a seventh check for near-black speckle in the dark areas, plus a manual deep-zoom sweep — because Tripo reproduces the reference literally, so a speckled sheet becomes a speckled model and then baked texture noise. <strong>Step 01 gained the two-layer prompt idea</strong> and a fifth variant, E, that specifies the street bay by bay instead of describing a mood; it ships marked untested. Step 05 also gained the two Process Book figures for the size hierarchy and the skyline." },
+        { d: "—", t: "v0.3 · look dev and delivery (todo)", c: "Steps 06–07 are still placeholder content. They need the Alpha and Beta look-dev and delivery passes before they can be written up the same way." },
         { d: "—", t: "v0.4 · membership layer (todo)", c: "For tiered access, add a lightweight password gate or a real account layer; a bilingual build is also a straightforward addition from the separated content files." }
       ]
     },
-    note: "<b>About this page</b>: steps 01–04 and the POC block are written up from the project's own working documents, and the figures are extracted from them — nothing in those sections is invented. Steps 05–06 remain <strong>placeholder examples</strong> used to validate the information hierarchy and the interactions. Every media slot shows a placeholder state until a real file is present, and nothing errors. See the manifest above and <code>README.md</code> for the extraction workflow."
+    note: "<b>About this page</b>: steps 01–05 and the POC block are written up from the project's own working documents, and the figures are extracted from them — nothing in those sections is invented. Steps 06–07 remain <strong>placeholder examples</strong> used to validate the information hierarchy and the interactions. Every media slot shows a placeholder state until a real file is present, and nothing errors. See the manifest above and <code>README.md</code> for the extraction workflow."
   };
 })(window.WIKI);

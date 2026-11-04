@@ -1,248 +1,249 @@
 /* ============================================================================
-   step-6.js — 06 Workflow Documentation & Final Presentation
+   step-6.js — 06 Visual Unification & Atmosphere Development
    ========================================================================== */
 (function (W) {
   W.steps.push({
     id: "step-6",
     n: "06",
-    title: "Workflow Documentation & Final Presentation",
-    short: "Delivery",
-    en: "Document · Storyboard · Render · Publish",
-    stage: "DELIVERY",
-    purpose: "<strong>Document the whole AI-assisted environment art pipeline</strong> from concept generation through to the finished scene, then <strong>present</strong> that final environment through cinematic rendering and camera work. Whether the work gets seen is half decided here.",
-    duration: "2–4 days",
-    difficulty: "Medium — completeness and delivery are what count",
-    inputs: ["Raw process material (screenshots / recordings / parameters)", "The visually unified level", "Storyboard and camera design"],
-    outputs: ["A complete workflow document (text + images + video)", "The finished film (Sequence render)", "Stills and animated GIF set", "Archived project and parameter pack"],
-    tools: ["UE5 Sequencer / Movie Render Queue", "DaVinci Resolve / Premiere", "Photoshop", "This wiki system"],
-    pipe: { out: "Film + full process document", tool: "MRQ · Resolve" },
+    title: "Visual Unification & Atmosphere Development",
+    short: "Unify",
+    en: "Materials · Light rig · LUT · Atmosphere",
+    stage: "LOOK DEV",
+    purpose: "Bring assets from many different sources into one visual standard: <strong>material consistency</strong> (hue / saturation / roughness held inside a shared range), <strong>unified lighting</strong>, and <strong>post-processing with colour grading</strong>. This step decides whether the frame looks like one team made it.",
+    duration: "3–6 days",
+    difficulty: "High — controlled by numbers, not by feel",
+    inputs: ["Frozen level (dressing included)", "Material library", "Colour and lighting data from the references"],
+    outputs: ["Unified material standard and instances", "Primary light rig (Lumen settings)", "Post-processing setup (LUT / grade)", "2–3 atmosphere variants"],
+    tools: ["UE5 (Lumen / Post Process Volume)", "Substance Painter", "DaVinci Resolve / Photoshop (LUT authoring)"],
+    pipe: { out: "Unified look + atmosphere set", tool: "UE5 Look Dev" },
 
     intro: [
-      "The document and the film serve <strong>two different audiences</strong>: the document proves your method (to peers, to interviewers, to members) and the film proves your result (to players, to clients). You need both — but do not build them in the same sitting.",
-      "The single most important discipline: <strong>collect process material while you work</strong>. Come back afterwards to gather screenshots and you cannot — the parameters are forgotten, the intermediate versions deleted, the failed attempts unrecorded. Get into the habit of saving one “key state screenshot + parameter line” at the end of every sub-step, and this step becomes ten times easier."
+      "Assets arrive from AI generation, marketplace packs and outsourcing, so their style is inconsistent by default. The way to unify is not “tweak it by feel” but to <strong>fix a set of numeric ranges</strong>: hue concentrated within {{N}} degrees, a saturation ceiling, a roughness distribution, a value range. Once the ranges exist, any new asset can be judged against them in seconds.",
+      "Lighting and post-processing are the last resort for unification: even if materials differ slightly, one shared key direction, colour temperature and grade pulls them together. <strong>Fix materials first, then close the gap with light</strong> — reverse the order and you spend the rest of the project patching holes."
     ],
 
     substeps: [
       {
-        id: "6.1",
-        title: "Write the complete workflow document",
-        detail: "The structure has to be followable: goal → inputs → steps → key parameters → common problems → acceptance criteria. Every step carries copyable prompts and the real parameter values.",
+        id: "5.1",
+        title: "Material consistency audit and convergence",
+        detail: "Check four values per material: hue, saturation, roughness, value. Fix anything outside the ranges. Once this pass is done the frame suddenly looks like one set of things.",
         tasks: [
-          "Lay out the document across the six steps, four parts each: purpose / actions / parameters / acceptance",
-          "Organise the prompt library: A–E variants per block with the situation each is for (exactly the structure of this wiki)",
-          "Add the failure log: what you tried that did not work and why (this section is worth the most)",
-          "Check reproducibility: could someone else reach your result from this document alone"
+          "Fix the visual baseline: hue band (e.g. {{180–220°}}), saturation ceiling (e.g. {{45%}}), value range (e.g. {{20–70%}})",
+          "Route every parameter change through material instances; never scatter edits across the master material",
+          "Audit and correct material by material, recording values before and after",
+          "Check texture colour spaces: albedo as sRGB, roughness / normal as Linear, to avoid colour shifts"
         ]
       },
       {
-        id: "6.2",
-        title: "Standardise the media specs",
-        detail: "Screenshots, recordings and GIFs need consistent specs, or dozens of assets assembled together look cheap. Fix resolution, aspect, naming and annotation style here.",
+        id: "5.2",
+        title: "Unified lighting",
+        detail: "Decide one primary light rig and reuse it for every camera: key direction, colour temperature, sky light intensity, fog and volumetrics. Lighting is the last safety net for consistency.",
         tasks: [
-          "Stills: {{2560×1440}} / 16:9 / UI hidden / locked resolution and exposure",
-          "Recordings: {{60fps}}, with click and keypress highlighting, each clip kept to 3–6 minutes",
-          "GIFs: {{800px wide}}, {{≤8 seconds}}, {{≤3MB}} — keep only the single most important technical action",
-          "Naming: {{step_content_version}} (e.g. 03_threeview_good_v2.gif), applied consistently"
+          "Fix the key light direction and elevation (e.g. {{azimuth 315°, elevation 35°}}) and keep it identical scene-wide",
+          "Define the colour-temperature relationships: sun / sky / practical, with a clear warm-cool division",
+          "Configure Lumen and an exposure strategy (lock a manual EV so nothing jumps with auto exposure)",
+          "Add fog and volumetrics to unify the sense of air and the depth read"
         ]
       },
       {
-        id: "6.3",
-        title: "Cinematic rendering and camera work",
-        detail: "Deliver the film with Sequencer plus Movie Render Queue. Camera movement is not showing off — it is <strong>introducing the space in order</strong>: establish wide → guide through mid → hold on detail.",
+        id: "5.3",
+        title: "Post-processing and colour grading",
+        detail: "Post-processing is the cheapest unification tool there is: one LUT, one white balance, one contrast compression pulls mismatched assets into the same colour space.",
         tasks: [
-          "Storyboard 6–10 shots, including one establishing shot, one detail close-up and one final held frame",
-          "Output through Movie Render Queue: {{EXR/PNG sequence + high-sample anti-aliasing}}, with path tracing or high-quality Lumen settings",
-          "Control the move speed: slow enough for the eye to finish reading the frame (roughly 2–4 seconds per piece of information)",
-          "Composite in Resolve: unify the grade, add sound design and music, and keep the cut aligned to the pacing"
+          "Configure the Post Process Volume: white balance, contrast, tone curve (S-curve), highlight rolloff",
+          "Author a project LUT (build it in DaVinci / Photoshop, export .cube or a 256×16 strip)",
+          "Unify bloom / lens flare / sharpening so the look does not jump between cameras",
+          "Check that shadows are not crushed and highlights are not clipped — leave grading headroom"
         ]
       },
       {
-        id: "6.4",
-        title: "Publish, archive and reuse",
-        detail: "The point of archiving is that you can return to the exact state six months later: project, assets, parameters, prompts and dependency versions all packaged together.",
+        id: "5.4",
+        title: "Atmosphere variants and side-by-side comparison",
+        detail: "Build 2–3 atmospheres for the same scene (early morning fog / harsh noon / warm dusk), compare them side by side, then pick the hero look — and keep the others as ammunition for promotional material.",
         tasks: [
-          "Archive: the UE project (including .uproject / Content / plugin list), external asset source files, the prompt library, LUTs",
-          "Record dependency versions: engine version, model versions, AI tool versions (all of which will have moved in six months)",
-          "Publish: document + film + stills, re-sized per platform with the right lead image",
-          "Retrospective: list the three things to change next time and put them into a “next steps” section of the document"
+          "Capture every atmosphere from the same fixed cameras so they are directly comparable",
+          "List the emotional keywords and the best use case for each atmosphere",
+          "Choose the hero look and record all of its parameters (reproducibly)",
+          "Put the hero-look screenshots next to the step 01 locked concept for a final cross-check"
         ]
       }
     ],
 
     prompts: [
       {
-        id: "s6p1",
-        title: "Workflow document structure",
-        icon: "book",
-        note: "Have the model organise your process into something teachable, and find the steps and parameters you left out.",
+        id: "s5p1",
+        title: "Material consistency audit",
+        icon: "layers",
+        note: "Drop in several asset renders or material spheres at once and have the model find whatever falls outside the colour range.",
         variants: [
           {
             key: "A",
-            name: "Six-stage workflow outline",
+            name: "Colour-range consistency issue list",
             tag: "Primary",
-            use: "When the document needs structure from scratch",
-            out: "A teachable document outline",
-            note: "Feed it your description of the process and let it produce a structure with acceptance points (this wiki came from exactly that)",
-            text: `You are a technical documentation lead for game art. Turn my process description into a teachable, step-by-step workflow document.
+            use: "When the palette clearly does not hold together",
+            out: "Problem material list + corrected values",
+            note: "Demand numeric suggestions, not “make it cooler”",
+            text: `Attached are renders of {{8}} assets that will live in one scene. Audit them for visual consistency as a look-dev artist.
 
-My process: {{1) visual research + manual sketch + AI concept generation + manual selection; 2) UE5 blockout to fix AI perspective/scale errors; 3) style conversion, architectural component breakdown, three-view sheets, 3D generation (Tripo), manual retopo in Maya/ZBrush; 4) environment dressing; 5) material/lighting/post-process unification; 6) documentation and cinematic presentation.}}
+Target look: {{hue family 190–230°}}, saturation ≤ {{45%}}, value range {{20–70%}}, roughness mostly {{0.55–0.85}} with specular only on exposed metal and wet surfaces.
 
-For each of the 6 stages produce:
-- GOAL in one sentence a beginner understands
-- INPUTS (what must exist before starting)
-- 4–6 numbered SUB-STEPS, each starting with a verb
-- KEY PARAMETERS that must be recorded for reproducibility
-- COMMON FAILURES with the symptom and the fix
-- DEFINITION OF DONE (a checkable criterion, not a vibe)
+For each asset report: HUE | SATURATION | VALUE | ROUGHNESS (estimated) | VERDICT (in range / out of range / borderline) | CORRECTION (specific direction and amount, e.g. "-15 sat, +8 value, hue -12° toward cyan").
 
-Then add: a tool list with which tool is used where, a glossary of 12 terms I should define, and 8 questions a reader will ask that the document must answer.`
+Then:
+- Rank the assets by how much they damage the unified read.
+- Name the asset that should become the visual benchmark (reference standard) and why.
+- Give 3 global adjustments (a single change that improves everything at once), such as one shared LUT direction or a global albedo desaturation.`
           },
           {
             key: "B",
-            name: "Prompt library normalisation",
-            tag: "Prompt",
-            use: "When your prompts are scattered and need a system",
-            out: "A structured prompt library",
-            note: "Turns the whole prompt set into a maintainable asset in one pass",
-            text: `Organize my scattered prompt collection for an AI-assisted environment art workflow into a maintainable library.
+            name: "Material parameter standard sheet",
+            tag: "Standard",
+            use: "When you need an executable material standard",
+            out: "A material spec sheet",
+            note: "Use it directly as the team's material standard document",
+            text: `Produce a PBR material standardization sheet for a {{stylized-realistic alpine environment}} project.
 
-For each prompt I give you, return a normalized record:
-- ID and NAME
-- USE CASE (when to reach for it)
-- STAGE (which of the 6 workflow stages)
-- MODEL / TOOL ({{Midjourney / SD / ComfyUI / Tripo / vision model}})
-- VARIABLE SLOTS — every {{placeholder}} with its expected format and an example value
-- THE PROMPT, cleaned up
-- EXPECTED OUTPUT
-- FAILURE MODE and the negative list to add
-- VARIANT FAMILY — what should be swapped to produce versions B, C, D, E
+For each material family below give: Base Color range (in RGB values), Roughness range, Metallic policy, Normal strength policy, and the allowed variation between assets in the same family.
+- {{stone: granite, slate, weathered concrete}}
+- {{wood: raw timber, painted timber, lacquered}}
+- {{metal: bare steel, galvanized, painted steel, rusted}}
+- {{fabric: canvas, rope, leather}}
+- {{glass and water}}
+- {{snow and ice}}
 
-Then group them into families, flag duplicates and contradictions between prompts, and tell me which prompts are too vague to be reproducible.
-
-My prompts: {{paste list}}`
+Then state:
+1. The THREE global rules that make a scene look unified regardless of asset source.
+2. What must NEVER be varied between assets of the same family.
+3. A short checklist a modeler/texture artist can run before submitting an asset.`
           },
           {
             key: "C",
-            name: "Tutorial video script",
-            tag: "Video",
-            use: "When the process becomes a tutorial video",
-            out: "A recording script",
-            note: "Writing the script before recording visibly cuts re-takes and filler",
-            text: `Write a recording script for a {{10-minute}} tutorial video teaching {{step 3 of my workflow: converting concept art into 3D assets}}.
+            name: "Texture and colour space troubleshooting",
+            tag: "Technical",
+            use: "When you see colour shifts, washed-out greys or dead-looking materials",
+            out: "A technical fault isolation list",
+            note: "A lot of “inconsistency” is a settings error, not a taste problem",
+            text: `Diagnose technical causes of visual inconsistency in a UE5 scene where assets were sourced from {{AI generation, a marketplace pack, and an external vendor}}.
 
-Structure:
-- COLD OPEN (0:00–0:20): what the viewer will be able to do by the end, plus a 3-second result flash
-- WHY IT MATTERS (0:20–1:00): the problem this step solves, stated with a concrete failure example
-- DEMO (1:00–7:30): broken into 5–7 blocks, each with what is on screen, what I say (verbatim-friendly, short sentences), and the on-screen caption
-- COMMON MISTAKES (7:30–9:00): 3 mistakes with the visible symptom on screen
-- RECAP + NEXT (9:00–10:00)
+Checklist to produce, with cause → symptom → fix:
+1. Texture color space errors (albedo treated as linear, roughness treated as sRGB)
+2. Normal map format and green-channel orientation mismatch
+3. Inconsistent texel density causing blur/sharpness mismatch between assets
+4. Auto-exposure and its effect on perceived material consistency across camera positions
+5. Roughness maps authored at different scales (micro-detail amplitude mismatch)
+6. AO baked at scene scale vs asset scale
+7. Nanite vs non-Nanite assets and shading differences between them
+8. Material domain / blend mode inconsistencies affecting reflections
 
-Rules: no filler phrases, no "as you can see", every sentence must carry information. Mark where I should pause on screen for emphasis, and where a zoom-in is needed.`
+For each, tell me how to DETECT it in 60 seconds and the exact setting to correct.`
           },
           {
             key: "D",
-            name: "Reproducibility audit",
-            tag: "QA",
-            use: "Before delivery, to check someone else could follow it",
-            out: "A gap list",
-            note: "Simulates “another artist following the document” and surfaces every piece of hidden knowledge",
-            text: `Act as a reviewer who must reproduce my workflow from the document alone, with no access to me.
+            name: "LUT and colour grade authoring brief",
+            tag: "Grading",
+            use: "When you want to unify the colour base itself",
+            out: "LUT recipe + parameters",
+            note: "Analyse the reference first, then produce reproducible LUT parameters",
+            text: `Analyze the attached reference image and produce a color grading recipe I can build as a LUT in DaVinci Resolve.
 
-Read the following documentation: {{paste doc summary}}. Then report:
+Output:
+1. EXPOSURE & CONTRAST — black point, white point, midpoint shift, and the S-curve shape (soft / medium / hard) in plain terms
+2. COLOR BALANCE — shadows / midtones / highlights shift directions (e.g. "shadows +8 blue, midtones +4 warm amber, highlights neutral")
+3. SATURATION MAP — which hue ranges are pushed and which are pulled, by how much
+4. HUE VS HUE — any hue rotation needed to make {{foliage / stone / snow}} land in the palette
+5. LUMINANCE VS SATURATION — whether highlights are desaturated (filmic) or saturated
+6. THE 5 NUMBERS — the five most important numeric values to set first
+7. FAILURE MODE — what this grade does badly, and the shot type where it will break
 
-1. MISSING ARTIFACTS — files, templates, LUTs, models, or presets the reader needs but that the document does not provide.
-2. HIDDEN KNOWLEDGE — steps where I rely on unstated experience ("just fix the perspective") and a beginner would be stuck.
-3. UNRECORDED PARAMETERS — every place where a number matters and no number is given.
-4. VERSION DEPENDENCIES — anything that will break when {{the AI tool / engine version}} changes.
-5. AMBIGUOUS LANGUAGE — sentences that can be read two ways, with a rewrite for each.
-6. FIRST POINT OF FAILURE — where the reader will most likely give up, and what to add there.
-
-Rank all findings by how badly they block reproduction. Be merciless — a document that needs me in the room is not a document.`
+Then tell me how to verify the LUT is neutral enough to reuse across different times of day.`
           }
         ]
       },
       {
-        id: "s6p2",
-        title: "Storyboard and camera design",
-        icon: "film",
-        note: "Shot design for the film. The job is to explain the space, not to show off.",
+        id: "s5p2",
+        title: "Lighting and post-processing plan",
+        icon: "flame",
+        note: "Define a reusable primary light rig and post-processing parameters so every camera reads the same.",
         variants: [
           {
             key: "A",
-            name: "Establish → detail → hold (8 shots)",
+            name: "Primary light rig design",
             tag: "Primary",
-            use: "For a 60–90 second portfolio film",
-            out: "An 8-shot storyboard table",
-            note: "The standard structure: information density climbs, then falls back, ending on a held frame",
-            text: `Design an 8-shot cinematic sequence to present {{an abandoned alpine research station interior}} as a finished environment art piece. Target length {{75 seconds}}.
+            use: "When you need one unified lighting baseline",
+            out: "A lighting parameter plan",
+            note: "The output should map directly onto UE5 Directional Light / Sky Light / Lumen settings",
+            text: `Design a unified lighting setup for {{an abandoned alpine research station — mixed interior/exterior, one broken roof section}} in Unreal Engine 5 with Lumen.
 
-For each shot give: SHOT # | PURPOSE (establish / orient / guide / detail / emotion / resolve) | FRAMING (scale, height, angle) | CAMERA MOVE (static / slow push / lateral track / rise / handheld) | MOVE SPEED in approximate cm/s | LENS (mm) | DURATION | WHAT THE VIEWER LEARNS | TRANSITION TO NEXT
+Give me:
+1. KEY LIGHT — direction (azimuth / elevation), color temperature in Kelvin, intensity in lux, source angle (softness), and the reason for that angle given the architecture
+2. SKY / AMBIENT — sky light intensity, ambient cubemap or HDRI choice, and the expected bounce color from {{snow ground, concrete walls}}
+3. PRACTICALS — which interior lamps exist, their color temperature, intensity, and whether they should be the brightest thing in any frame
+4. GLOBAL ILLUMINATION — Lumen settings worth changing from default, and the ones to leave alone
+5. VOLUMETRICS — fog density, height falloff, and where to use local fog volumes so depth reads without washing out contrast
+6. EXPOSURE — fixed EV, metering mode, and why auto-exposure must be off for a consistent look
+7. FAILURE MODES — what will look wrong first (blown skylight, flat shadows, muddy midtones) and the check for each
 
-Constraints:
-- Shot 1 must establish the whole space in a single readable frame.
-- Include exactly one detail shot where the camera nearly stops (≤2 cm/s) so the viewer can read texture quality.
-- Include one shot with foreground occlusion to prove depth.
-- End on a static frame held for ≥3 s that could work as a portfolio thumbnail.
-- No cuts on camera motion that reverses direction.
-
-Then flag the two shots that are hardest to render and how to make them cheaper.`
+Then state the one-sentence rule that keeps every future camera angle consistent.`
           },
           {
             key: "B",
-            name: "Single-take / long take design",
-            tag: "Long take",
-            use: "When you want a demanding continuous move",
-            out: "A single-shot camera path",
-            note: "A long take best demonstrates spatial coherence, but exposure and pacing are hardest to control",
-            text: `Design a single unbroken camera move through {{a fishing village on stone terraces}}, {{40 seconds}}, no cuts.
+            name: "Atmosphere variant design (3 sets)",
+            tag: "Variant",
+            use: "When you need several atmospheres to compare or to publish",
+            out: "3 atmosphere sets",
+            note: "Every set must come with quantifiable differences, not “a bit warmer”",
+            text: `Design 3 distinct atmosphere variants for the same scene ({{scene}}), all keeping the same camera and layout so they can be compared directly.
 
-Provide:
-1. PATH — a step-by-step route with positions described relative to landmarks, and whether the camera height changes (walk height, rise, descend).
-2. SPEED PROFILE — a table of time vs speed, marking where the camera slows down for information and where it accelerates through dead space.
-3. FRAMING STOPS — 3 moments where the composition must land on a deliberate frame (name what sits where in the frame at that moment).
-4. OCCLUSION EVENTS — where the camera passes behind geometry, and how to use it as a natural transition.
-5. EXPOSURE RISK — where the dynamic range will blow out (passing from shadow into sky) and how to handle it (baking exposure, manual EV, local grade).
-6. FALLBACK — how to split this into 3 shots with straight cuts if the single move proves too hard to render.`
+For each variant give: NAME | MOOD IN 3 WORDS | SUN ANGLE & KELVIN | SKY STATE | FOG | PRACTICAL LIGHTS | CONTRAST RATIO | GRADE DIRECTION | WHAT IT COMMUNICATES ABOUT THE PLACE
+
+The variants:
+1. {{early morning low fog — quiet, cold, high contrast light shaft}}
+2. {{flat overcast noon — honest, desaturated, detail-first}}
+3. {{late afternoon warm interior glow — inviting, narrative, longest shadows}}
+
+Then:
+- Recommend which one to use as the hero look for a portfolio piece, and why in 3 sentences.
+- List what would break in each variant (what would make it look cheap).
+- Give the single parameter I should hold constant across all three so the comparison stays fair.`
           },
           {
             key: "C",
-            name: "Cinematic render settings and QA",
-            tag: "Render",
-            use: "When you are about to render the final deliverable",
-            out: "MRQ settings + QA sheet",
-            note: "Wrong render settings mean a full re-run — run this list before you queue it",
-            text: `Give me a Movie Render Queue configuration and a pre-render checklist for a {{cinematic environment showcase}} in Unreal Engine 5.
+            name: "Lighting diagnosis (screenshot)",
+            tag: "Review",
+            use: "When the image looks grey, washed out or flat",
+            out: "Lighting fault isolation + fixes",
+            note: "Ask for symptom → cause → fix so you can act on it directly",
+            text: `Attached is a screenshot of my UE5 scene. Diagnose the lighting and post-processing.
 
-Configuration to specify:
-- Output: {{EXR half-float sequence}} vs PNG — recommendation and why; also a delivery MP4 path
-- Anti-aliasing: spatial/temporal sample counts, and how they trade against render time
-- Rendering quality: Lumen / path tracer choice, GI samples, reflection quality, shadow settings
-- Motion blur, depth of field, and whether to render them in-engine or in comp
-- Console variables worth setting before a final render
-- Thread and memory settings, plus a rough time estimate per frame for {{5 MP}} output
+Report as symptom → likely cause → specific fix (with UE5 setting names):
+1. Overall value range — where is the image compressed or blown?
+2. Shadow quality — too open (flat) or too closed (crushed)? What is the current effective contrast ratio?
+3. Light direction readability — can you tell where the key light comes from within 2 seconds? If not, what breaks it?
+4. Ambient occlusion / contact shadows — are objects grounding properly, or do they look pasted on?
+5. Color temperature logic — are warm and cool sources in a believable relationship?
+6. Post-processing faults — bloom too strong, DOF on the wrong plane, sharpening halos, vignette too heavy, or crushed blacks from the grade.
+7. Atmosphere — is there enough aerial perspective to separate foreground and background?
 
-Pre-render checklist (each item with the failure it prevents): {{texture streaming at risk, Nanite fallback visibility, LOD transition popping on camera move, particle/foliage wind seeding inconsistency between render and viewport, exposure locking, camera clipping through geometry, UI/actors hidden, time-of-day consistency across shots}}.
-
-End with: how to verify a single test frame before committing to the full render.`
+End with a 5-item fix list ordered by visual impact per minute of work.`
           },
           {
             key: "D",
-            name: "Portfolio presentation and copy",
-            tag: "Publish",
-            use: "When the work goes out into the world",
-            out: "Publishing copy + layout advice",
-            note: "The same work presented differently performs very differently",
-            text: `Help me present this environment art piece ({{AI-assisted alpine station interior, 6-step workflow, real-time in UE5}}) for {{a portfolio page and an ArtStation post}}.
+            name: "Reverse-engineer lighting from a reference",
+            tag: "Benchmark",
+            use: "When you want to reproduce a reference's lighting",
+            out: "Reverse-engineered light parameters",
+            note: "Upload a reference render and get back parameters you can type straight into the engine",
+            text: `Reverse-engineer the lighting of the attached reference render.
 
 Deliver:
-1. TITLE OPTIONS — 5 options, each under 8 words, none using "concept art" if it is a real-time render.
-2. SHORT CAPTION — 2 sentences: what the space is and what the viewer is looking at.
-3. PROCESS BLURB — 120 words describing the workflow honestly, including where AI was used and where manual work took over. Be specific and unapologetic about the tooling.
-4. IMAGE SET — the 6 images to publish and in what order, with the text role of each (hero, scale, detail, process, lighting variant, comparison).
-5. BREAKDOWN SECTION — a short list of technical facts worth stating (engine version, real-time status, tri count, texture budget, render settings).
-6. WHAT NOT TO SAY — 5 phrases that weaken an environment art presentation and what to say instead.
+1. LIGHT INVENTORY — every visible light source: type, estimated direction, estimated intensity ratio relative to the key, color temperature in Kelvin, and whether it is visible in frame
+2. SHADOW ANALYSIS — penumbra softness (which implies source size), shadow length relative to object height (which implies elevation angle), and shadow color
+3. EXPOSURE — estimated middle grey placement, highlight rolloff character, and whether the image is exposed for the sky or the interior
+4. ATMOSPHERE — is there fog, dust, or depth haze? Estimated density by distance
+5. BOUNCE — where the fill light comes from and its color (assume the local surfaces are {{snow and grey stone}})
+6. RECIPE — a UE5 setup card: Directional Light (rotation, lux, Kelvin), Sky Light, key practicals, fog settings, exposure EV
 
-Tone: professional, concrete, no hype, no inflated adjectives.`
+Then flag the two details in the reference that would be hardest to reproduce in real time, and a cheaper approximation for each.`
           }
         ]
       }
@@ -250,51 +251,56 @@ Tone: professional, concrete, no hype, no inflated adjectives.`
 
     media: [
       {
-        type: "video",
-        title: "Final film · cinematic render (complete)",
-        caption: "The 75-second piece out of Movie Render Queue, graded with sound design. This is the end product of the whole pipeline.",
-        src: "assets/video/step6-final-cinematic.mp4",
-        poster: "assets/video/step6-final-cinematic.jpg",
-        dur: "01:15",
-        file: "assets/video/step6-final-cinematic.mp4",
+        type: "gif",
+        title: "Material convergence before / after (loop)",
+        caption: "Key GIF: how the frame changes as hue and saturation converge. Watch it go from looking assembled to looking unified.",
+        src: "assets/gifs/step5-material-unify.gif",
+        file: "assets/gifs/step5-material-unify.gif",
         wide: true
       },
       {
+        type: "video",
+        title: "Look dev end to end: material audit → lighting → grade (not recorded yet)",
+        caption: "Planned: the full narrated pass, including how the parameter values were chosen and the attempts that failed.",
+        src: "assets/video/step5-lookdev.mp4",
+        file: "assets/video/step5-lookdev.mp4"
+      },
+      {
         type: "gif",
-        title: "Storyboard pacing diagram",
-        caption: "The 8-shot strip with its time allocation — the film's structure at a glance (6-second loop).",
-        src: "assets/gifs/step6-storyboard-timing.gif",
-        file: "assets/gifs/step6-storyboard-timing.gif"
+        title: "LUT toggle",
+        caption: "The same frame grading off / grading on, 4-second loop.",
+        src: "assets/gifs/step5-lut-toggle.gif",
+        file: "assets/gifs/step5-lut-toggle.gif"
       },
       {
         type: "image",
-        title: "Document structure diagram",
-        caption: "The information architecture of the document site (the page you are reading now).",
-        src: "assets/images/step6-doc-structure.jpg",
-        file: "assets/images/step6-doc-structure.jpg"
+        title: "Three atmosphere variants side by side",
+        caption: "Dawn fog / flat noon / warm dusk, same camera, compared directly.",
+        src: "assets/images/step5-atmosphere-variants.jpg",
+        file: "assets/images/step5-atmosphere-variants.jpg"
       },
       {
-        type: "image",
-        title: "Final still (hero shot)",
-        caption: "The locked frame used for the portfolio cover and thumbnail.",
-        src: "assets/images/step6-hero-shot.jpg",
-        file: "assets/images/step6-hero-shot.jpg"
+        type: "gif",
+        title: "Light direction sweep",
+        caption: "Continuous azimuth sweep from 180° to 45° to pick the best angle (6-second loop).",
+        src: "assets/gifs/step5-light-sweep.gif",
+        file: "assets/gifs/step5-light-sweep.gif"
       }
     ],
 
     tips: [
-      { title: "Collect process material as you go", text: "Save one key-state screenshot plus one line of parameters at the end of every sub-step. Come back later and you cannot reconstruct it." },
-      { title: "Build document and film separately", text: "The document proves the method, the film proves the result. Build them together and both suffer." },
-      { title: "Failure notes are worth the most", text: "“This does not work because…” is ten times more valuable to a reader than “this works well”. It also shows your depth." },
-      { title: "Slow the camera down", text: "You are not bored by your own scene; your audience will be. Leave at least 2–4 seconds of readable information per shot." },
-      { title: "Version everything on archive", text: "AI tools change every six months. Put model versions, parameters and dependencies into the archive or you will not be able to reproduce your own work." }
+      { title: "Write the numeric ranges down", text: "Put the allowed ranges for hue / saturation / value / roughness into the standard document. With ranges, judgement becomes comparison instead of argument." },
+      { title: "Materials before lighting", text: "Adjusting light before materials are aligned means forever patching holes. The order is: converge materials → unify lighting → close with the grade." },
+      { title: "Manual exposure", text: "Turn auto exposure off. It makes the look jump between cameras and is the most overlooked killer of consistency." },
+      { title: "One benchmark image", text: "Pick a single “visual benchmark frame” and compare every new asset against it. Much easier to execute than an abstract standard." },
+      { title: "Leave grading headroom", text: "Do not max out contrast in engine. Keep shadows above 5% and highlights unclipped so the LUT has room to work." }
     ],
     pitfalls: [
-      { title: "Remembering the material too late", text: "No capture along the way means re-running the entire pipeline to fill the gaps — an extremely high price." },
-      { title: "A document that reads as a diary", text: "Without acceptance criteria and failure logs, readers give up halfway." },
-      { title: "A film that is all showmanship", text: "Fast rotations and constant cuts leave the audience remembering nothing about the space." },
-      { title: "No tool versions recorded", text: "Six months on you cannot reproduce your own work — the most common archiving failure there is." }
+      { title: "Grading by feel", text: "Without numeric ranges, twenty assets produce twenty styles, and none of it transfers to the next project." },
+      { title: "Lighting used to hide problems", text: "Covering inconsistent materials with strong light and heavy fog looks fine briefly, then falls apart the moment you change camera or atmosphere." },
+      { title: "Wrong texture colour space", text: "Reading roughness as sRGB washes everything out and greys it down. Most people read that as a taste problem when it is a settings problem." },
+      { title: "Atmosphere variants from different cameras", text: "Comparing atmospheres across different cameras is not a comparison. Fix the camera and the parameters, change only the light." }
     ],
-    checkpoint: "A complete workflow document someone else can follow (including the prompt library and the failure log); consistent media specs; the film rendered with a unified grade; an archive containing the project, parameters and version information; and publishing copy that states accurately where AI ended and manual work began."
+    checkpoint: "Every material sits inside the fixed numeric ranges; one reusable light rig is applied to all cameras; exposure is locked with no automatic jumping; a LUT is generated and applied; 2–3 reproducible atmosphere variants exist; and the hero-look screenshots match the step 01 locked concept in tone."
   });
 })(window.WIKI);

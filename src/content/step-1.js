@@ -86,7 +86,7 @@
         id: "s1p1",
         title: "Sketch → scene concept art (Banana 2)",
         icon: "sparkles",
-        note: "The two prompts below are the ones actually run for the test and evidence passes — variant A and variant B. Variants C and D are the same structure rewritten for other settings, so the block stays reusable. Anything in {{}} is a variable; replace it with your own image slots or subject.",
+        note: "The two prompts below are the ones actually run for the test and evidence passes — variant A and variant B. Variants C and D are the same structure rewritten for other settings, so the block stays reusable. <strong>Variant E is different in kind</strong>: instead of describing a mood it specifies the street bay by bay. Anything in {{}} is a variable; replace it with your own image slots or subject.",
         variants: [
           {
             key: "A",
@@ -137,6 +137,45 @@ Keep the road layout and the direction of travel exactly as drawn. Fix one {{lar
 {{Image 2}} and {{Image 3}} are real photographs of the location; {{Image 4}} is the style reference. Correct perspective only — do not redesign the street. (Banana 2)
 
 [[two competing focal buildings, blocked colonnade, altered road width, game UI, watermark]]`
+          },
+          {
+            key: "E",
+            name: "Spatial spec — building by building",
+            tag: "Untested",
+            use: "When the style is right but the street is wrong: wrong building count, wrong storey heights, buildings that do not belong to this location",
+            out: "A frame where every building on both sides matches a written specification",
+            note: "Different in kind from A–D, not just longer. The style block stays compressed to a short keyword set; what expands is the <strong>content</strong> — every bay on both sides described individually. Not yet run: it is built from the critique that these prompts described a mood but never described the street, so treat the measurements as placeholders to replace with your own site.",
+            text: `Generate a concept reference image of a Guangzhou qilou (arcade) shopping street. Eye-level view down the centre of the road, 16:9.
+
+CAMERA
+Standing height 1.6 m, 35 mm equivalent, one-point perspective, vanishing point slightly left of centre. No tilt, no wide-angle distortion.
+
+LEFT SIDE, near corner to far end — five bays
+1. Three storeys, cream stucco. Ground-floor arcade 4.2 m high with round columns and a simple moulding. Dark green timber shutters on floors 2 and 3. Vertical hanging sign, faded red ground with white characters.
+2. Two storeys, grey brick. Shallower arcade, square columns. Black steel casement windows. No sign.
+3. Four storeys, pale yellow tile. Decorative parapet. Arched windows on the second floor. Horizontal sign band in dark blue above the arcade.
+4. Three storeys, whitewashed render. Exposed drainage pipe on the right edge. One air-conditioning unit under each upper window.
+5. Two storeys, weathered red brick. Arched arcade openings. Canvas awning over the ground floor.
+
+RIGHT SIDE, near corner to far end — six bays
+1. Four storeys, pale green tile. Corner unit with frontage on two sides. Ground floor open to the street.
+2. Three storeys, cream render, flat roofline. Timber-framed windows, dark brown. Small projecting sign.
+3. Two storeys, grey brick, same family as left bay 2 but lighter mortar.
+4. Three storeys, pale pink stucco. Continuous balcony on the second floor with an iron railing.
+5. Four storeys, white tile, vertical sign in dark red.
+6. Three storeys, cream stucco, matching left bay 1 — this is the repeat that makes the street read as one place.
+
+STREET SURFACE AND FURNITURE
+Grey granite paving in 600 mm courses, a wet sheen only inside the shaded arcade. Two street trees on the left at bays 1 and 4. One utility pole on the right at bay 5. No vehicles.
+
+LIGHT
+Warm overcast daylight, high-key but not blown out. Shadow gradients smooth and continuous — no hard black areas.
+
+STYLE (keep this short — this is the layer that compresses)
+Southern Chinese commercial street, muted saturated signage, clean surfaces, consistent shadow gradients.
+
+NEGATIVE
+[[black speckle, dark blotches in shadow, smeared or melted textures, text artifacts, watermark, game UI, duplicated buildings, distorted perspective, vehicles]]`
           }
         ]
       },
@@ -230,18 +269,18 @@ For each item, state what blockout should do instead. Be blunt; this list exists
         file: "assets/images/step1-sketch-evidence.jpg"
       },
       {
-        type: "video",
-        title: "Step 01 walkthrough (to be recorded)",
-        caption: "Screen recording slot: Procreate sketch → reference set-up in TapNow → generation and selection. Drop the file at this path and the placeholder swaps out automatically.",
-        src: "assets/video/step1-full-walkthrough.mp4",
-        poster: "assets/video/step1-full-walkthrough.jpg",
-        dur: "—",
-        file: "assets/video/step1-full-walkthrough.mp4",
+        type: "youtube",
+        title: "Step 01 walkthrough · sketch to locked concept",
+        caption: "The whole pass, unedited: the Procreate sketch, setting up both reference sets in TapNow, generation, and the hand selection that closes the step. Streams from YouTube in 0:28 — use the player's own controls, or open it larger.",
+        yt: "https://youtu.be/7zcNvTVmT8I",
+        dur: "0:28",
         wide: true
       }
     ],
 
     tips: [
+      { title: "Style compresses, content expands", text: "Two layers, two directions. The style layer gets shorter as you iterate — a dozen keywords beat a paragraph, because a long style description dilutes what the model latches onto. The content layer goes the other way: every bay on both sides, its storeys, its material, its colour. Confusing the two is how a prompt ends up 400 words long and still never says what is in the street." },
+      { title: "A precise prompt may also run faster", text: "Reported by a reviewer on this project, not yet measured here: prompts that specify the street bay by bay came back faster than vague ones. The plausible reason is that the model spends less effort inventing content it was never given. Worth testing on your own run — time a vague and a specific prompt on the same subject before treating it as a rule." },
       { title: "Sketch before you prompt", text: "Everything in this step is downstream of one decision: does the layout come from you or from the model? Draw it first and the answer is you." },
       { title: "Keep the two reference sets apart", text: "Real photographs define the architecture; target-game screenshots define the style. Tell the model which is which inside the prompt, or it will build the screenshot's buildings." },
       { title: "Budget from the second pass, not the first", text: "The test pass cost 36 tapies and 4 iterations; the evidence pass, with the prompt settled, cost 18 and 2. The first run on a new scene is always the expensive one — plan for it." },
@@ -251,7 +290,7 @@ For each item, state what blockout should do instead. Be blunt; this list exists
     pitfalls: [
       { title: "Generating without a sketch", text: "You get a good-looking image you did not design, and you will spend blockout reverse-engineering a layout out of it. This is the single most expensive shortcut in the pipeline." },
       { title: "Trusting the concept art's dimensions", text: "AI concept art of a street is not dimensionally reliable. Road width, lane count and storey height drawn in the render are wrong often enough that blockout must check them against real construction standards." },
-      { title: "Long prompts for style", text: "Asking a text model to describe the target style returns something extremely verbose, and long prompts demonstrably weaken image models. Compress to ~12 keywords before you generate (s1p2 variant B)." },
+      { title: "Long prompts for style — and the wrong lesson from it", text: "Asking a text model to describe the target style returns something extremely verbose, and long prompts demonstrably weaken image models. The wrong lesson is to write short prompts everywhere: what shrinks is the style layer, not the description of the street. A prompt that never says how many bays are on each side, or what they are made of, leaves the model to invent them — and it will, differently every run." },
       { title: "Using one view", text: "A single sketch view hides composition and massing errors. Draw two or three; the errors that survive all of them are the ones worth building on." }
     ],
     checkpoint: "You are holding a design pack: the hand-drawn sketch (high-res) + both reference sets, tagged by role + one locked AI concept frame + a written must-fix list naming every perspective and dimension error blockout should not trust. The step is done when you can point at the locked frame and say which three things in it are wrong."

@@ -201,13 +201,11 @@ Be concrete about where in the frame you are looking when you say something.`
         file: "assets/images/step2-blockout-pass.jpg"
       },
       {
-        type: "video",
-        title: "Step 02 blockout time-lapse (to be recorded)",
-        caption: "Screen recording slot: reference plane import, master material setup, massing pass and the scale correction. Silent time-lapse is fine for this one.",
-        src: "assets/video/step2-blockout-timelapse.mp4",
-        poster: "assets/video/step2-blockout-timelapse.jpg",
-        dur: "—",
-        file: "assets/video/step2-blockout-timelapse.mp4",
+        type: "youtube",
+        title: "Step 02 blockout walkthrough · planes to true scale",
+        caption: "Reference plane import, the parameterised master material, the massing pass, then the correction pass where road and walkway dimensions are rebuilt to construction standards. Streams from YouTube in 1:20 — with audio.",
+        yt: "https://youtu.be/pdP_gEW6iEQ",
+        dur: "1:20",
         wide: true
       }
     ],

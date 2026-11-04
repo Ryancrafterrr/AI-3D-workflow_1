@@ -712,6 +712,22 @@ h3.sec .tagn {
   border-radius: 5px; padding: 3px 7px; white-space: nowrap;
 }
 
+/* A stage with no prompt library states that on purpose — see renderPrompts(). */
+.no-prompt {
+  border: 1px solid var(--line-2);
+  border-left: 2px solid var(--accent-2);
+  border-radius: var(--r-s);
+  background: rgba(255, 255, 255, .02);
+  padding: 14px 17px;
+}
+.no-prompt p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.72;
+  color: var(--txt-2);
+}
+.no-prompt code { font-family: var(--font-mono); font-size: 11.5px; color: var(--accent); }
+
 .variants {
   display: flex; align-items: center; gap: 6px; flex-wrap: wrap; row-gap: 6px;
   padding: 12px 17px;
@@ -881,6 +897,69 @@ pre.code .ph { padding: 0 3px; }
   font-family: var(--font-mono); font-size: 10px;
   padding: 2px 6px; border-radius: 4px;
   background: rgba(0, 0, 0, .7); color: var(--txt-1);
+}
+/* Video cards are players, not pictures. Two consequences: the card must not
+   lift on hover (it would shift the transport controls under the cursor), and
+   the duration badge moves to the top-right, because bottom-right is where the
+   native control bar lives and an overlay there steals clicks from it. */
+.media.is-video:hover { transform: none; }
+.media .frame .dur.tr { top: 9px; bottom: auto; }
+/* A YouTube card is a player surface too, so it gets the same treatment as a
+   video card: no hover lift (the whole frame is the click target and it becomes
+   an iframe with its own controls), and the duration badge stays top-right. */
+.media.is-yt:hover { transform: none; }
+.yt {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  cursor: pointer;
+  /* the gradient is the backdrop whenever the thumbnail cannot load */
+  background:
+    radial-gradient(120% 90% at 28% 18%, rgba(76, 201, 240, .10), transparent 62%),
+    linear-gradient(135deg, #14171c, #090b0e);
+}
+.yt-thumb {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover;   /* YouTube serves 16:9 and the frame is 16:9 */
+}
+/* maxresdefault is absent on some uploads, and i.ytimg.com is unreachable from
+   behind a block: the image steps down to hqdefault, and if that fails too it is
+   hidden so the gradient shows through. A broken-image glyph never appears. */
+.yt-thumb[data-broken="1"] { display: none; }
+.yt-play {
+  position: relative; z-index: 2;
+  width: 62px; height: 44px; border-radius: 11px;
+  display: grid; place-items: center;
+  color: #fff;                      /* the icon is fill="currentColor" */
+  background: rgba(226, 43, 43, .93);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, .55);
+  transition: background .16s var(--ease), transform .16s var(--ease);
+}
+.yt-play svg { width: 17px; height: 17px; }
+.yt:hover .yt-play { background: #ff2f2f; transform: scale(1.06); }
+.yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.yt.is-off {
+  cursor: default; padding: 0 18px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+}
+.yt.is-off svg { width: 20px; height: 20px; color: var(--warn); }
+.yt.is-off b { font-size: 12.5px; color: var(--txt-1); }
+.yt.is-off span { font-size: 11px; color: var(--txt-2); }
+.yt.is-off code { font-family: var(--font-mono); font-size: 10.5px; color: var(--accent); }
+/* lightbox: hold the 16:9 box so the player letterboxes the way it should */
+.lb-yt { position: relative; width: 100%; padding-top: 56.25%; }
+.lb-yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.media .cap .open-lg {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 9px; height: 26px; padding: 0 9px;
+  border-radius: 6px; border: 1px solid var(--line-2);
+  background: rgba(255, 255, 255, .03);
+  font-size: 11px; color: var(--txt-1);
+  transition: all .16s var(--ease);
+}
+.media .cap .open-lg svg { width: 12px; height: 12px; display: block; }
+.media .cap .open-lg:hover {
+  color: var(--txt-0); border-color: var(--line-3);
+  background: rgba(255, 255, 255, .07);
 }
 .media .expand {
   position: absolute; inset: 0; z-index: 4;
