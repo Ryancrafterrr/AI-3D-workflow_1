@@ -142,7 +142,9 @@ async function run(ws) {
   // v0.2 · 2026-09-30 — steps 01–04 rewritten with real content from the
   // Process Book and the Sprint 2 POC: 96 → 122 tasks, 27 → 41 media slots,
   // 55 → 43 prompt variants (fewer, but real ones).
-  const BASE = { steps: 6, tasks: 122, media: 41, variants: 43, chips: 10 };
+  // v0.2.4 · 2026-11-02 — set dressing split out as step 05: 6 → 7 steps,
+  // 122 → 140 tasks, 41 → 43 media slots, 43 → 45 variants, 10 → 11 chips.
+  const BASE = { steps: 7, tasks: 140, media: 43, variants: 45, chips: 11 };
   const st = await evaluate(ws, `
     'steps=' + document.querySelectorAll('section.step').length +
     ' tasks=' + document.querySelectorAll('.task').length +

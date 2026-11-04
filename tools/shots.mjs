@@ -5,8 +5,12 @@
  * this drives Chrome over the DevTools protocol instead: scroll to an anchor,
  * wait for images to settle, then capture the viewport.
  *
- * Usage:  node tools/shots.mjs            (auto-detects Chrome)
- *         CHROME=/path/to/chrome node tools/shots.mjs
+ * Usage:  node tools/shots.mjs                       (auto-detects Chrome)
+ *         node tools/shots.mjs "#step-3 .media-grid"  (zoom one element)
+ *         PAGE_FILE=_variant.html node tools/shots.mjs
+ *         SITE_URL=https://user.github.io/repo/ node tools/shots.mjs
+ *                                                     (verify the deployed site,
+ *                                                      not the local build)
  * Output: tools/_shots/*.png
  */
 import { spawn } from "node:child_process";
@@ -17,8 +21,12 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "..");
-const PAGE = join(ROOT, "index.html");
-const OUT = join(HERE, "_shots");
+// PAGE_FILE lets you point the same walkthrough at a variant build (e.g. a copy
+// with one media path rewritten) without disturbing index.html.
+const PAGE = join(ROOT, process.env.PAGE_FILE || "index.html");
+// SITE_URL lets the same walkthrough verify the deployed site instead of the local build.
+const SITE = (process.env.SITE_URL || "").replace(/\/+$/, "");
+const OUT = join(HERE, process.env.OUT_DIR || "_shots");
 const PORT = 9453;
 const VIEW = "1680,1000";
 
@@ -31,12 +39,13 @@ const CANDIDATES = [
 ].filter(Boolean);
 const chromePath = CANDIDATES.find((p) => existsSync(p));
 if (!chromePath) { console.error("No Chrome/Edge found. Set CHROME=..."); process.exit(1); }
-if (!existsSync(PAGE)) { console.error("index.html not found — run `python build.py` first."); process.exit(1); }
+if (!SITE && !existsSync(PAGE)) { console.error("index.html not found — run `python build.py` first."); process.exit(1); }
 
 mkdirSync(OUT, { recursive: true });
 const profile = mkdtempSync(join(tmpdir(), "shots-"));
 spawn(chromePath, [
   "--headless=new", "--disable-gpu", "--no-sandbox", "--hide-scrollbars",
+  ...(process.env.PLAY_TEST === "1" ? ["--autoplay-policy=no-user-gesture-required"] : []),
   "--remote-debugging-port=" + PORT, "--user-data-dir=" + profile,
   "--window-size=" + VIEW, "about:blank",
 ], { stdio: "ignore" });
@@ -90,8 +99,10 @@ const run = async () => {
 
   await send("Page.enable");
   await send("Runtime.enable");
-  await send("Page.navigate", { url: pathToFileURL(PAGE).href });
-  await sleep(3000);
+  const pageUrl = SITE ? SITE + "/" : pathToFileURL(PAGE).href;
+  console.log("target:", pageUrl);
+  await send("Page.navigate", { url: pageUrl });
+  await sleep(SITE ? 5000 : 3000);
 
   // report any asset that failed to load — the fastest way to catch a bad path
   const broken = await evaluate(`
@@ -100,9 +111,138 @@ const run = async () => {
       .map(function (i) { return i.getAttribute('src'); })`);
   console.log("broken images:", broken.length ? broken : "none");
 
+  // Video and YouTube cards must be real players: a <div> shell (never a
+  // <button>, which would swallow clicks aimed at the transport controls), with
+  // data-open moved onto a separate button. Stills and GIFs keep the <button>
+  // shell, because for those the whole card should stay clickable.
+  const shells = await evaluate(`
+    (function () {
+      var players = 0, pBad = 0, rest = 0, restBad = 0;
+      document.querySelectorAll('.media').forEach(function (c) {
+        var t = c.getAttribute('data-type');
+        var isP = (t === 'video' || t === 'youtube');
+        if (isP) { players++; if (c.tagName !== 'DIV' || c.hasAttribute('data-open')) pBad++; }
+        else { rest++; if (c.tagName !== 'BUTTON' || !c.hasAttribute('data-open')) restBad++; }
+      });
+      return { players: players, playersWrongShell: pBad, others: rest, othersWrongShell: restBad };
+    })()`);
+  console.log("card shells:", JSON.stringify(shells));
+
+  const vids = await evaluate(`
+    Array.from(document.querySelectorAll('video')).map(function (v) {
+      var s = v.currentSrc || (v.querySelector('source') || {}).src || '';
+      return {
+        file: s.split('/').pop() || '(none)',
+        controls: v.hasAttribute('controls'),
+        readyState: v.readyState,
+        duration: isFinite(v.duration) ? Math.round(v.duration * 10) / 10 : null,
+        w: v.videoWidth, h: v.videoHeight,
+        error: v.error ? v.error.code : null,
+      };
+    })`);
+  console.log("videos:", vids.length);
+  for (const v of vids) {
+    console.log("  " + (v.controls ? "controls" : "NO-CONTROLS").padEnd(12) +
+      "ready=" + v.readyState +
+      "  dur=" + (v.duration === null ? "?" : v.duration + "s").padEnd(7) +
+      "  " + (v.w ? v.w + "x" + v.h : "-").padEnd(10) +
+      "  err=" + (v.error === null ? "-" : v.error) + "  " + v.file);
+  }
+
+  // YouTube cards are click-to-load facades: the id must parse, and there must be
+  // NO iframe in the DOM yet — building every player up front is exactly what this
+  // design exists to avoid. YT_TEST=1 additionally clicks one and inspects the
+  // iframe that the click is supposed to inject.
+  const yts = await evaluate(`
+    Array.from(document.querySelectorAll('.media.is-yt')).map(function (c) {
+      var f = c.querySelector('.yt');
+      return {
+        title: (c.getAttribute('data-title') || '').slice(0, 34),
+        id: c.getAttribute('data-yt') || '',
+        facade: !!f,
+        pending: !!(f && f.classList.contains('is-off')),
+        thumb: !!(f && f.querySelector('img.yt-thumb')),
+        thumbBroken: !!(f && f.querySelector('img.yt-thumb[data-broken="1"]')),
+        iframes: c.querySelectorAll('iframe').length,
+      };
+    })`);
+  console.log("youtube cards:", yts.length);
+  for (const y of yts) {
+    console.log("  " + (y.pending ? "PENDING" : y.facade ? "facade" : "NO-FACADE").padEnd(10) +
+      " id=" + (y.id || "-").padEnd(14) +
+      " thumb=" + (y.thumb ? "yes" : "no ") +
+      (y.thumbBroken ? " (fell back)" : "             ") +
+      " iframes=" + y.iframes + "  " + y.title);
+  }
+
+  if (process.env.YT_TEST === "1") {
+    const yt = await evaluate(`
+      (function () {
+        var f = document.querySelector('.media.is-yt .yt[data-yt]');
+        if (!f) return { skipped: 'no facade carrying an id' };
+        f.click();
+        var ifr = f.querySelector('iframe');
+        return { iframe: !!ifr, src: ifr ? ifr.getAttribute('src') : '', live: f.getAttribute('data-live') };
+      })()`);
+    console.log("youtube click-test:", JSON.stringify(yt));
+
+    // The thumbnail has two fallbacks before it gives up: maxresdefault → hqdefault
+    // → hidden, letting the gradient backdrop show through. Both steps are driven
+    // by the error event, so they can be exercised without a broken file on disk.
+    const fb = await evaluate(`
+      (function () {
+        var img = document.querySelector('.media.is-yt img.yt-thumb');
+        if (!img) return { skipped: 'no thumbnail' };
+        var tail = function (e) { return (e.getAttribute('src') || '').split('/').pop(); };
+        var first = tail(img);
+        img.dispatchEvent(new Event('error'));
+        var afterOne = tail(img);
+        img.dispatchEvent(new Event('error'));
+        return { first: first, afterOneError: afterOne, afterTwoErrors: tail(img),
+                 broken: img.getAttribute('data-broken'),
+                 display: getComputedStyle(img).display };
+      })()`);
+    console.log("youtube thumb-fallback:", JSON.stringify(fb));
+
+    const lb = await evaluate(`
+      (function () {
+        var btn = document.querySelector('.media.is-yt .cap .open-lg');
+        if (!btn) return { skipped: 'no open-lg button on a youtube card' };
+        btn.click();
+        var lbx = document.getElementById('lightbox');
+        var fr = document.querySelector('#lb-stage iframe');
+        var out = { open: lbx.classList.contains('on'), iframe: !!fr,
+                    src: fr ? fr.getAttribute('src') : '',
+                    badge: (document.getElementById('lb-meta') || {}).textContent };
+        lbx.classList.remove('on');
+        return out;
+      })()`);
+    console.log("youtube lightbox:", JSON.stringify(lb));
+  }
+
   const errs = await evaluate(
     "window.__e=[];window.addEventListener('error',function(e){window.__e.push(String(e.message));});0");
   void errs;
+
+  // PLAY_TEST=1 actually decodes: calls play() on every video and reports whether
+  // currentTime advanced. Chrome is launched with the autoplay policy relaxed for
+  // this, because without a user gesture an unmuted play() is rejected by policy
+  // — which would look like a broken file.
+  if (process.env.PLAY_TEST === "1") {
+    const played = await evaluate(`
+      (async function () {
+        var out = [];
+        for (const v of document.querySelectorAll('video')) {
+          var name = (v.currentSrc || '').split('/').pop();
+          try { await v.play(); } catch (e) { out.push({ file: name, playRejected: e.name }); continue; }
+          await new Promise(function (r) { setTimeout(r, 1500); });
+          out.push({ file: name, advanced: Math.round(v.currentTime * 100) / 100, paused: v.paused });
+          v.pause();
+        }
+        return out;
+      })()`);
+    for (const p of played) console.log("  play-test:", JSON.stringify(p));
+  }
 
   await shot("01-hero");
 

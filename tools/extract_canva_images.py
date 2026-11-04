@@ -79,6 +79,11 @@ CROPS = [
     # ---- 04 assembly -------------------------------------------------------
     ("pb", 15, 226, 120, 662, 347, "step4-building-blockout"),
     ("pb", 16, 44, 116, 842, 322, "step4-components-assembly"),
+    # ---- 05 set dressing ---------------------------------------------------
+    # Page numbers are from the 20-page Process Book exported on 2026-11-02;
+    # the two §05 pages sit at the end of the deck (pb19 / pb20 on disk).
+    ("pb", 19, 165, 101, 715, 300, "step5-store-set-dressing"),
+    ("pb", 20, 131, 119, 749, 337, "step5-distant-blocks"),
 ]
 
 

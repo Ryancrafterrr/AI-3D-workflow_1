@@ -32,6 +32,8 @@ INLINE = [
     "assets/images/step3-tripo-four-angles.jpg",
     "assets/images/step3-ue-inspection.jpg",
     "assets/images/step4-components-assembly.jpg",
+    "assets/images/step5-store-set-dressing.jpg",
+    "assets/images/step5-distant-blocks.jpg",
     # the remaining media slots are still placeholders — keep one representative GIF
     "assets/gifs/step5-material-unify.gif",
     "assets/video/step1-full-walkthrough.jpg",
