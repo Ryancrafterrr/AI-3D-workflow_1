@@ -1,5 +1,9 @@
 /* ============================================================================
    step-6.js — 06 Visual Unification & Atmosphere Development
+   Source: Final Project Process Book §06 Atmosphere Development (pages 26–29)
+   Order follows the document: fundamentals → atmosphere → overall adjustment.
+   Sub-steps 6.5 and 6.6 are marked as the deeper passes the document does not
+   cover yet.
    ========================================================================== */
 (function (W) {
   W.steps.push({
@@ -7,26 +11,74 @@
     n: "06",
     title: "Visual Unification & Atmosphere Development",
     short: "Unify",
-    en: "Materials · Light rig · LUT · Atmosphere",
+    en: "Exposure · Sun & sky · Fog · Overall adjustment",
     stage: "LOOK DEV",
-    purpose: "Bring assets from many different sources into one visual standard: <strong>material consistency</strong> (hue / saturation / roughness held inside a shared range), <strong>unified lighting</strong>, and <strong>post-processing with colour grading</strong>. This step decides whether the frame looks like one team made it.",
+    purpose: "Make the street look like one place at one hour. The Process Book runs this chapter in a fixed direction: fix the <strong>fundamentals</strong> first — lock exposure, then set the sun and the sky that stands in for it — and only then add fog, because fog is what turns a lit greybox into a space with distance in it. The last pass is an <strong>overall adjustment</strong>: saturation, contrast and exposure, judged in black and white so the value structure is visible. Material-level convergence and a reusable LUT sit beyond the document's scope and are marked as such.",
     duration: "3–6 days",
     difficulty: "High — controlled by numbers, not by feel",
-    inputs: ["Frozen level (dressing included)", "Material library", "Colour and lighting data from the references"],
-    outputs: ["Unified material standard and instances", "Primary light rig (Lumen settings)", "Post-processing setup (LUT / grade)", "2–3 atmosphere variants"],
-    tools: ["UE5 (Lumen / Post Process Volume)", "Substance Painter", "DaVinci Resolve / Photoshop (LUT authoring)"],
+    inputs: ["Frozen level (dressing included)", "Reference photography for the time of day being built", "Material library", "Post Process Volume, Exponential Height Fog, fog cards"],
+    outputs: ["Exposure locked at a fixed EV100, with a sun and sky that read as one time of day", "Exponential height fog with volumetric scattering, tuned for depth", "Fog cards for the background that is not actually distant", "An overall grade checked in black and white", "2–3 reproducible atmosphere variants"],
+    tools: ["UE5 — Post Process Volume (exposure, colour grading)", "UE5 — Directional Light, Sky Light, Exponential Height Fog, fog cards", "Substance Painter (material instances)"],
     pipe: { out: "Unified look + atmosphere set", tool: "UE5 Look Dev" },
 
     intro: [
-      "Assets arrive from AI generation, marketplace packs and outsourcing, so their style is inconsistent by default. The way to unify is not “tweak it by feel” but to <strong>fix a set of numeric ranges</strong>: hue concentrated within {{N}} degrees, a saturation ceiling, a roughness distribution, a value range. Once the ranges exist, any new asset can be judged against them in seconds.",
-      "Lighting and post-processing are the last resort for unification: even if materials differ slightly, one shared key direction, colour temperature and grade pulls them together. <strong>Fix materials first, then close the gap with light</strong> — reverse the order and you spend the rest of the project patching holes."
+      "By the end of step 05 the street is dressed and nothing about it is lit. This stage is the look-dev pass, and the Process Book runs it in a strict order — <strong>fundamentals, then atmosphere, then the overall adjustment</strong> — because each step is judged against the one before it. Sub-steps 6.1 to 6.4 follow that chapter page for page. 6.5 and 6.6 are the deeper material and grade passes the document does not cover yet, and they are labelled that way rather than presented as procedure.",
+      "The order is not a stylistic choice. Exposure and the sun/sky pair decide whether the frame is readable at all; fog adds depth on top of a frame that already works; the final post pass unifies lightness across everything. Reverse the order and you end up grading a scene whose exposure is still drifting, which is why almost every “the light is off” problem in a student scene turns out to be an auto-exposure problem."
     ],
 
     substeps: [
       {
-        id: "5.1",
-        title: "Material consistency audit and convergence",
-        detail: "Check four values per material: hue, saturation, roughness, value. Fix anything outside the ranges. Once this pass is done the frame suddenly looks like one set of things.",
+        id: "6.1",
+        title: "Basic parameters: exposure, sun and sky",
+        detail: "Three fundamentals, in this order: <strong>exposure, directional light, sky light</strong>. In the Post Process Volume, set both <code>Min EV100</code> and <code>Max EV100</code> to <strong>1</strong> — equal min and max is what disables auto exposure, so the image stops breathing as the camera moves. The <strong>Directional Light is the sun</strong>: intensity, colour and source angle all follow the time of day. Early morning and dusk are warmer with softer shadows, because the source angle is larger; midday is cooler, close to white, with sharper shadows from a smaller angle. The <strong>Sky Light stands in for ambient, diffuse light</strong> and is what sets the value of the shadowed areas. In a game the shadows generally need to stay readable rather than go pitch black, so sky intensity is often pushed <strong>above</strong> the physically realistic figure. The reliable trick for volume is a warm sun against a cool ambient — that temperature split is what reads as three-dimensional.",
+        tasks: [
+          "Lock exposure: set both Min and Max EV100 to 1 in the Post Process Volume, then confirm the image no longer shifts as the camera moves",
+          "Set the Directional Light as the sun for one specific time of day: intensity, colour temperature, source angle",
+          "Match the source angle to the hour — larger for the soft shadows of early morning and dusk, smaller for the sharp shadows of midday",
+          "Set the Sky Light intensity for the shadow value you want, and accept that it will sit above the physically realistic figure",
+          "Hold a warm sun against a cool ambient, and check the split still reads from the walking route"
+        ]
+      },
+      {
+        id: "6.2",
+        title: "Exponential height fog — depth and scale",
+        detail: "Fog comes after the fundamentals, never before: once the base values are set the scene already reads as an hour of the day, and fog is what gives it distance. In the Exponential Height Fog actor, enable <strong>Volumetric Fog</strong> first — without it the density and colour settings do very little — then tune density, colour and start distance. The physical job of fog is to separate foreground from background and to give the street a scale; its colour sets the mood. Blue or cyan reads as fresh and open, a warmer tint as weight and gravity. The failure to avoid is fog strong enough to flatten the contrast you built in 6.1.",
+        tasks: [
+          "Enable Volumetric Fog before touching anything else — density and colour do almost nothing without it",
+          "Set density and start distance so the far end of the street reads as far away rather than as small",
+          "Pick the fog colour for the mood the frame is meant to carry — cool for open, warm for heavy",
+          "Judge the fog from the hero camera; a value that looks right in the viewport often disappears at eye level",
+          "Back the density off if the shadow structure from 6.1 has gone flat"
+        ]
+      },
+      {
+        id: "6.3",
+        title: "Fog planes for distance that isn't there",
+        detail: "Height fog assumes things get further away as they rise and recede. A background block that sits only thirty metres behind the foreground will not gain distance from it. That is what <strong>fog cards</strong> are for: hand-placed planes that add aerial perspective where the geometry does not provide it. The colour rule is a distance rule — <strong>the closer the card, the lower its saturation</strong>, tending toward white; <strong>the further away, the higher the saturation</strong>, tending toward the sky colour. Get it backwards and the background reads as a painted backdrop instead of as air.",
+        tasks: [
+          "Find the background objects that still fail to read as distant after 6.2",
+          "Place a fog card in front of each one, not around it",
+          "Set saturation by distance — near cards washed toward white, distant cards toward the sky colour",
+          "Keep the card's own edge invisible; if you can see the plane, the opacity map is too hard",
+          "Re-check the silhouette separation from the hero camera"
+        ]
+      },
+      {
+        id: "6.4",
+        title: "Visual unification: the overall adjustment",
+        detail: "The last documented pass is the one the Process Book calls <strong>visual unification</strong>, and it happens entirely in the Post Process Volume: saturation, contrast and exposure, set to move the whole frame toward the intended aesthetic rather than to repair individual assets. Stylised scenes sit higher in saturation, realistic ones lower — that number is a decision, not a default. The second half is a value check, and the most effective way to run it is to <strong>switch the scene to black and white</strong>, where you can see at a glance whether objects of the same type sit in a similar lightness range. The hierarchy that should survive that check: <strong>environment darkest, characters next, effects brightest</strong>. This street has no characters yet, so read it as environment → hero props and lit signage → emissives. Road and surface decals are the one family still free to move, because their lightness is not fixed by a photographic reference.",
+        tasks: [
+          "Switch the scene to black and white and read the value structure before touching colour",
+          "Check the hierarchy: environment < hero props and signage < emissive effects",
+          "Pull same-type objects into one lightness range — the b/w view is what exposes the outliers",
+          "Set saturation for the intended aesthetic, then contrast, then exposure, in that order",
+          "Adjust the road and surface decals last, since they are the one family not locked to a reference"
+        ]
+      },
+      {
+        id: "6.5",
+        title: "Material consistency audit — beyond the document",
+        detail: "The Process Book does not cover material-level convergence. This is the deeper pass, and it is the one that decides whether assets from AI generation, marketplace packs and outsourcing can sit in the same frame. Check four values per material — hue, saturation, roughness, value — and fix anything outside the ranges. Once the ranges exist, a new asset can be judged against them in seconds instead of argued about.",
         tasks: [
           "Fix the visual baseline: hue band (e.g. {{180–220°}}), saturation ceiling (e.g. {{45%}}), value range (e.g. {{20–70%}})",
           "Route every parameter change through material instances; never scatter edits across the master material",
@@ -35,46 +87,24 @@
         ]
       },
       {
-        id: "5.2",
-        title: "Unified lighting",
-        detail: "Decide one primary light rig and reuse it for every camera: key direction, colour temperature, sky light intensity, fog and volumetrics. Lighting is the last safety net for consistency.",
-        tasks: [
-          "Fix the key light direction and elevation (e.g. {{azimuth 315°, elevation 35°}}) and keep it identical scene-wide",
-          "Define the colour-temperature relationships: sun / sky / practical, with a clear warm-cool division",
-          "Configure Lumen and an exposure strategy (lock a manual EV so nothing jumps with auto exposure)",
-          "Add fog and volumetrics to unify the sense of air and the depth read"
-        ]
-      },
-      {
-        id: "5.3",
-        title: "Post-processing and colour grading",
-        detail: "Post-processing is the cheapest unification tool there is: one LUT, one white balance, one contrast compression pulls mismatched assets into the same colour space.",
+        id: "6.6",
+        title: "Authoring a reusable grade (LUT) — beyond the document",
+        detail: "6.4 sets a grade for this scene; this is about making that grade reproducible. If the look has to survive a new camera, a new atmosphere or a second scene, it cannot live in a dozen scattered Post Process Volume values — it needs to be one LUT. Author it outside the engine (DaVinci Resolve or Photoshop), export it as <code>.cube</code> or a strip, and put it back on the volume so every camera and every variant starts from the same colour base. Also the cheapest unification tool there is: one LUT, one white balance, one contrast compression pulls mismatched assets into the same colour space.",
         tasks: [
           "Configure the Post Process Volume: white balance, contrast, tone curve (S-curve), highlight rolloff",
-          "Author a project LUT (build it in DaVinci / Photoshop, export .cube or a 256×16 strip)",
+          "Author a project LUT and export it as .cube or a 256×16 strip",
           "Unify bloom / lens flare / sharpening so the look does not jump between cameras",
           "Check that shadows are not crushed and highlights are not clipped — leave grading headroom"
-        ]
-      },
-      {
-        id: "5.4",
-        title: "Atmosphere variants and side-by-side comparison",
-        detail: "Build 2–3 atmospheres for the same scene (early morning fog / harsh noon / warm dusk), compare them side by side, then pick the hero look — and keep the others as ammunition for promotional material.",
-        tasks: [
-          "Capture every atmosphere from the same fixed cameras so they are directly comparable",
-          "List the emotional keywords and the best use case for each atmosphere",
-          "Choose the hero look and record all of its parameters (reproducibly)",
-          "Put the hero-look screenshots next to the step 01 locked concept for a final cross-check"
         ]
       }
     ],
 
     prompts: [
       {
-        id: "s5p1",
+        id: "s6p1",
         title: "Material consistency audit",
         icon: "layers",
-        note: "Drop in several asset renders or material spheres at once and have the model find whatever falls outside the colour range.",
+        note: "Supports 6.5. Drop in several asset renders or material spheres at once and have the model find whatever falls outside the colour range.",
         variants: [
           {
             key: "A",
@@ -160,10 +190,10 @@ Then tell me how to verify the LUT is neutral enough to reuse across different t
         ]
       },
       {
-        id: "s5p2",
+        id: "s6p2",
         title: "Lighting and post-processing plan",
         icon: "flame",
-        note: "Define a reusable primary light rig and post-processing parameters so every camera reads the same.",
+        note: "Supports 6.1 and 6.6. Define a reusable primary light rig and post-processing parameters so every camera reads the same.",
         variants: [
           {
             key: "A",
@@ -249,58 +279,63 @@ Then flag the two details in the reference that would be hardest to reproduce in
       }
     ],
 
+
     media: [
       {
-        type: "gif",
-        title: "Material convergence before / after (loop)",
-        caption: "Key GIF: how the frame changes as hue and saturation converge. Watch it go from looking assembled to looking unified.",
-        src: "assets/gifs/step5-material-unify.gif",
-        file: "assets/gifs/step5-material-unify.gif",
-        wide: true
-      },
-      {
-        type: "video",
-        title: "Look dev end to end: material audit → lighting → grade (not recorded yet)",
-        caption: "Planned: the full narrated pass, including how the parameter values were chosen and the attempts that failed.",
-        src: "assets/video/step5-lookdev.mp4",
-        file: "assets/video/step5-lookdev.mp4"
-      },
-      {
-        type: "gif",
-        title: "LUT toggle",
-        caption: "The same frame grading off / grading on, 4-second loop.",
-        src: "assets/gifs/step5-lut-toggle.gif",
-        file: "assets/gifs/step5-lut-toggle.gif"
+        type: "image",
+        title: "The three fundamentals, and where they live",
+        caption: "Post Process Volume on the left — Min and Max EV100 both at 1, which is what actually turns auto exposure off. Directional Light in the middle: intensity, colour and source angle are the sun. Sky Light on the right: Real Time Capture on, intensity scaled up so the shadows stay readable. These three panels are the whole of 6.1.",
+        src: "assets/images/step6-basic-parameters.jpg",
+        file: "assets/images/step6-basic-parameters.jpg"
       },
       {
         type: "image",
-        title: "Three atmosphere variants side by side",
-        caption: "Dawn fog / flat noon / warm dusk, same camera, compared directly.",
-        src: "assets/images/step5-atmosphere-variants.jpg",
-        file: "assets/images/step5-atmosphere-variants.jpg"
+        title: "Exponential height fog: volumetric on, then density, then distance",
+        caption: "Volumetric Fog has to be enabled first or the density values barely register. Then scattering distribution, albedo, density and start distance — and the frame on the right is what those numbers buy: the far end of the street reads as far away rather than as small.",
+        src: "assets/images/step6-height-fog.jpg",
+        file: "assets/images/step6-height-fog.jpg"
       },
       {
-        type: "gif",
-        title: "Light direction sweep",
-        caption: "Continuous azimuth sweep from 180° to 45° to pick the best angle (6-second loop).",
-        src: "assets/gifs/step5-light-sweep.gif",
-        file: "assets/gifs/step5-light-sweep.gif"
+        type: "image",
+        title: "A fog card, for distance the geometry does not have",
+        caption: "BP_EasyFog is a plane with an opacity map and a tint, placed in front of the background block rather than around it. The colour rule is a distance rule: near cards washed toward white, distant cards toward the sky colour. If the card's own edge is visible, the opacity map is too hard.",
+        src: "assets/images/step6-fog-planes.jpg",
+        file: "assets/images/step6-fog-planes.jpg"
+      },
+      {
+        type: "image",
+        title: "The black-and-white check",
+        caption: "Left: the overall adjustment — temperature, saturation, contrast. Right: the same frame with saturation off, which is the only view in which the value structure is actually legible. Same-type objects should land in one lightness range, and the hierarchy environment → props and signage → emissives should survive the check.",
+        src: "assets/images/step6-visual-unification.jpg",
+        file: "assets/images/step6-visual-unification.jpg"
+      },
+      {
+        type: "youtube",
+        title: "Step 06 walkthrough · look dev, fog and the overall adjustment",
+        caption: "The recorded pass for this stage: locking exposure, setting the sun and the sky, bringing in the height fog and the fog cards, then the overall adjustment judged in black and white. Streams from YouTube.",
+        yt: "https://youtu.be/bRKF-4obHOo",
+        wide: true
       }
     ],
 
     tips: [
-      { title: "Write the numeric ranges down", text: "Put the allowed ranges for hue / saturation / value / roughness into the standard document. With ranges, judgement becomes comparison instead of argument." },
-      { title: "Materials before lighting", text: "Adjusting light before materials are aligned means forever patching holes. The order is: converge materials → unify lighting → close with the grade." },
-      { title: "Manual exposure", text: "Turn auto exposure off. It makes the look jump between cameras and is the most overlooked killer of consistency." },
-      { title: "One benchmark image", text: "Pick a single “visual benchmark frame” and compare every new asset against it. Much easier to execute than an abstract standard." },
+      { title: "Exposure before anything else", text: "Set Min and Max EV100 to the same value and the image stops breathing. Almost every “the light keeps changing” complaint is auto exposure still running." },
+      { title: "Sun warm, ambient cool", text: "The temperature split between the directional light and the sky light is what gives the frame volume. Same temperature on both reads flat however carefully the rest is tuned." },
+      { title: "Fog is depth, not atmosphere dressing", text: "Fog's physical job is to separate foreground from background and give the street a scale. Its colour is the mood layer, and it comes second." },
+      { title: "Judge values in black and white", text: "Switching saturation off is the cheapest check in look dev. It shows every object that is the wrong lightness, which colour hides almost perfectly." },
+      { title: "One benchmark image", text: "Pick a single “visual benchmark frame” and compare every new asset and every new atmosphere against it. Much easier to execute than an abstract standard." },
       { title: "Leave grading headroom", text: "Do not max out contrast in engine. Keep shadows above 5% and highlights unclipped so the LUT has room to work." }
     ],
+
     pitfalls: [
-      { title: "Grading by feel", text: "Without numeric ranges, twenty assets produce twenty styles, and none of it transfers to the next project." },
-      { title: "Lighting used to hide problems", text: "Covering inconsistent materials with strong light and heavy fog looks fine briefly, then falls apart the moment you change camera or atmosphere." },
+      { title: "Auto exposure left on", text: "The single most common cause of a look that will not hold: the image re-exposes itself every time the camera turns, so nothing you set afterwards stays set." },
+      { title: "Fog used to hide a weak light setup", text: "Heavy fog over bad lighting looks atmospheric for one screenshot and falls apart the moment the camera or the time of day changes." },
+      { title: "Grading in colour", text: "Saturation hides value errors. Grade the black-and-white frame first, or the same wrong-lightness object survives every pass." },
+      { title: "Fog cards that read as cards", text: "A hard-edged plane in the background announces itself as a plane. Soften the opacity map and place it in front of the object, never around it." },
       { title: "Wrong texture colour space", text: "Reading roughness as sRGB washes everything out and greys it down. Most people read that as a taste problem when it is a settings problem." },
-      { title: "Atmosphere variants from different cameras", text: "Comparing atmospheres across different cameras is not a comparison. Fix the camera and the parameters, change only the light." }
+      { title: "Atmosphere variants from different cameras", text: "Comparing atmospheres across different cameras is not a comparison. Fix the camera and the values, change only the light and the fog." }
     ],
-    checkpoint: "Every material sits inside the fixed numeric ranges; one reusable light rig is applied to all cameras; exposure is locked with no automatic jumping; a LUT is generated and applied; 2–3 reproducible atmosphere variants exist; and the hero-look screenshots match the step 01 locked concept in tone."
+
+    checkpoint: "Exposure is locked at a fixed EV100 with min and max equal, and the image no longer shifts as the camera moves. The directional light reads as one specific time of day, with its source angle matched to that hour, and the sky light is set high enough that shadowed areas stay readable. Volumetric fog is enabled with density, colour and start distance tuned for depth rather than for mood alone, and any background that still fails to read as distant has its own fog card, saturated by distance. The overall adjustment has been judged in black and white: same-type objects sit in one lightness range and the environment → props → emissives hierarchy survives. Materials sit inside the fixed numeric ranges where that pass was run, a LUT makes the grade reproducible, and 2–3 atmosphere variants exist from the same cameras."
   });
 })(window.WIKI);

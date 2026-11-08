@@ -3,7 +3,7 @@
    Content model is documented in README.md. Every step-N.js pushes one record
    into WIKI.steps, so adding a step = adding a file.
 
-   Copy for steps 01–05 and for the appendix is written up from the two Canva
+   Copy for steps 01–06 and for the appendix is written up from the two Canva
    source documents (Final Project Process Book, Sprint 2 – Proof of Concept
    A4 v3). Figures in assets/images/ are cropped out of those same documents by
    tools/extract_canva_images.py — see README §8.
@@ -12,19 +12,19 @@ window.WIKI = {
   meta: {
     title: "AI-Assisted Environment Art Workflow",
     titleEn: "Lingnan Arcade Street · Unreal Engine 5",
-    lede: "A working record of the <strong>AI-assisted environment art pipeline</strong> used to build a Guangzhou Lingnan arcade (<code>qilou</code>) street in Unreal Engine 5 — visual research and concept development, UE5 blockout, asset generation and refinement, component assembly, set dressing, visual unification, and final delivery. Every stage carries the timings, iteration counts and generation costs that were actually logged while it ran.",
-    lede2: "The pipeline was validated in <strong>Sprint 2</strong> with a focused proof of concept: one representative building component carried end to end through Procreate, TapNow, Tripo 3D and Unreal Engine 5. Steps 01–04 below are written up from that evidence, with the source figures included. Step 05 comes from the set-dressing chapter of the Process Book. Steps 06–07 still carry placeholder content.",
-    version: "v0.2.4 · REAL CONTENT",
-    updated: "2026-11-02",
+    lede: "A working record of the <strong>AI-assisted environment art pipeline</strong> used to build a Guangzhou Lingnan arcade (<code>qilou</code>) street in Unreal Engine 5 — visual research and concept development, UE5 blockout, asset generation and refinement, component assembly, set dressing, and visual unification. Every stage carries the timings, iteration counts and generation costs that were actually logged while it ran.",
+    lede2: "The pipeline was validated in <strong>Sprint 2</strong> with a focused proof of concept: one representative building component carried end to end through Procreate, TapNow, Tripo 3D and Unreal Engine 5. Steps 01–04 below are written up from that evidence, with the source figures included. Step 05 comes from the set-dressing chapter of the Process Book. Step 06 is written up from the Process Book’s atmosphere chapter; its last two passes are marked as guidance that goes beyond the document.",
+    version: "v0.2.7 · REAL CONTENT",
+    updated: "2026-11-08",
     badges: [
       { text: "Built from production logs", tone: "live" },
-      { text: "7-step pipeline", tone: "" },
+      { text: "6-step pipeline", tone: "" },
       { text: "Single page · no page loads", tone: "" },
       { text: "Prompts copy in one click", tone: "" }
     ],
     stats: [
-      { v: "07", l: "Workflow steps" },
-      { v: "30", l: "Source figures" },
+      { v: "06", l: "Workflow steps" },
+      { v: "39", l: "Source figures" },
       { v: "55", l: "Logged iterations" },
       { v: "$10.6", l: "Generation cost logged" }
     ]
@@ -37,7 +37,7 @@ window.WIKI = {
       {
         icon: "menu",
         title: "Pinned rail + top jump bar",
-        text: "The chip bar at the top jumps straight to any of the 7 steps. The rail on the left stays pinned to the screen for the entire scroll, highlights the section you are reading, and expands the sub-steps of the current step."
+        text: "The chip bar at the top jumps straight to any of the 6 steps. The rail on the left stays pinned to the screen for the entire scroll, highlights the section you are reading, and expands the sub-steps of the current step."
       },
       {
         icon: "copy",
@@ -59,7 +59,7 @@ window.WIKI = {
 
   pipeline: {
     title: "Pipeline overview",
-    lead: "Seven steps take you from reference to finished film. Click any card to jump to that section. The muted tag is the one thing that must exist when the step is done.",
+    lead: "Six steps take you from reference to finished film. Click any card to jump to that section. The muted tag is the one thing that must exist when the step is done.",
     items: [
       /* injected by each step-N.js */
     ]

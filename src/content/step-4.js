@@ -190,11 +190,10 @@ Answer in concrete numbers and named edits.`
         file: "assets/images/step4-components-assembly.jpg"
       },
       {
-        type: "video",
-        title: "Step 04 dressing walkthrough (not recorded yet)",
-        caption: "Planned: Blueprint assembly, placement into the blockout, the repetition-edit pass and the camera sheet. Narrated if possible — the editing decisions are the part worth hearing explained.",
-        src: "assets/video/step4-dressing-walkthrough.mp4",
-        file: "assets/video/step4-dressing-walkthrough.mp4",
+        type: "youtube",
+        title: "Step 04 walkthrough · assembly, placement and the repetition edit",
+        caption: "The recorded pass for this stage: building the Blueprint, assembling walls and columns before openings, placing the results into the blockout, and editing the repetition out of the street. Streams from YouTube — use the player's own controls, or open it larger.",
+        yt: "https://youtu.be/QOiQzWhFvCI",
         wide: true
       }
     ],
