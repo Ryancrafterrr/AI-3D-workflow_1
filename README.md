@@ -66,7 +66,7 @@ ai-scene-workflow-wiki/
 │   ├── app.js                  rendering and interaction logic (the only file needing code)
 │   └── content/
 │       ├── 00-core.js          site meta + how to use + pipeline overview (container)
-│       ├── step-1.js … step-7.js   the seven steps, one file each
+│       ├── step-1.js … step-6.js   the six steps, one file each
 │       └── 99-appendix.js      toolchain / media manifest / FAQ / changelog
 ├── demo-standalone.html        optional single-file demo (sample media inlined as data URIs)
 ├── tools/
@@ -153,7 +153,7 @@ Prose fields (`purpose` / `intro` / `detail` / `tips` / `checkpoint`) accept inl
 
 ### 4.2 Adding a step
 
-1. Copy `src/content/step-7.js` → `src/content/step-8.js`
+1. Copy `src/content/step-6.js` → `src/content/step-7.js`
 2. Change `id` / `n` / `title` / `short` and the content
 3. Run `python build.py`
 
@@ -277,7 +277,7 @@ more, so the file can be deleted from the repository to shrink it.
 
 ## 6. Known boundaries
 
-- **Steps 01–05 carry real content; steps 06–07 are still placeholder content.** The source documents stop at asset generation, so look dev and delivery are left in their placeholder state on purpose rather than filled with invented material — it stays obvious which parts of the wiki are backed by evidence.
+- **Steps 01–05 carry real content, and step 06 carries the Process Book's atmosphere chapter.** Sub-steps 6.1–6.4 (exposure, sun and sky, height fog, fog cards, the overall adjustment) follow §06 page for page; 6.5 (material consistency) and 6.6 (LUT authoring) are labelled “beyond the document” on the page, because they are guidance rather than procedure. Workflow documentation and the final film used to be step 07; they were removed on 2026-11-06 because they are deliverables rather than part of the AI-assisted environment pipeline.
 - Progress lives in browser `localStorage` and **does not sync across devices**. Syncing needs a thin account + progress endpoint (this build deliberately stays backend-free).
 - GIFs get heavy when they run long — compress to under 8 seconds in AE/PS first. For smaller files, switch `src` to `.webp` (browser support is fine, but you supply the file).
 - Use H.264 MP4 for video; HEVC does not play in some browsers.
@@ -320,7 +320,7 @@ invented.
 
 | Document | Canva ID | Pages | Feeds |
 |---|---|---|---|
-| Final Project Process Book | `DAHV1mabePw` | 20 | Sections 01–05 → steps 01–05 |
+| Final Project Process Book | `DAHV1mabePw` | 29 | Sections 01–05 → steps 01–05; §06 → step 06 (6.1–6.4) |
 | Sprint 2 – Proof of Concept (A4 v3) | `DAHWU6gmpMY` | 23 | The eight logged stages → steps 01–03, and the appendix POC block |
 
 ```bash

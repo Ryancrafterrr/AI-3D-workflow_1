@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI-Assisted Environment Art Workflow · Lingnan Arcade Street · Unreal Engine 5</title>
-<meta name="description" content="AI-assisted environment art workflow · single-page documentation · v0.2.4 · REAL CONTENT">
+<meta name="description" content="AI-assisted environment art workflow · single-page documentation · v0.2.7 · REAL CONTENT">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#080a0e">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23121820'/%3E%3Cpath d='M8 22V10h4l4 7 4-7h4v12' stroke='%234cc9f0' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
@@ -1403,7 +1403,7 @@ footer.foot .sp { flex: 1; }
    Content model is documented in README.md. Every step-N.js pushes one record
    into WIKI.steps, so adding a step = adding a file.
 
-   Copy for steps 01–05 and for the appendix is written up from the two Canva
+   Copy for steps 01–06 and for the appendix is written up from the two Canva
    source documents (Final Project Process Book, Sprint 2 – Proof of Concept
    A4 v3). Figures in assets/images/ are cropped out of those same documents by
    tools/extract_canva_images.py — see README §8.
@@ -1412,19 +1412,19 @@ window.WIKI = {
   meta: {
     title: "AI-Assisted Environment Art Workflow",
     titleEn: "Lingnan Arcade Street · Unreal Engine 5",
-    lede: "A working record of the <strong>AI-assisted environment art pipeline</strong> used to build a Guangzhou Lingnan arcade (<code>qilou</code>) street in Unreal Engine 5 — visual research and concept development, UE5 blockout, asset generation and refinement, component assembly, set dressing, visual unification, and final delivery. Every stage carries the timings, iteration counts and generation costs that were actually logged while it ran.",
-    lede2: "The pipeline was validated in <strong>Sprint 2</strong> with a focused proof of concept: one representative building component carried end to end through Procreate, TapNow, Tripo 3D and Unreal Engine 5. Steps 01–04 below are written up from that evidence, with the source figures included. Step 05 comes from the set-dressing chapter of the Process Book. Steps 06–07 still carry placeholder content.",
-    version: "v0.2.4 · REAL CONTENT",
-    updated: "2026-11-02",
+    lede: "A working record of the <strong>AI-assisted environment art pipeline</strong> used to build a Guangzhou Lingnan arcade (<code>qilou</code>) street in Unreal Engine 5 — visual research and concept development, UE5 blockout, asset generation and refinement, component assembly, set dressing, and visual unification. Every stage carries the timings, iteration counts and generation costs that were actually logged while it ran.",
+    lede2: "The pipeline was validated in <strong>Sprint 2</strong> with a focused proof of concept: one representative building component carried end to end through Procreate, TapNow, Tripo 3D and Unreal Engine 5. Steps 01–04 below are written up from that evidence, with the source figures included. Step 05 comes from the set-dressing chapter of the Process Book. Step 06 is written up from the Process Book’s atmosphere chapter; its last two passes are marked as guidance that goes beyond the document.",
+    version: "v0.2.7 · REAL CONTENT",
+    updated: "2026-11-08",
     badges: [
       { text: "Built from production logs", tone: "live" },
-      { text: "7-step pipeline", tone: "" },
+      { text: "6-step pipeline", tone: "" },
       { text: "Single page · no page loads", tone: "" },
       { text: "Prompts copy in one click", tone: "" }
     ],
     stats: [
-      { v: "07", l: "Workflow steps" },
-      { v: "30", l: "Source figures" },
+      { v: "06", l: "Workflow steps" },
+      { v: "39", l: "Source figures" },
       { v: "55", l: "Logged iterations" },
       { v: "$10.6", l: "Generation cost logged" }
     ]
@@ -1437,7 +1437,7 @@ window.WIKI = {
       {
         icon: "menu",
         title: "Pinned rail + top jump bar",
-        text: "The chip bar at the top jumps straight to any of the 7 steps. The rail on the left stays pinned to the screen for the entire scroll, highlights the section you are reading, and expands the sub-steps of the current step."
+        text: "The chip bar at the top jumps straight to any of the 6 steps. The rail on the left stays pinned to the screen for the entire scroll, highlights the section you are reading, and expands the sub-steps of the current step."
       },
       {
         icon: "copy",
@@ -1459,7 +1459,7 @@ window.WIKI = {
 
   pipeline: {
     title: "Pipeline overview",
-    lead: "Seven steps take you from reference to finished film. Click any card to jump to that section. The muted tag is the one thing that must exist when the step is done.",
+    lead: "Six steps take you from reference to finished film. Click any card to jump to that section. The muted tag is the one thing that must exist when the step is done.",
     items: [
       /* injected by each step-N.js */
     ]
@@ -1490,7 +1490,7 @@ window.WIKI = {
         { name: "Gemini 3.1 Flash Lite", stage: "STEP 01 · 03", use: "Text model, used for describing target-game material style in game-art terminology and for auditing reference sheets before they are uploaded to a 3D platform." },
         { name: "Running Hub", stage: "STEP 01 (dropped)", use: "Batch image generation. Tried first and rejected: images in the same batch share a style, so one style drift fails the entire run however good the best output looks." },
         { name: "Tripo 3D", stage: "STEP 03", use: "Model generation, retopology, UV unwrapping and texturing in a single pass. Auto-generates multi-view references from the upload. Logged as the cheapest, most reliable stage in the pipeline." },
-        { name: "Unreal Engine 5", stage: "STEP 02–07", use: "Reference planes with a parameterised master material, blockout, import and inspection of generated models, Blueprint assembly, lighting and delivery." },
+        { name: "Unreal Engine 5", stage: "STEP 02–06", use: "Reference planes with a parameterised master material, blockout, import and inspection of generated models, Blueprint assembly, set dressing placement and decal work, lighting and post-processing." },
         { name: "Reference-plane master material", stage: "STEP 02", use: "A project-side asset rather than a product: base colour and opacity exposed as parameters, colour texture multiplied by a scalar for brightness, one instance per reference plane." }
       ]
     },
@@ -1550,7 +1550,7 @@ window.WIKI = {
 
     manifest: {
       title: "Media manifest (drop the file at the path and it appears)",
-      lead: "Every still below is a real figure extracted from the two source documents by <code>tools/extract_canva_images.py</code>. The three walkthrough recordings for steps 01–03 stream from YouTube instead of being served out of this repository, so a long recording no longer has to fit inside the repo. Each is embedded as a click-to-load facade — the player itself is only built when a visitor presses play. The remaining video slots are still open: put a file at the matching path under <code>assets/</code> (or set <code>yt</code> / <code>src</code> in <code>content/*.js</code>) and the page swaps out its placeholder state automatically, with no CSS or logic changes.",
+      lead: "Every still below is a real figure extracted from the two source documents by <code>tools/extract_canva_images.py</code>. The six walkthrough recordings — one per step — stream from YouTube instead of being served out of this repository, so a long recording no longer has to fit inside the repo. Each is embedded as a click-to-load facade — the player itself is only built when a visitor presses play. The remaining video slots are still open: put a file at the matching path under <code>assets/</code> (or set <code>yt</code> / <code>src</code> in <code>content/*.js</code>) and the page swaps out its placeholder state automatically, with no CSS or logic changes.",
       cols: ["Step", "File path", "Type", "Source / purpose"],
       rows: [
         ["STEP 01", "assets/images/step1-sketch-sheet.jpg", "Still", "Process Book §01 — three hand-drawn concept sketches (Procreate)"],
@@ -1584,14 +1584,20 @@ window.WIKI = {
         ["STEP 03", "youtu.be/q0Z8bKxi16M", "Video", "Embedded from YouTube · 0:56 · click-to-load"],
         ["STEP 04", "assets/images/step4-building-blockout.jpg", "Still", "Process Book §04 — the building blocked out inside the assembly"],
         ["STEP 04", "assets/images/step4-components-assembly.jpg", "Still", "Process Book §04 — components assembled onto the building"],
-        ["STEP 04", "assets/video/step4-dressing-walkthrough.mp4", "Video", "Open slot · Blueprint assembly, facade variation, repetition edit · narrated"],
+        ["STEP 04", "youtu.be/QOiQzWhFvCI", "Video", "Embedded from YouTube · click-to-load"],
+        ["STEP 05", "assets/images/step5-prop-hierarchy.jpg", "Still", "Process Book §05 — prop order: vehicles, trees, bikes, small props, shrubs, vines"],
+        ["STEP 05", "assets/images/step5-prop-stilllife.jpg", "Still", "Process Book §05 — still-life hierarchy at prop scale, around the required street furniture"],
         ["STEP 05", "assets/images/step5-store-set-dressing.jpg", "Still", "Process Book §05 — the size hierarchy in a fitted-out shop and in still-life studies"],
         ["STEP 05", "assets/images/step5-distant-blocks.jpg", "Still", "Process Book §05 — distant blocks placed tallest-first"],
-        ["STEP 06", "assets/images/step5-atmosphere-variants.jpg", "Still", "Placeholder — waiting on the look-dev pass"],
-        ["STEP 06", "assets/video/step5-lookdev.mp4", "Video", "Placeholder — look-dev walkthrough"],
-        ["STEP 07", "assets/images/step6-hero-shot.jpg", "Still", "Placeholder — final hero shot"],
-        ["STEP 07", "assets/images/step6-doc-structure.jpg", "Still", "Placeholder — document structure"],
-        ["STEP 07", "assets/video/step6-final-cinematic.mp4", "Video", "Placeholder — final walkthrough film"]
+        ["STEP 05", "assets/images/step5-road-markings.jpg", "Still", "Process Book §05 — road markings before the damage pass"],
+        ["STEP 05", "assets/images/step5-decal-patches.jpg", "Still", "Process Book §05 — patch, cover and crack chain with its cause"],
+        ["STEP 05", "assets/images/step5-rhythm-interruption.jpg", "Still", "Process Book §05 — rhythm and interruption, from drawn cloth to water staining"],
+        ["STEP 05", "youtu.be/vky-T_UJrZM", "Video", "Embedded from YouTube · click-to-load"],
+        ["STEP 06", "assets/images/step6-basic-parameters.jpg", "Still", "Process Book §06 — Post Process Volume exposure, directional light, sky light"],
+        ["STEP 06", "assets/images/step6-height-fog.jpg", "Still", "Process Book §06 — exponential height fog, volumetric on"],
+        ["STEP 06", "assets/images/step6-fog-planes.jpg", "Still", "Process Book §06 — a fog card placed for distance"],
+        ["STEP 06", "assets/images/step6-visual-unification.jpg", "Still", "Process Book §06 — colour grading and the black-and-white value check"],
+        ["STEP 06", "youtu.be/bRKF-4obHOo", "Video", "Embedded from YouTube · click-to-load"]
       ]
     },
 
@@ -1603,8 +1609,8 @@ window.WIKI = {
           a: "From two working documents: the <strong>Final Project Process Book</strong> (sections 01–05) and <strong>Sprint 2 – Proof of Concept (A4 v3)</strong>, which logs all eight pipeline stages across a test pass and an evidence pass. The text is a write-up of what those documents record; the figures are cropped out of them by <code>tools/extract_canva_images.py</code> so they can be re-extracted whenever the source documents change."
         },
         {
-          q: "Why are steps 06 and 07 still placeholders?",
-          a: "Because the source documents do not cover them yet — the proof of concept stopped at asset generation, and look dev and delivery are Alpha and Beta work. They are left in their placeholder state deliberately rather than filled with invented content, so it stays obvious which parts of this wiki are backed by evidence and which are not."
+          q: "Which parts of step 06 are documented, and which are not?",
+          a: "Sub-steps 6.1 to 6.4 — exposure, sun and sky, exponential height fog, fog cards, and the overall adjustment checked in black and white — follow the Process Book’s atmosphere chapter page for page. 6.5 (material consistency) and 6.6 (authoring a LUT) are not in the document; they are the deeper passes this wiki adds, and they are labelled “beyond the document” on the page rather than presented as procedure. Workflow documentation and the final film used to be a seventh step here; they were removed because they are deliverables rather than part of the AI-assisted environment pipeline."
         },
         {
           q: "The tabular data shows costs in 'tapies'. What are those?",
@@ -1616,7 +1622,7 @@ window.WIKI = {
         },
         {
           q: "How do I add a step or a section?",
-          a: "Content and code are fully separated. Copy <code>src/content/step-7.js</code> to <code>step-8.js</code>, change <code>id / n / title</code> and the content, then rebuild.<strong>The top jump bar, the left rail, the pipeline cards and the progress ring all pick up the new step automatically</strong> — because the pipeline cards are derived from each step's <code>pipe</code> field."
+          a: "Content and code are fully separated. Copy <code>src/content/step-6.js</code> to <code>step-7.js</code>, change <code>id / n / title</code> and the content, then rebuild.<strong>The top jump bar, the left rail, the pipeline cards and the progress ring all pick up the new step automatically</strong> — because the pipeline cards are derived from each step's <code>pipe</code> field."
         },
         {
           q: "Where is progress stored? Does it sync across devices?",
@@ -1644,11 +1650,14 @@ window.WIKI = {
         { d: "2026-10-14", t: "v0.2.2 · walkthroughs stream from YouTube", c: "The step 01–03 recordings moved off the repository and onto YouTube, so a recording is no longer bounded by what fits in a repo. Each card renders a click-to-load facade — thumbnail plus play glyph — and the player iframe is injected only on click, because every embed is about a megabyte of JS; nothing is requested from YouTube until a visitor presses play. The thumbnail steps down maxresdefault → hqdefault → hidden rather than ever showing a broken image, embeds go through www.youtube.com/embed/ with rel=0, and an entry with no link yet renders a pending panel instead of an empty box. This is the one intentional external dependency in the build." },
         { d: "2026-10-15", t: "v0.2.3 · error 153 fixed (missing Referer)", c: "The player refused to start with &quot;Error 153 · video player configuration error&quot;. Google documents the cause plainly: embedders must send the HTTP Referer header, and without it playback is blocked outright. The iframe now carries referrerpolicy=&quot;strict-origin-when-cross-origin&quot; so the browser actually sends one, and the embed host moved to www.youtube.com/embed/ to match the snippet YouTube itself generates. Worth knowing: a file:// document sends no Referer at all, so the cards will report 153 when index.html is opened straight off disk — that is YouTube's rule, and the page is fine once served over http(s)." },
         { d: "2026-11-02", t: "v0.2.4 · set dressing becomes step 05 · speckle gate · prompt layers", c: "Two changes to the structure, two to the content. <strong>Set dressing is now its own step.</strong> Step 04 was called 'Environment Dressing &amp; Scene Composition' while every sub-step in it was assembly, so the step is now 'Components Assembly &amp; Facade Variation' and a new step 05 'Set Dressing &amp; Scene Composition' carries the Process Book's fifth chapter — placement by size rather than by category, the two shop types, distant blocks by height, and the signs of use. Everything after it renumbered to 06 and 07, which means every anchor id, the jump bar, the rail and the stored progress keys moved with it. <strong>A stage with no AI now says so.</strong> Step 05 renders an explicit 'no prompt library' panel and a 'Manual stage' meta tag instead of the silent gap it used to leave. <strong>Step 03 gained a speckle gate.</strong> The pre-flight audit on reference sheets now checks image quality as well as content — a seventh check for near-black speckle in the dark areas, plus a manual deep-zoom sweep — because Tripo reproduces the reference literally, so a speckled sheet becomes a speckled model and then baked texture noise. <strong>Step 01 gained the two-layer prompt idea</strong> and a fifth variant, E, that specifies the street bay by bay instead of describing a mood; it ships marked untested. Step 05 also gained the two Process Book figures for the size hierarchy and the skyline." },
-        { d: "—", t: "v0.3 · look dev and delivery (todo)", c: "Steps 06–07 are still placeholder content. They need the Alpha and Beta look-dev and delivery passes before they can be written up the same way." },
+        { d: "2026-11-06", t: "v0.2.5 · set dressing expanded · step 07 removed · numbering fixed", c: "Three changes. <strong>Step 05 grew from two Process Book pages to seven.</strong> The new pages cover the order of props by type inside a size band (vehicles, trees, bicycles, small props, shrubs, climbing plants — and rock formations, vegetation, other props for a natural scene), the still-life hierarchy applied at prop scale, and a decal pass that had no coverage at all before: road markings laid before anything else, patches and cracks placed as a descending chain that obeys cause, and water staining used to break rhythm and interrupt a uniform edge. Step 05 now runs eight sub-steps and seven figures, and it is the most detailed section of the wiki. <strong>Step 07 was removed.</strong> Workflow documentation and the final film are deliverables, not part of the AI-assisted environment pipeline, so the site now documents six steps and ends at look dev. <strong>Step 06 had inherited step 05\u2019s numbering</strong> when set dressing was split out — its sub-steps read 5.1–5.4 in both the rail and the body. They are now 6.1–6.4, its prompt blocks are s6p1 / s6p2, and its look-dev media files were renamed from step5-* to step6-* so no path on the page points at the wrong step." },
+        { d: "2026-11-07", t: "v0.2.6 · step 06 written from the Process Book", c: "The Process Book grew a sixth chapter — <strong>Atmosphere Development</strong>, four pages — and step 06 now follows it page for page. 6.1 lays the fundamentals in the documented order: lock exposure by setting Min and Max EV100 to the same value, set the directional light as the sun for one specific hour (warmer and softer at dawn and dusk, cooler and sharper at midday), then bring the sky light up until the shadows read instead of going black, keeping a warm sun against a cool ambient. 6.2 covers exponential height fog — volumetric fog first, then density, colour and start distance — and 6.3 covers fog cards for background that is not actually distant, with saturation rising by distance. 6.4 is the overall adjustment: saturation, contrast and exposure, judged with the scene switched to black and white so the environment → props → emissives lightness hierarchy is visible. Material convergence and LUT authoring keep their place as 6.5 and 6.6, now labelled as going beyond the document rather than as documented procedure. Four figures were cropped out of the new pages." },
+        { d: "2026-11-08", t: "v0.2.7 · walkthroughs for steps 04–06", c: "Every step now carries its own recording. Steps 04, 05 and 06 gain a click-to-load YouTube card like the ones on steps 01–03 — the same facade, so nothing is requested from YouTube until a visitor presses play, and the same referrerpolicy fix that keeps error 153 away. Step 04\u2019s open slot for an assembly walkthrough and step 06\u2019s for a look-dev pass are both filled; step 05 gets the recording it never had, which matters most of all because it is the one stage with no prompt library and therefore the one where a written description carries the least. The placeholder posters for those two video slots are gone from the repository." },
+        { d: "—", t: "v0.3 · look dev (todo)", c: "Step 06 is still placeholder content. It needs the Alpha look-dev pass before it can be written up the same way." },
         { d: "—", t: "v0.4 · membership layer (todo)", c: "For tiered access, add a lightweight password gate or a real account layer; a bilingual build is also a straightforward addition from the separated content files." }
       ]
     },
-    note: "<b>About this page</b>: steps 01–05 and the POC block are written up from the project's own working documents, and the figures are extracted from them — nothing in those sections is invented. Steps 06–07 remain <strong>placeholder examples</strong> used to validate the information hierarchy and the interactions. Every media slot shows a placeholder state until a real file is present, and nothing errors. See the manifest above and <code>README.md</code> for the extraction workflow."
+    note: "<b>About this page</b>: steps 01–05 and the POC block are written up from the project's own working documents, and the figures are extracted from them — nothing in those sections is invented. Sub-steps 6.5 and 6.6 of step 06 remain <strong>guidance rather than documented procedure</strong> used to validate the information hierarchy and the interactions. Every media slot shows a placeholder state until a real file is present, and nothing errors. See the manifest above and <code>README.md</code> for the extraction workflow."
   };
 })(window.WIKI);
 
@@ -2852,11 +2861,10 @@ Answer in concrete numbers and named edits.`
         file: "assets/images/step4-components-assembly.jpg"
       },
       {
-        type: "video",
-        title: "Step 04 dressing walkthrough (not recorded yet)",
-        caption: "Planned: Blueprint assembly, placement into the blockout, the repetition-edit pass and the camera sheet. Narrated if possible — the editing decisions are the part worth hearing explained.",
-        src: "assets/video/step4-dressing-walkthrough.mp4",
-        file: "assets/video/step4-dressing-walkthrough.mp4",
+        type: "youtube",
+        title: "Step 04 walkthrough · assembly, placement and the repetition edit",
+        caption: "The recorded pass for this stage: building the Blueprint, assembling walls and columns before openings, placing the results into the blockout, and editing the repetition out of the street. Streams from YouTube — use the player's own controls, or open it larger.",
+        yt: "https://youtu.be/QOiQzWhFvCI",
         wide: true
       }
     ],
@@ -2882,7 +2890,7 @@ Answer in concrete numbers and named edits.`
 /* ---------- step-5.js ---------- */
 /* ============================================================================
    step-5.js — 05 Set Dressing & Scene Composition
-   Source: Final Project Process Book §05 Set Dressing
+   Source: Final Project Process Book §05 Set Dressing (7 pages)
 
    No prompt library on purpose. Every decision in this stage is a placement
    call made by hand at the camera — the props themselves were generated back in
@@ -2894,19 +2902,20 @@ Answer in concrete numbers and named edits.`
     n: "05",
     title: "Set Dressing & Scene Composition",
     short: "Dressing",
-    en: "Largest-first · Still-life depth · Shop fitting · Signs of use",
+    en: "Largest-first · Prop order · Decals · Signs of use",
     stage: "SET DRESSING",
-    purpose: "Turn an assembled street into a place someone could walk through. Nothing here is generated — the work is deciding <strong>what goes where, and in what order</strong>. The order is the one a still-life drawing uses: the dominant mass first, then the medium form that supports it, then the small thing further away. That hierarchy is what the eye reads as depth, and it is why this stage sorts by size instead of by prop type.",
+    purpose: "Turn an assembled street into a place someone could walk through. Nothing here is generated — the work is deciding <strong>what goes where, and in what order</strong>. The order is the one a still-life drawing uses: the dominant mass first, then the medium form that supports it, then the small thing further away. That hierarchy is what the eye reads as depth, and it is why this stage sorts by size instead of by prop type — then by type inside each size band, and finally at decal scale, where markings, patches, cracks and water stains follow the same logic.",
     duration: "1–2 weeks (schedule slot: weeks 6–7)",
     difficulty: "Medium — no technical risk, but every call is a composition decision",
-    inputs: ["Assembled building Blueprints placed in the blockout", "Prop and fixture library from the asset stage", "Camera sheet from step 04"],
-    outputs: ["Dressed street with a readable size hierarchy", "Fitted-out shops for both mid-block and corner conditions", "Signs of use that make the block feel inhabited"],
-    tools: ["Unreal Engine 5 (placement, decals)", "Prop library from the asset stage", "The camera sheet as the review position"],
+    inputs: ["Assembled building Blueprints placed in the blockout", "Prop and fixture library from the asset stage", "Decal library: road markings, patches, cracks, water stains", "Camera sheet from step 04"],
+    outputs: ["Dressed street with a readable size hierarchy", "Props ordered by type inside each size band", "Fitted-out shops for both mid-block and corner conditions", "A road that reads as used: markings, patched asphalt, water staining", "Signs of use that make the block feel inhabited"],
+    tools: ["Unreal Engine 5 (placement, decals, decal projection)", "Prop library from the asset stage", "The camera sheet as the review position"],
     pipe: { out: "An inhabited, layered street", tool: "UE5 placement" },
 
     intro: [
       "By the end of step 04 the street is architecturally correct and completely uninhabited: every storey height is right, every column is where it should be, and nothing on the street suggests a person has ever stood on it. This stage closes that gap, and it does so by hand, one prop at a time.",
-      "The method is borrowed from <strong>still-life drawing</strong>, and it is worth taking literally. A still life is rarely a random arrangement: there is a dominant large form — a vase, a basket — a medium form beside it such as an apple or a cup, and a smaller form further back, a spoon. That hierarchy is what produces the sense of depth, not the amount of detail. The same hierarchy works on a street, which is why the placement order below is <strong>by size, not by category</strong>."
+      "The method is borrowed from <strong>still-life drawing</strong>, and it is worth taking literally. A still life is rarely a random arrangement: there is a dominant large form — a vase, a basket — a medium form beside it such as an apple or a cup, and a smaller form further back, a spoon. That hierarchy is what produces the sense of depth, not the amount of detail. The same hierarchy works on a street, which is why the placement order below is <strong>by size, not by category</strong>.",
+      "It also works <strong>below prop scale</strong>. Road markings, patched asphalt, cracks and water staining are all decals, and they are placed in the same order and judged the same way — a big patch with a smaller one beside it, cracks that explain the patch, staining spaced unevenly on purpose. A street dressed down to props but left with a clean, evenly marked road still reads as a render."
     ],
 
     substeps: [
@@ -2924,6 +2933,18 @@ Answer in concrete numbers and named edits.`
       },
       {
         id: "5.2",
+        title: "Order props by type inside each band",
+        detail: "Size gets you the bands; <strong>type</strong> gets you the order within them, and that order is largely fixed by scale. For an urban street the working sequence is <strong>vehicles, trees, bicycles and motorcycles, small props such as bins and flower pots, shrubs, then climbing plants</strong>. For a natural environment it is <strong>rock formations, then vegetation, then everything else</strong> — the same principle of largest to smallest, primary to secondary, applied inside a band. Reality overrides taste in a few places: traffic lights and utility lines have to exist where they have to exist. A game environment is a distilled, aestheticised version of a street rather than a fantasy one, so keep the required elements and compose everything else around them.",
+        tasks: [
+          "Write the type order for this block before placing anything: vehicles → trees → bikes → small props → shrubs → vines",
+          "Place the vehicles first — they set the scale the rest of the street is read against",
+          "Keep the real-world necessities (traffic lights, utility poles, lines) where reality puts them, and compose around them",
+          "Add planting last, and treat it as composition rather than decoration — see 5.7 for the spacing rule",
+          "Re-check the order from the camera sheet: if a bin reads as loudly as a bus, the bands have collapsed"
+        ]
+      },
+      {
+        id: "5.3",
         title: "Fit out the shops — two types, one order",
         detail: "A shop interior follows the same sequence at room scale: the volume is defined by walls, floor and ceiling, then the large fixtures go in (shelving), then the medium items (tables, cartons), then the small ones (baskets). Two shop types cover most of a street. <strong>Mid-block</strong> units sit between the building's load-bearing columns, so their frontage — and therefore their width — is set by the column spacing; that is a measurement, not a design choice. <strong>Corner</strong> units face the street on two sides and carry a larger floor area.",
         tasks: [
@@ -2935,7 +2956,7 @@ Answer in concrete numbers and named edits.`
         ]
       },
       {
-        id: "5.3",
+        id: "5.4",
         title: "Place the distant blocks by height",
         detail: "Background buildings follow the same rule at a different scale: the tallest and largest go in first, and the shorter ones are arranged around them. This is also how real cities form — high-rise buildings cluster, and the tallest in the cluster becomes the landmark that defines the area. Once the tallest silhouette is fixed, the character of the whole background is decided; everything after that is supporting it.",
         tasks: [
@@ -2946,7 +2967,42 @@ Answer in concrete numbers and named edits.`
         ]
       },
       {
-        id: "5.4",
+        id: "5.5",
+        title: "Lay the road markings before anything else",
+        detail: "A large share of what makes an urban scene feel real is decal work, and the road is where it starts. Lane dividers, crosswalks, stop lines and directional arrows are all decals and all carry an enormous amount of realism for very little cost, so they go down <strong>first</strong> — before patches, cracks, staining or grime. Getting the markings in early also fixes the geometry everything else reacts to: a patch sits inside a lane, a stain runs along a gutter, a crack follows the edge of a repair. Put them in last and every later decal has to be forced into a road that has no structure yet.",
+        tasks: [
+          "Lay the marking pass first: lane dividers, crosswalks, stop lines, arrows",
+          "Keep the markings consistent with the block's traffic logic — a one-way street does not get two-way arrows",
+          "Check the markings at eye level from the walking route, not only from a top view",
+          "Only then start the damage pass in 5.6"
+        ]
+      },
+      {
+        id: "5.6",
+        title: "Patches and cracks: give every decal a cause",
+        detail: "Damage decals follow the still-life rule too: a <strong>large patch is accompanied by a smaller one</strong>, then a medium utility cover, then the smallest cracks — a descending chain of scale rather than a uniform sprinkle. The second half of the rule matters more: <strong>the placement has to obey real-world cause</strong>. A patch on asphalt exists because the asphalt cracked, so the crack goes next to the patch — that is what tells the story of a surface that failed and was filled. A patch with no crack around it, or a crack that runs nowhere, reads as a texture rather than as wear, and the eye rejects it even when it cannot say why.",
+        tasks: [
+          "Place patches as a chain: large patch → smaller patch → utility cover → smallest cracks",
+          "Put the crack next to the patch it came from — causality is what sells the decal",
+          "Keep utility covers on the road's real service lines, not scattered for visual interest",
+          "Check the damage pass at 100% from the camera sheet; decals that read well in the editor often vanish at eye level",
+          "Stop before the road becomes a ruin — a functioning street is patched, not destroyed"
+        ]
+      },
+      {
+        id: "5.7",
+        title: "Break the rhythm — water stains, gaps and interruption",
+        detail: "The last decal pass is where the scene stops looking procedural, and it comes straight out of still-life drawing's two ideas of <strong>rhythm</strong> and <strong>interruption</strong>. When a drawn edge is too uniform, you introduce folds to interrupt it; when the intervals between folds are too even, you stretch some gaps and tighten others to create rhythm. Cloth that is too smooth, or folded at perfectly regular intervals, looks stiff. The same correction applies to a street: an evenly spaced tree line reads as a fence, a wall of identical shopfronts reads as a texture, and water staining applied at regular intervals reads as a pattern. So vary the spacing deliberately, extend some gaps and tighten others, and let the staining interrupt an edge rather than cover it evenly.",
+        tasks: [
+          "Place water staining where water would actually run and pool: gutters, column bases, the shaded side",
+          "Vary the interval between stains instead of the amount — an even rhythm is what reads as fake",
+          "Interrupt long straight edges (kerbs, facades, tree lines) with a deliberate break",
+          "Apply the same test to planting: space trees unevenly, and leave one gap where the eye can rest",
+          "Compare two camera views side by side — if both look equally regular, the pass is not finished"
+        ]
+      },
+      {
+        id: "5.8",
         title: "Add the signs of use",
         detail: "The last pass is made of small things and decides most of the character. Rotate props a few degrees off-axis, leave a chair pulled out, wear the step where feet would land, let a sign fade unevenly. None of these are large objects and none of them are random: each one is a <strong>trace of a specific action</strong>. The rule that keeps this from turning into clutter is that every sign of use should answer one question — who did this, and why.",
         tasks: [
@@ -2965,8 +3021,22 @@ Answer in concrete numbers and named edits.`
     media: [
       {
         type: "image",
+        title: "Prop order: vehicles first, planting last",
+        caption: "Three passes over the same block. Vehicles go in first and set the scale the street is read against, then trees, then the small stuff — bins, pots, bikes, shrubs, vines. The type order inside a size band is as fixed as the size order between bands.",
+        src: "assets/images/step5-prop-hierarchy.jpg",
+        file: "assets/images/step5-prop-hierarchy.jpg"
+      },
+      {
+        type: "image",
+        title: "Still-life logic applied to a dressed street",
+        caption: "The hierarchy holds at prop scale: the bus is the dominant mass, the bicycle the medium form beside it, the traffic light and the utility lines the required real-world elements. The composition is built around those necessities rather than against them.",
+        src: "assets/images/step5-prop-stilllife.jpg",
+        file: "assets/images/step5-prop-stilllife.jpg"
+      },
+      {
+        type: "image",
         title: "The size hierarchy, applied to a shop and to a still life",
-        caption: "Left: the fitted-out shop, with the three size bands outlined — the shelving as the large volume, the stacked cartons as the medium form, the baskets as the small one. Right: the two still-life studies the method comes from, marked the same way. The point of the comparison is that the bands are not a styling choice; they are the same three-role structure read at room scale and at drawing scale.",
+        caption: "Left: the fitted-out shop, with the three size bands outlined — the shelving as the large volume, the stacked cartons as the medium form, the baskets as the small one. Right: the two still-life studies the method comes from, marked the same way. The bands are not a styling choice; they are the same three-role structure read at room scale and at drawing scale.",
         src: "assets/images/step5-store-set-dressing.jpg",
         file: "assets/images/step5-store-set-dressing.jpg"
       },
@@ -2976,13 +3046,44 @@ Answer in concrete numbers and named edits.`
         caption: "Two passes over the same background. The tallest silhouette goes in first and defines the character of the cluster; the shorter blocks are then arranged around it rather than spread evenly across the horizon. An even row of towers at one distance reads as a fence — clustering is what the eye reads as a skyline.",
         src: "assets/images/step5-distant-blocks.jpg",
         file: "assets/images/step5-distant-blocks.jpg"
+      },
+      {
+        type: "image",
+        title: "Markings first: the same frame before and after the road pass",
+        caption: "Crosswalk, lane dividers, stop lines and arrows are all decals, and they carry more realism per unit of work than anything else on the road. They go down before any damage decal, because a patch sits inside a lane and a crack follows a repair — the markings are the structure the damage reacts to.",
+        src: "assets/images/step5-road-markings.jpg",
+        file: "assets/images/step5-road-markings.jpg"
+      },
+      {
+        type: "image",
+        title: "Patches, covers and cracks as one descending chain",
+        caption: "Top-down, with the chain marked: a large patch, a smaller patch beside it, a utility cover, then the smallest cracks. Note where the cracks sit — next to the patches, because the patch exists because the surface cracked. Damage placed without that causality reads as texture, not as wear.",
+        src: "assets/images/step5-decal-patches.jpg",
+        file: "assets/images/step5-decal-patches.jpg"
+      },
+      {
+        type: "image",
+        title: "Rhythm and interruption — from drawn cloth to water staining",
+        caption: "The drawn folds in the middle and right panels show the two corrections: introduce folds to interrupt an edge that is too uniform, and vary the intervals when the spacing is too even. The street on the left is the same principle at scene scale — staining that interrupts an edge, and spacing that is deliberately uneven, is what stops a dressed block from reading as procedural.",
+        src: "assets/images/step5-rhythm-interruption.jpg",
+        file: "assets/images/step5-rhythm-interruption.jpg"
+      },
+      {
+        type: "youtube",
+        title: "Step 05 walkthrough · dressing the block",
+        caption: "The recorded pass for this stage: props placed largest-first, shops fitted out, distant blocks set by height, the decal passes over the road, and the small signs of use that close it. No AI in this one — it is all placement and judgement. Streams from YouTube.",
+        yt: "https://youtu.be/vky-T_UJrZM",
+        wide: true
       }
     ],
 
     tips: [
       { title: "Order by size, not by category", text: "The placement order <em>is</em> the method. Sorting props by type feels tidier in the outliner and produces a flat street, because nothing was ever placed against something larger." },
       { title: "Still life is the actual reference", text: "Large form, a medium form supporting it, a small form further away. If a view feels flat, check whether it has that hierarchy before adding another prop." },
+      { title: "Vehicles set the scale", text: "A bus or a truck is the first thing the eye measures the street against. Place them before anything else in the band and the rest of the block inherits the scale for free." },
       { title: "Two shop types cover a street", text: "Mid-block and corner. The mid-block width is dictated by column spacing — measure it before you model anything, or the whole type has to be rebuilt." },
+      { title: "A decal with no cause reads as dirt", text: "Patches come from cracks; stains come from water running somewhere. If you cannot say why a mark is there, it reads as a texture rather than as wear — and viewers notice even when they cannot name it." },
+      { title: "Vary the interval, not the amount", text: "Ten stains at even spacing look more artificial than four at uneven spacing. Rhythm is a property of the gaps, not of the quantity." },
       { title: "Wear goes where hands go", text: "Wear on surfaces nobody touches reads as dirt. Put it on thresholds, counters and handrails, and leave the rest clean." }
     ],
 
@@ -2990,16 +3091,23 @@ Answer in concrete numbers and named edits.`
       { title: "Dressing by category", text: "All the signage, then all the crates, and everything ends up at the same visual weight because nothing was ever measured against a larger neighbour." },
       { title: "Every shop stocked the same", text: "It reads as a showroom rather than a street. Deliberately under-fill a couple of units so the eye has somewhere to rest." },
       { title: "Evenly distributed background blocks", text: "Real skylines cluster. An even row of towers at the same distance reads as a fence, not a city." },
-      { title: "Confusing clutter with detail", text: "More props is not more depth. Depth comes from the size hierarchy; clutter only raises the noise floor and makes the composition harder to read." }
+      { title: "Confusing clutter with detail", text: "More props is not more depth. Depth comes from the size hierarchy; clutter only raises the noise floor and makes the composition harder to read." },
+      { title: "A clean, perfectly marked road", text: "Markings with no damage underneath leave the road looking freshly painted. The damage pass is not optional decoration — it is what makes the markings believable." },
+      { title: "Damage scattered for visual interest", text: "Cracks that run nowhere and patches with no cause are the fastest way to make a road look like a decal test. Every mark should have a physical reason to be exactly where it is." },
+      { title: "A tree line at even intervals", text: "Uniform spacing reads as a fence. Break the interval, extend one gap, tighten the next, and leave one gap empty." }
     ],
 
-    checkpoint: "The street is dressed large-to-small: the large band reads as a composition on its own from every camera in the sheet, the medium band supports it rather than spreading evenly, and the small band gives the eye a landing point in each view. Shops are fitted out in both mid-block and corner types, with at least a couple deliberately under-filled. Distant blocks cluster around a tallest silhouette with readable gaps between them. Signs of use sit only where a body would touch, the scene reads as inhabited from the walking route, and the composition is frozen for step 06."
+    checkpoint: "The street is dressed large-to-small: the large band reads as a composition on its own from every camera in the sheet, the medium band supports it rather than spreading evenly, and the small band gives the eye a landing point in each view. Inside each band the props follow the type order — vehicles, trees, bikes, small props, shrubs, vines — and the required real-world elements such as traffic lights and utility lines are present where reality puts them. Shops are fitted out in both mid-block and corner types, with at least a couple deliberately under-filled. Distant blocks cluster around a tallest silhouette with readable gaps between them. The road carries its markings first, then a patch chain that obeys cause — large patch, smaller patch, utility cover, cracks beside the patch they came from — and water staining whose intervals are deliberately uneven. Signs of use sit only where a body would touch, the scene reads as inhabited from the walking route, and the composition is frozen for step 06."
   });
 })(window.WIKI);
 
 /* ---------- step-6.js ---------- */
 /* ============================================================================
    step-6.js — 06 Visual Unification & Atmosphere Development
+   Source: Final Project Process Book §06 Atmosphere Development (pages 26–29)
+   Order follows the document: fundamentals → atmosphere → overall adjustment.
+   Sub-steps 6.5 and 6.6 are marked as the deeper passes the document does not
+   cover yet.
    ========================================================================== */
 (function (W) {
   W.steps.push({
@@ -3007,26 +3115,74 @@ Answer in concrete numbers and named edits.`
     n: "06",
     title: "Visual Unification & Atmosphere Development",
     short: "Unify",
-    en: "Materials · Light rig · LUT · Atmosphere",
+    en: "Exposure · Sun & sky · Fog · Overall adjustment",
     stage: "LOOK DEV",
-    purpose: "Bring assets from many different sources into one visual standard: <strong>material consistency</strong> (hue / saturation / roughness held inside a shared range), <strong>unified lighting</strong>, and <strong>post-processing with colour grading</strong>. This step decides whether the frame looks like one team made it.",
+    purpose: "Make the street look like one place at one hour. The Process Book runs this chapter in a fixed direction: fix the <strong>fundamentals</strong> first — lock exposure, then set the sun and the sky that stands in for it — and only then add fog, because fog is what turns a lit greybox into a space with distance in it. The last pass is an <strong>overall adjustment</strong>: saturation, contrast and exposure, judged in black and white so the value structure is visible. Material-level convergence and a reusable LUT sit beyond the document's scope and are marked as such.",
     duration: "3–6 days",
     difficulty: "High — controlled by numbers, not by feel",
-    inputs: ["Frozen level (dressing included)", "Material library", "Colour and lighting data from the references"],
-    outputs: ["Unified material standard and instances", "Primary light rig (Lumen settings)", "Post-processing setup (LUT / grade)", "2–3 atmosphere variants"],
-    tools: ["UE5 (Lumen / Post Process Volume)", "Substance Painter", "DaVinci Resolve / Photoshop (LUT authoring)"],
+    inputs: ["Frozen level (dressing included)", "Reference photography for the time of day being built", "Material library", "Post Process Volume, Exponential Height Fog, fog cards"],
+    outputs: ["Exposure locked at a fixed EV100, with a sun and sky that read as one time of day", "Exponential height fog with volumetric scattering, tuned for depth", "Fog cards for the background that is not actually distant", "An overall grade checked in black and white", "2–3 reproducible atmosphere variants"],
+    tools: ["UE5 — Post Process Volume (exposure, colour grading)", "UE5 — Directional Light, Sky Light, Exponential Height Fog, fog cards", "Substance Painter (material instances)"],
     pipe: { out: "Unified look + atmosphere set", tool: "UE5 Look Dev" },
 
     intro: [
-      "Assets arrive from AI generation, marketplace packs and outsourcing, so their style is inconsistent by default. The way to unify is not “tweak it by feel” but to <strong>fix a set of numeric ranges</strong>: hue concentrated within {{N}} degrees, a saturation ceiling, a roughness distribution, a value range. Once the ranges exist, any new asset can be judged against them in seconds.",
-      "Lighting and post-processing are the last resort for unification: even if materials differ slightly, one shared key direction, colour temperature and grade pulls them together. <strong>Fix materials first, then close the gap with light</strong> — reverse the order and you spend the rest of the project patching holes."
+      "By the end of step 05 the street is dressed and nothing about it is lit. This stage is the look-dev pass, and the Process Book runs it in a strict order — <strong>fundamentals, then atmosphere, then the overall adjustment</strong> — because each step is judged against the one before it. Sub-steps 6.1 to 6.4 follow that chapter page for page. 6.5 and 6.6 are the deeper material and grade passes the document does not cover yet, and they are labelled that way rather than presented as procedure.",
+      "The order is not a stylistic choice. Exposure and the sun/sky pair decide whether the frame is readable at all; fog adds depth on top of a frame that already works; the final post pass unifies lightness across everything. Reverse the order and you end up grading a scene whose exposure is still drifting, which is why almost every “the light is off” problem in a student scene turns out to be an auto-exposure problem."
     ],
 
     substeps: [
       {
-        id: "5.1",
-        title: "Material consistency audit and convergence",
-        detail: "Check four values per material: hue, saturation, roughness, value. Fix anything outside the ranges. Once this pass is done the frame suddenly looks like one set of things.",
+        id: "6.1",
+        title: "Basic parameters: exposure, sun and sky",
+        detail: "Three fundamentals, in this order: <strong>exposure, directional light, sky light</strong>. In the Post Process Volume, set both <code>Min EV100</code> and <code>Max EV100</code> to <strong>1</strong> — equal min and max is what disables auto exposure, so the image stops breathing as the camera moves. The <strong>Directional Light is the sun</strong>: intensity, colour and source angle all follow the time of day. Early morning and dusk are warmer with softer shadows, because the source angle is larger; midday is cooler, close to white, with sharper shadows from a smaller angle. The <strong>Sky Light stands in for ambient, diffuse light</strong> and is what sets the value of the shadowed areas. In a game the shadows generally need to stay readable rather than go pitch black, so sky intensity is often pushed <strong>above</strong> the physically realistic figure. The reliable trick for volume is a warm sun against a cool ambient — that temperature split is what reads as three-dimensional.",
+        tasks: [
+          "Lock exposure: set both Min and Max EV100 to 1 in the Post Process Volume, then confirm the image no longer shifts as the camera moves",
+          "Set the Directional Light as the sun for one specific time of day: intensity, colour temperature, source angle",
+          "Match the source angle to the hour — larger for the soft shadows of early morning and dusk, smaller for the sharp shadows of midday",
+          "Set the Sky Light intensity for the shadow value you want, and accept that it will sit above the physically realistic figure",
+          "Hold a warm sun against a cool ambient, and check the split still reads from the walking route"
+        ]
+      },
+      {
+        id: "6.2",
+        title: "Exponential height fog — depth and scale",
+        detail: "Fog comes after the fundamentals, never before: once the base values are set the scene already reads as an hour of the day, and fog is what gives it distance. In the Exponential Height Fog actor, enable <strong>Volumetric Fog</strong> first — without it the density and colour settings do very little — then tune density, colour and start distance. The physical job of fog is to separate foreground from background and to give the street a scale; its colour sets the mood. Blue or cyan reads as fresh and open, a warmer tint as weight and gravity. The failure to avoid is fog strong enough to flatten the contrast you built in 6.1.",
+        tasks: [
+          "Enable Volumetric Fog before touching anything else — density and colour do almost nothing without it",
+          "Set density and start distance so the far end of the street reads as far away rather than as small",
+          "Pick the fog colour for the mood the frame is meant to carry — cool for open, warm for heavy",
+          "Judge the fog from the hero camera; a value that looks right in the viewport often disappears at eye level",
+          "Back the density off if the shadow structure from 6.1 has gone flat"
+        ]
+      },
+      {
+        id: "6.3",
+        title: "Fog planes for distance that isn't there",
+        detail: "Height fog assumes things get further away as they rise and recede. A background block that sits only thirty metres behind the foreground will not gain distance from it. That is what <strong>fog cards</strong> are for: hand-placed planes that add aerial perspective where the geometry does not provide it. The colour rule is a distance rule — <strong>the closer the card, the lower its saturation</strong>, tending toward white; <strong>the further away, the higher the saturation</strong>, tending toward the sky colour. Get it backwards and the background reads as a painted backdrop instead of as air.",
+        tasks: [
+          "Find the background objects that still fail to read as distant after 6.2",
+          "Place a fog card in front of each one, not around it",
+          "Set saturation by distance — near cards washed toward white, distant cards toward the sky colour",
+          "Keep the card's own edge invisible; if you can see the plane, the opacity map is too hard",
+          "Re-check the silhouette separation from the hero camera"
+        ]
+      },
+      {
+        id: "6.4",
+        title: "Visual unification: the overall adjustment",
+        detail: "The last documented pass is the one the Process Book calls <strong>visual unification</strong>, and it happens entirely in the Post Process Volume: saturation, contrast and exposure, set to move the whole frame toward the intended aesthetic rather than to repair individual assets. Stylised scenes sit higher in saturation, realistic ones lower — that number is a decision, not a default. The second half is a value check, and the most effective way to run it is to <strong>switch the scene to black and white</strong>, where you can see at a glance whether objects of the same type sit in a similar lightness range. The hierarchy that should survive that check: <strong>environment darkest, characters next, effects brightest</strong>. This street has no characters yet, so read it as environment → hero props and lit signage → emissives. Road and surface decals are the one family still free to move, because their lightness is not fixed by a photographic reference.",
+        tasks: [
+          "Switch the scene to black and white and read the value structure before touching colour",
+          "Check the hierarchy: environment < hero props and signage < emissive effects",
+          "Pull same-type objects into one lightness range — the b/w view is what exposes the outliers",
+          "Set saturation for the intended aesthetic, then contrast, then exposure, in that order",
+          "Adjust the road and surface decals last, since they are the one family not locked to a reference"
+        ]
+      },
+      {
+        id: "6.5",
+        title: "Material consistency audit — beyond the document",
+        detail: "The Process Book does not cover material-level convergence. This is the deeper pass, and it is the one that decides whether assets from AI generation, marketplace packs and outsourcing can sit in the same frame. Check four values per material — hue, saturation, roughness, value — and fix anything outside the ranges. Once the ranges exist, a new asset can be judged against them in seconds instead of argued about.",
         tasks: [
           "Fix the visual baseline: hue band (e.g. {{180–220°}}), saturation ceiling (e.g. {{45%}}), value range (e.g. {{20–70%}})",
           "Route every parameter change through material instances; never scatter edits across the master material",
@@ -3035,46 +3191,24 @@ Answer in concrete numbers and named edits.`
         ]
       },
       {
-        id: "5.2",
-        title: "Unified lighting",
-        detail: "Decide one primary light rig and reuse it for every camera: key direction, colour temperature, sky light intensity, fog and volumetrics. Lighting is the last safety net for consistency.",
-        tasks: [
-          "Fix the key light direction and elevation (e.g. {{azimuth 315°, elevation 35°}}) and keep it identical scene-wide",
-          "Define the colour-temperature relationships: sun / sky / practical, with a clear warm-cool division",
-          "Configure Lumen and an exposure strategy (lock a manual EV so nothing jumps with auto exposure)",
-          "Add fog and volumetrics to unify the sense of air and the depth read"
-        ]
-      },
-      {
-        id: "5.3",
-        title: "Post-processing and colour grading",
-        detail: "Post-processing is the cheapest unification tool there is: one LUT, one white balance, one contrast compression pulls mismatched assets into the same colour space.",
+        id: "6.6",
+        title: "Authoring a reusable grade (LUT) — beyond the document",
+        detail: "6.4 sets a grade for this scene; this is about making that grade reproducible. If the look has to survive a new camera, a new atmosphere or a second scene, it cannot live in a dozen scattered Post Process Volume values — it needs to be one LUT. Author it outside the engine (DaVinci Resolve or Photoshop), export it as <code>.cube</code> or a strip, and put it back on the volume so every camera and every variant starts from the same colour base. Also the cheapest unification tool there is: one LUT, one white balance, one contrast compression pulls mismatched assets into the same colour space.",
         tasks: [
           "Configure the Post Process Volume: white balance, contrast, tone curve (S-curve), highlight rolloff",
-          "Author a project LUT (build it in DaVinci / Photoshop, export .cube or a 256×16 strip)",
+          "Author a project LUT and export it as .cube or a 256×16 strip",
           "Unify bloom / lens flare / sharpening so the look does not jump between cameras",
           "Check that shadows are not crushed and highlights are not clipped — leave grading headroom"
-        ]
-      },
-      {
-        id: "5.4",
-        title: "Atmosphere variants and side-by-side comparison",
-        detail: "Build 2–3 atmospheres for the same scene (early morning fog / harsh noon / warm dusk), compare them side by side, then pick the hero look — and keep the others as ammunition for promotional material.",
-        tasks: [
-          "Capture every atmosphere from the same fixed cameras so they are directly comparable",
-          "List the emotional keywords and the best use case for each atmosphere",
-          "Choose the hero look and record all of its parameters (reproducibly)",
-          "Put the hero-look screenshots next to the step 01 locked concept for a final cross-check"
         ]
       }
     ],
 
     prompts: [
       {
-        id: "s5p1",
+        id: "s6p1",
         title: "Material consistency audit",
         icon: "layers",
-        note: "Drop in several asset renders or material spheres at once and have the model find whatever falls outside the colour range.",
+        note: "Supports 6.5. Drop in several asset renders or material spheres at once and have the model find whatever falls outside the colour range.",
         variants: [
           {
             key: "A",
@@ -3160,10 +3294,10 @@ Then tell me how to verify the LUT is neutral enough to reuse across different t
         ]
       },
       {
-        id: "s5p2",
+        id: "s6p2",
         title: "Lighting and post-processing plan",
         icon: "flame",
-        note: "Define a reusable primary light rig and post-processing parameters so every camera reads the same.",
+        note: "Supports 6.1 and 6.6. Define a reusable primary light rig and post-processing parameters so every camera reads the same.",
         variants: [
           {
             key: "A",
@@ -3249,359 +3383,64 @@ Then flag the two details in the reference that would be hardest to reproduce in
       }
     ],
 
+
     media: [
       {
-        type: "gif",
-        title: "Material convergence before / after (loop)",
-        caption: "Key GIF: how the frame changes as hue and saturation converge. Watch it go from looking assembled to looking unified.",
-        src: "assets/gifs/step5-material-unify.gif",
-        file: "assets/gifs/step5-material-unify.gif",
-        wide: true
-      },
-      {
-        type: "video",
-        title: "Look dev end to end: material audit → lighting → grade (not recorded yet)",
-        caption: "Planned: the full narrated pass, including how the parameter values were chosen and the attempts that failed.",
-        src: "assets/video/step5-lookdev.mp4",
-        file: "assets/video/step5-lookdev.mp4"
-      },
-      {
-        type: "gif",
-        title: "LUT toggle",
-        caption: "The same frame grading off / grading on, 4-second loop.",
-        src: "assets/gifs/step5-lut-toggle.gif",
-        file: "assets/gifs/step5-lut-toggle.gif"
+        type: "image",
+        title: "The three fundamentals, and where they live",
+        caption: "Post Process Volume on the left — Min and Max EV100 both at 1, which is what actually turns auto exposure off. Directional Light in the middle: intensity, colour and source angle are the sun. Sky Light on the right: Real Time Capture on, intensity scaled up so the shadows stay readable. These three panels are the whole of 6.1.",
+        src: "assets/images/step6-basic-parameters.jpg",
+        file: "assets/images/step6-basic-parameters.jpg"
       },
       {
         type: "image",
-        title: "Three atmosphere variants side by side",
-        caption: "Dawn fog / flat noon / warm dusk, same camera, compared directly.",
-        src: "assets/images/step5-atmosphere-variants.jpg",
-        file: "assets/images/step5-atmosphere-variants.jpg"
+        title: "Exponential height fog: volumetric on, then density, then distance",
+        caption: "Volumetric Fog has to be enabled first or the density values barely register. Then scattering distribution, albedo, density and start distance — and the frame on the right is what those numbers buy: the far end of the street reads as far away rather than as small.",
+        src: "assets/images/step6-height-fog.jpg",
+        file: "assets/images/step6-height-fog.jpg"
       },
       {
-        type: "gif",
-        title: "Light direction sweep",
-        caption: "Continuous azimuth sweep from 180° to 45° to pick the best angle (6-second loop).",
-        src: "assets/gifs/step5-light-sweep.gif",
-        file: "assets/gifs/step5-light-sweep.gif"
+        type: "image",
+        title: "A fog card, for distance the geometry does not have",
+        caption: "BP_EasyFog is a plane with an opacity map and a tint, placed in front of the background block rather than around it. The colour rule is a distance rule: near cards washed toward white, distant cards toward the sky colour. If the card's own edge is visible, the opacity map is too hard.",
+        src: "assets/images/step6-fog-planes.jpg",
+        file: "assets/images/step6-fog-planes.jpg"
+      },
+      {
+        type: "image",
+        title: "The black-and-white check",
+        caption: "Left: the overall adjustment — temperature, saturation, contrast. Right: the same frame with saturation off, which is the only view in which the value structure is actually legible. Same-type objects should land in one lightness range, and the hierarchy environment → props and signage → emissives should survive the check.",
+        src: "assets/images/step6-visual-unification.jpg",
+        file: "assets/images/step6-visual-unification.jpg"
+      },
+      {
+        type: "youtube",
+        title: "Step 06 walkthrough · look dev, fog and the overall adjustment",
+        caption: "The recorded pass for this stage: locking exposure, setting the sun and the sky, bringing in the height fog and the fog cards, then the overall adjustment judged in black and white. Streams from YouTube.",
+        yt: "https://youtu.be/bRKF-4obHOo",
+        wide: true
       }
     ],
 
     tips: [
-      { title: "Write the numeric ranges down", text: "Put the allowed ranges for hue / saturation / value / roughness into the standard document. With ranges, judgement becomes comparison instead of argument." },
-      { title: "Materials before lighting", text: "Adjusting light before materials are aligned means forever patching holes. The order is: converge materials → unify lighting → close with the grade." },
-      { title: "Manual exposure", text: "Turn auto exposure off. It makes the look jump between cameras and is the most overlooked killer of consistency." },
-      { title: "One benchmark image", text: "Pick a single “visual benchmark frame” and compare every new asset against it. Much easier to execute than an abstract standard." },
+      { title: "Exposure before anything else", text: "Set Min and Max EV100 to the same value and the image stops breathing. Almost every “the light keeps changing” complaint is auto exposure still running." },
+      { title: "Sun warm, ambient cool", text: "The temperature split between the directional light and the sky light is what gives the frame volume. Same temperature on both reads flat however carefully the rest is tuned." },
+      { title: "Fog is depth, not atmosphere dressing", text: "Fog's physical job is to separate foreground from background and give the street a scale. Its colour is the mood layer, and it comes second." },
+      { title: "Judge values in black and white", text: "Switching saturation off is the cheapest check in look dev. It shows every object that is the wrong lightness, which colour hides almost perfectly." },
+      { title: "One benchmark image", text: "Pick a single “visual benchmark frame” and compare every new asset and every new atmosphere against it. Much easier to execute than an abstract standard." },
       { title: "Leave grading headroom", text: "Do not max out contrast in engine. Keep shadows above 5% and highlights unclipped so the LUT has room to work." }
     ],
+
     pitfalls: [
-      { title: "Grading by feel", text: "Without numeric ranges, twenty assets produce twenty styles, and none of it transfers to the next project." },
-      { title: "Lighting used to hide problems", text: "Covering inconsistent materials with strong light and heavy fog looks fine briefly, then falls apart the moment you change camera or atmosphere." },
+      { title: "Auto exposure left on", text: "The single most common cause of a look that will not hold: the image re-exposes itself every time the camera turns, so nothing you set afterwards stays set." },
+      { title: "Fog used to hide a weak light setup", text: "Heavy fog over bad lighting looks atmospheric for one screenshot and falls apart the moment the camera or the time of day changes." },
+      { title: "Grading in colour", text: "Saturation hides value errors. Grade the black-and-white frame first, or the same wrong-lightness object survives every pass." },
+      { title: "Fog cards that read as cards", text: "A hard-edged plane in the background announces itself as a plane. Soften the opacity map and place it in front of the object, never around it." },
       { title: "Wrong texture colour space", text: "Reading roughness as sRGB washes everything out and greys it down. Most people read that as a taste problem when it is a settings problem." },
-      { title: "Atmosphere variants from different cameras", text: "Comparing atmospheres across different cameras is not a comparison. Fix the camera and the parameters, change only the light." }
-    ],
-    checkpoint: "Every material sits inside the fixed numeric ranges; one reusable light rig is applied to all cameras; exposure is locked with no automatic jumping; a LUT is generated and applied; 2–3 reproducible atmosphere variants exist; and the hero-look screenshots match the step 01 locked concept in tone."
-  });
-})(window.WIKI);
-
-/* ---------- step-7.js ---------- */
-/* ============================================================================
-   step-7.js — 07 Workflow Documentation & Final Presentation
-   ========================================================================== */
-(function (W) {
-  W.steps.push({
-    id: "step-7",
-    n: "07",
-    title: "Workflow Documentation & Final Presentation",
-    short: "Delivery",
-    en: "Document · Storyboard · Render · Publish",
-    stage: "DELIVERY",
-    purpose: "<strong>Document the whole AI-assisted environment art pipeline</strong> from concept generation through to the finished scene, then <strong>present</strong> that final environment through cinematic rendering and camera work. Whether the work gets seen is half decided here.",
-    duration: "2–4 days",
-    difficulty: "Medium — completeness and delivery are what count",
-    inputs: ["Raw process material (screenshots / recordings / parameters)", "The visually unified level", "Storyboard and camera design"],
-    outputs: ["A complete workflow document (text + images + video)", "The finished film (Sequence render)", "Stills and animated GIF set", "Archived project and parameter pack"],
-    tools: ["UE5 Sequencer / Movie Render Queue", "DaVinci Resolve / Premiere", "Photoshop", "This wiki system"],
-    pipe: { out: "Film + full process document", tool: "MRQ · Resolve" },
-
-    intro: [
-      "The document and the film serve <strong>two different audiences</strong>: the document proves your method (to peers, to interviewers, to members) and the film proves your result (to players, to clients). You need both — but do not build them in the same sitting.",
-      "The single most important discipline: <strong>collect process material while you work</strong>. Come back afterwards to gather screenshots and you cannot — the parameters are forgotten, the intermediate versions deleted, the failed attempts unrecorded. Get into the habit of saving one “key state screenshot + parameter line” at the end of every sub-step, and this step becomes ten times easier."
+      { title: "Atmosphere variants from different cameras", text: "Comparing atmospheres across different cameras is not a comparison. Fix the camera and the values, change only the light and the fog." }
     ],
 
-    substeps: [
-      {
-        id: "6.1",
-        title: "Write the complete workflow document",
-        detail: "The structure has to be followable: goal → inputs → steps → key parameters → common problems → acceptance criteria. Every step carries copyable prompts and the real parameter values.",
-        tasks: [
-          "Lay out the document across the six steps, four parts each: purpose / actions / parameters / acceptance",
-          "Organise the prompt library: A–E variants per block with the situation each is for (exactly the structure of this wiki)",
-          "Add the failure log: what you tried that did not work and why (this section is worth the most)",
-          "Check reproducibility: could someone else reach your result from this document alone"
-        ]
-      },
-      {
-        id: "6.2",
-        title: "Standardise the media specs",
-        detail: "Screenshots, recordings and GIFs need consistent specs, or dozens of assets assembled together look cheap. Fix resolution, aspect, naming and annotation style here.",
-        tasks: [
-          "Stills: {{2560×1440}} / 16:9 / UI hidden / locked resolution and exposure",
-          "Recordings: {{60fps}}, with click and keypress highlighting, each clip kept to 3–6 minutes",
-          "GIFs: {{800px wide}}, {{≤8 seconds}}, {{≤3MB}} — keep only the single most important technical action",
-          "Naming: {{step_content_version}} (e.g. 03_threeview_good_v2.gif), applied consistently"
-        ]
-      },
-      {
-        id: "6.3",
-        title: "Cinematic rendering and camera work",
-        detail: "Deliver the film with Sequencer plus Movie Render Queue. Camera movement is not showing off — it is <strong>introducing the space in order</strong>: establish wide → guide through mid → hold on detail.",
-        tasks: [
-          "Storyboard 6–10 shots, including one establishing shot, one detail close-up and one final held frame",
-          "Output through Movie Render Queue: {{EXR/PNG sequence + high-sample anti-aliasing}}, with path tracing or high-quality Lumen settings",
-          "Control the move speed: slow enough for the eye to finish reading the frame (roughly 2–4 seconds per piece of information)",
-          "Composite in Resolve: unify the grade, add sound design and music, and keep the cut aligned to the pacing"
-        ]
-      },
-      {
-        id: "6.4",
-        title: "Publish, archive and reuse",
-        detail: "The point of archiving is that you can return to the exact state six months later: project, assets, parameters, prompts and dependency versions all packaged together.",
-        tasks: [
-          "Archive: the UE project (including .uproject / Content / plugin list), external asset source files, the prompt library, LUTs",
-          "Record dependency versions: engine version, model versions, AI tool versions (all of which will have moved in six months)",
-          "Publish: document + film + stills, re-sized per platform with the right lead image",
-          "Retrospective: list the three things to change next time and put them into a “next steps” section of the document"
-        ]
-      }
-    ],
-
-    prompts: [
-      {
-        id: "s6p1",
-        title: "Workflow document structure",
-        icon: "book",
-        note: "Have the model organise your process into something teachable, and find the steps and parameters you left out.",
-        variants: [
-          {
-            key: "A",
-            name: "Six-stage workflow outline",
-            tag: "Primary",
-            use: "When the document needs structure from scratch",
-            out: "A teachable document outline",
-            note: "Feed it your description of the process and let it produce a structure with acceptance points (this wiki came from exactly that)",
-            text: `You are a technical documentation lead for game art. Turn my process description into a teachable, step-by-step workflow document.
-
-My process: {{1) visual research + manual sketch + AI concept generation + manual selection; 2) UE5 blockout to fix AI perspective/scale errors; 3) style conversion, architectural component breakdown, three-view sheets, 3D generation (Tripo), manual retopo in Maya/ZBrush; 4) environment dressing; 5) material/lighting/post-process unification; 6) documentation and cinematic presentation.}}
-
-For each of the 6 stages produce:
-- GOAL in one sentence a beginner understands
-- INPUTS (what must exist before starting)
-- 4–6 numbered SUB-STEPS, each starting with a verb
-- KEY PARAMETERS that must be recorded for reproducibility
-- COMMON FAILURES with the symptom and the fix
-- DEFINITION OF DONE (a checkable criterion, not a vibe)
-
-Then add: a tool list with which tool is used where, a glossary of 12 terms I should define, and 8 questions a reader will ask that the document must answer.`
-          },
-          {
-            key: "B",
-            name: "Prompt library normalisation",
-            tag: "Prompt",
-            use: "When your prompts are scattered and need a system",
-            out: "A structured prompt library",
-            note: "Turns the whole prompt set into a maintainable asset in one pass",
-            text: `Organize my scattered prompt collection for an AI-assisted environment art workflow into a maintainable library.
-
-For each prompt I give you, return a normalized record:
-- ID and NAME
-- USE CASE (when to reach for it)
-- STAGE (which of the 6 workflow stages)
-- MODEL / TOOL ({{Midjourney / SD / ComfyUI / Tripo / vision model}})
-- VARIABLE SLOTS — every {{placeholder}} with its expected format and an example value
-- THE PROMPT, cleaned up
-- EXPECTED OUTPUT
-- FAILURE MODE and the negative list to add
-- VARIANT FAMILY — what should be swapped to produce versions B, C, D, E
-
-Then group them into families, flag duplicates and contradictions between prompts, and tell me which prompts are too vague to be reproducible.
-
-My prompts: {{paste list}}`
-          },
-          {
-            key: "C",
-            name: "Tutorial video script",
-            tag: "Video",
-            use: "When the process becomes a tutorial video",
-            out: "A recording script",
-            note: "Writing the script before recording visibly cuts re-takes and filler",
-            text: `Write a recording script for a {{10-minute}} tutorial video teaching {{step 3 of my workflow: converting concept art into 3D assets}}.
-
-Structure:
-- COLD OPEN (0:00–0:20): what the viewer will be able to do by the end, plus a 3-second result flash
-- WHY IT MATTERS (0:20–1:00): the problem this step solves, stated with a concrete failure example
-- DEMO (1:00–7:30): broken into 5–7 blocks, each with what is on screen, what I say (verbatim-friendly, short sentences), and the on-screen caption
-- COMMON MISTAKES (7:30–9:00): 3 mistakes with the visible symptom on screen
-- RECAP + NEXT (9:00–10:00)
-
-Rules: no filler phrases, no "as you can see", every sentence must carry information. Mark where I should pause on screen for emphasis, and where a zoom-in is needed.`
-          },
-          {
-            key: "D",
-            name: "Reproducibility audit",
-            tag: "QA",
-            use: "Before delivery, to check someone else could follow it",
-            out: "A gap list",
-            note: "Simulates “another artist following the document” and surfaces every piece of hidden knowledge",
-            text: `Act as a reviewer who must reproduce my workflow from the document alone, with no access to me.
-
-Read the following documentation: {{paste doc summary}}. Then report:
-
-1. MISSING ARTIFACTS — files, templates, LUTs, models, or presets the reader needs but that the document does not provide.
-2. HIDDEN KNOWLEDGE — steps where I rely on unstated experience ("just fix the perspective") and a beginner would be stuck.
-3. UNRECORDED PARAMETERS — every place where a number matters and no number is given.
-4. VERSION DEPENDENCIES — anything that will break when {{the AI tool / engine version}} changes.
-5. AMBIGUOUS LANGUAGE — sentences that can be read two ways, with a rewrite for each.
-6. FIRST POINT OF FAILURE — where the reader will most likely give up, and what to add there.
-
-Rank all findings by how badly they block reproduction. Be merciless — a document that needs me in the room is not a document.`
-          }
-        ]
-      },
-      {
-        id: "s6p2",
-        title: "Storyboard and camera design",
-        icon: "film",
-        note: "Shot design for the film. The job is to explain the space, not to show off.",
-        variants: [
-          {
-            key: "A",
-            name: "Establish → detail → hold (8 shots)",
-            tag: "Primary",
-            use: "For a 60–90 second portfolio film",
-            out: "An 8-shot storyboard table",
-            note: "The standard structure: information density climbs, then falls back, ending on a held frame",
-            text: `Design an 8-shot cinematic sequence to present {{an abandoned alpine research station interior}} as a finished environment art piece. Target length {{75 seconds}}.
-
-For each shot give: SHOT # | PURPOSE (establish / orient / guide / detail / emotion / resolve) | FRAMING (scale, height, angle) | CAMERA MOVE (static / slow push / lateral track / rise / handheld) | MOVE SPEED in approximate cm/s | LENS (mm) | DURATION | WHAT THE VIEWER LEARNS | TRANSITION TO NEXT
-
-Constraints:
-- Shot 1 must establish the whole space in a single readable frame.
-- Include exactly one detail shot where the camera nearly stops (≤2 cm/s) so the viewer can read texture quality.
-- Include one shot with foreground occlusion to prove depth.
-- End on a static frame held for ≥3 s that could work as a portfolio thumbnail.
-- No cuts on camera motion that reverses direction.
-
-Then flag the two shots that are hardest to render and how to make them cheaper.`
-          },
-          {
-            key: "B",
-            name: "Single-take / long take design",
-            tag: "Long take",
-            use: "When you want a demanding continuous move",
-            out: "A single-shot camera path",
-            note: "A long take best demonstrates spatial coherence, but exposure and pacing are hardest to control",
-            text: `Design a single unbroken camera move through {{a fishing village on stone terraces}}, {{40 seconds}}, no cuts.
-
-Provide:
-1. PATH — a step-by-step route with positions described relative to landmarks, and whether the camera height changes (walk height, rise, descend).
-2. SPEED PROFILE — a table of time vs speed, marking where the camera slows down for information and where it accelerates through dead space.
-3. FRAMING STOPS — 3 moments where the composition must land on a deliberate frame (name what sits where in the frame at that moment).
-4. OCCLUSION EVENTS — where the camera passes behind geometry, and how to use it as a natural transition.
-5. EXPOSURE RISK — where the dynamic range will blow out (passing from shadow into sky) and how to handle it (baking exposure, manual EV, local grade).
-6. FALLBACK — how to split this into 3 shots with straight cuts if the single move proves too hard to render.`
-          },
-          {
-            key: "C",
-            name: "Cinematic render settings and QA",
-            tag: "Render",
-            use: "When you are about to render the final deliverable",
-            out: "MRQ settings + QA sheet",
-            note: "Wrong render settings mean a full re-run — run this list before you queue it",
-            text: `Give me a Movie Render Queue configuration and a pre-render checklist for a {{cinematic environment showcase}} in Unreal Engine 5.
-
-Configuration to specify:
-- Output: {{EXR half-float sequence}} vs PNG — recommendation and why; also a delivery MP4 path
-- Anti-aliasing: spatial/temporal sample counts, and how they trade against render time
-- Rendering quality: Lumen / path tracer choice, GI samples, reflection quality, shadow settings
-- Motion blur, depth of field, and whether to render them in-engine or in comp
-- Console variables worth setting before a final render
-- Thread and memory settings, plus a rough time estimate per frame for {{5 MP}} output
-
-Pre-render checklist (each item with the failure it prevents): {{texture streaming at risk, Nanite fallback visibility, LOD transition popping on camera move, particle/foliage wind seeding inconsistency between render and viewport, exposure locking, camera clipping through geometry, UI/actors hidden, time-of-day consistency across shots}}.
-
-End with: how to verify a single test frame before committing to the full render.`
-          },
-          {
-            key: "D",
-            name: "Portfolio presentation and copy",
-            tag: "Publish",
-            use: "When the work goes out into the world",
-            out: "Publishing copy + layout advice",
-            note: "The same work presented differently performs very differently",
-            text: `Help me present this environment art piece ({{AI-assisted alpine station interior, 6-step workflow, real-time in UE5}}) for {{a portfolio page and an ArtStation post}}.
-
-Deliver:
-1. TITLE OPTIONS — 5 options, each under 8 words, none using "concept art" if it is a real-time render.
-2. SHORT CAPTION — 2 sentences: what the space is and what the viewer is looking at.
-3. PROCESS BLURB — 120 words describing the workflow honestly, including where AI was used and where manual work took over. Be specific and unapologetic about the tooling.
-4. IMAGE SET — the 6 images to publish and in what order, with the text role of each (hero, scale, detail, process, lighting variant, comparison).
-5. BREAKDOWN SECTION — a short list of technical facts worth stating (engine version, real-time status, tri count, texture budget, render settings).
-6. WHAT NOT TO SAY — 5 phrases that weaken an environment art presentation and what to say instead.
-
-Tone: professional, concrete, no hype, no inflated adjectives.`
-          }
-        ]
-      }
-    ],
-
-    media: [
-      {
-        type: "video",
-        title: "Final film · cinematic render (not recorded yet)",
-        caption: "Planned: the walkthrough film out of Movie Render Queue, graded with sound design. This is the end product of the whole pipeline.",
-        src: "assets/video/step6-final-cinematic.mp4",
-        file: "assets/video/step6-final-cinematic.mp4",
-        wide: true
-      },
-      {
-        type: "gif",
-        title: "Storyboard pacing diagram",
-        caption: "The 8-shot strip with its time allocation — the film's structure at a glance (6-second loop).",
-        src: "assets/gifs/step6-storyboard-timing.gif",
-        file: "assets/gifs/step6-storyboard-timing.gif"
-      },
-      {
-        type: "image",
-        title: "Document structure diagram",
-        caption: "The information architecture of the document site (the page you are reading now).",
-        src: "assets/images/step6-doc-structure.jpg",
-        file: "assets/images/step6-doc-structure.jpg"
-      },
-      {
-        type: "image",
-        title: "Final still (hero shot)",
-        caption: "The locked frame used for the portfolio cover and thumbnail.",
-        src: "assets/images/step6-hero-shot.jpg",
-        file: "assets/images/step6-hero-shot.jpg"
-      }
-    ],
-
-    tips: [
-      { title: "Collect process material as you go", text: "Save one key-state screenshot plus one line of parameters at the end of every sub-step. Come back later and you cannot reconstruct it." },
-      { title: "Build document and film separately", text: "The document proves the method, the film proves the result. Build them together and both suffer." },
-      { title: "Failure notes are worth the most", text: "“This does not work because…” is ten times more valuable to a reader than “this works well”. It also shows your depth." },
-      { title: "Slow the camera down", text: "You are not bored by your own scene; your audience will be. Leave at least 2–4 seconds of readable information per shot." },
-      { title: "Version everything on archive", text: "AI tools change every six months. Put model versions, parameters and dependencies into the archive or you will not be able to reproduce your own work." }
-    ],
-    pitfalls: [
-      { title: "Remembering the material too late", text: "No capture along the way means re-running the entire pipeline to fill the gaps — an extremely high price." },
-      { title: "A document that reads as a diary", text: "Without acceptance criteria and failure logs, readers give up halfway." },
-      { title: "A film that is all showmanship", text: "Fast rotations and constant cuts leave the audience remembering nothing about the space." },
-      { title: "No tool versions recorded", text: "Six months on you cannot reproduce your own work — the most common archiving failure there is." }
-    ],
-    checkpoint: "A complete workflow document someone else can follow (including the prompt library and the failure log); consistent media specs; the film rendered with a unified grade; an archive containing the project, parameters and version information; and publishing copy that states accurately where AI ended and manual work began."
+    checkpoint: "Exposure is locked at a fixed EV100 with min and max equal, and the image no longer shifts as the camera moves. The directional light reads as one specific time of day, with its source angle matched to that hour, and the sky light is set high enough that shadowed areas stay readable. Volumetric fog is enabled with density, colour and start distance tuned for depth rather than for mood alone, and any background that still fails to read as distant has its own fog card, saturated by distance. The overall adjustment has been judged in black and white: same-type objects sit in one lightness range and the environment → props → emissives hierarchy survives. Materials sit inside the fixed numeric ranges where that pass was run, a LUT makes the grade reproducible, and 2–3 atmosphere variants exist from the same cameras."
   });
 })(window.WIKI);
 
