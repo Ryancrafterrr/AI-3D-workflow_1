@@ -84,6 +84,21 @@ CROPS = [
     # the two §05 pages sit at the end of the deck (pb19 / pb20 on disk).
     ("pb", 19, 165, 101, 715, 300, "step5-store-set-dressing"),
     ("pb", 20, 131, 119, 749, 337, "step5-distant-blocks"),
+    # ---- 05 set dressing, second batch (added 2026-11-06) ------------------
+    # The Process Book grew from 20 to 25 pages; the five new §05 pages are
+    # prop order by type, still life at prop scale, and three decal passes.
+    ("pb", 21, 46, 152, 834, 305, "step5-prop-hierarchy"),
+    ("pb", 22, 83, 127, 797, 329, "step5-prop-stilllife"),
+    ("pb", 23, 100, 130, 779, 326, "step5-road-markings"),
+    ("pb", 24, 73, 109, 811, 315, "step5-decal-patches"),
+    ("pb", 25, 140, 114, 739, 292, "step5-rhythm-interruption"),
+    # ---- 06 atmosphere development (added 2026-11-07) ----------------------
+    # The Process Book gained §06 on pages 26–29: fundamentals, height fog,
+    # fog cards, and the overall adjustment.
+    ("pb", 26, 226, 101, 654, 313, "step6-basic-parameters"),
+    ("pb", 27, 102, 117, 777, 323, "step6-height-fog"),
+    ("pb", 28, 187, 98, 692, 326, "step6-fog-planes"),
+    ("pb", 29, 192, 107, 688, 300, "step6-visual-unification"),
 ]
 
 

@@ -144,7 +144,14 @@ async function run(ws) {
   // 55 → 43 prompt variants (fewer, but real ones).
   // v0.2.4 · 2026-11-02 — set dressing split out as step 05: 6 → 7 steps,
   // 122 → 140 tasks, 41 → 43 media slots, 43 → 45 variants, 10 → 11 chips.
-  const BASE = { steps: 7, tasks: 140, media: 43, variants: 45, chips: 11 };
+  // v0.2.5 · 2026-11-06 — step 07 (documentation + final film) removed and §05
+  // expanded to eight sub-steps: back to 6 steps, 143 tasks, 44 media slots and
+  // 37 variants, because step 07 carried 8 variants of its own.
+  // v0.2.6 · 2026-11-07 — step 06 written from Process Book §06: six sub-steps,
+  // four new figures and the placeholder loops removed: 143 → 155 tasks, media 44,
+  // variants unchanged.
+  // v0.2.7 · 2026-11-08 — walkthroughs for steps 04–06: 44 → 45 media slots.
+  const BASE = { steps: 6, tasks: 155, media: 45, variants: 37, chips: 10 };
   const st = await evaluate(ws, `
     'steps=' + document.querySelectorAll('section.step').length +
     ' tasks=' + document.querySelectorAll('.task').length +

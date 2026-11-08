@@ -335,7 +335,7 @@ def gif_density(i, n):
 
 
 def gif_unify(i, n):
-    img, d = base("step5-material-unify.gif", "Material hue / saturation convergence · 6s loop")
+    img, d = base("step6-material-unify.gif", "Material hue / saturation convergence · 6s loop")
     p = ease((i / n) * 2 % 1)
     wild = [(210, 70, 40), (30, 85, 60), (140, 60, 55), (300, 75, 45),
             (0, 80, 50), (60, 90, 65), (180, 55, 40), (250, 70, 58)]
@@ -368,7 +368,7 @@ def gif_unify(i, n):
 
 
 def gif_lut(i, n):
-    img, d = base("step5-lut-toggle.gif", "Post-process grade on / off (LUT) · 4s loop")
+    img, d = base("step6-lut-toggle.gif", "Post-process grade on / off (LUT) · 4s loop")
     graded = (i / n) < 0.5
     mock_scene(d, 30, 44, 770, 400, tint=None)
     if graded:
@@ -383,7 +383,7 @@ def gif_lut(i, n):
 
 
 def gif_lightsweep(i, n):
-    img, d = base("step5-light-sweep.gif", "Key azimuth sweep: 180° → 45° · 6s loop")
+    img, d = base("step6-light-sweep.gif", "Key azimuth sweep: 180° → 45° · 6s loop")
     ang = 180 - (i / n) * 135
     mock_scene(d, 30, 44, 770, 400, tint=None, light=ang / 180)
     # light cone indicator
@@ -435,12 +435,11 @@ GIFS = [
     ("step3-uv-texeldensity.gif", gif_uv),
     ("step4-before-after-dressing.gif", gif_dressing),
     ("step4-density-rhythm.gif", gif_density),
-    ("step5-material-unify.gif", gif_unify),
-    ("step5-lut-toggle.gif", gif_lut),
-    ("step5-light-sweep.gif", gif_lightsweep),
-    ("step6-storyboard-timing.gif", gif_storyboard),
 ]
 
+# Step 07 (documentation + final film) was removed from the wiki on 2026-11-06, so its
+# placeholders (storyboard GIF, document structure, hero shot, cinematic poster) are no
+# longer generated.
 print("[media] building GIFs ...")
 for name, fn in GIFS:
     frames = [fn(i, SHOTS) for i in range(SHOTS)]
@@ -473,9 +472,6 @@ IMAGES = [
     ("step2-greybox-keyshot.jpg", "Greybox key shot", "The comparison baseline for every later step · UI hidden · exposure locked", "IMAGE"),
     ("step3-proxy-vs-final.jpg", "Proxy / retopo / textured", "The AI proxy is not a deliverable — it is a shape draft", "IMAGE"),
     ("step4-layer-grouping.jpg", "UE5 actor layers and naming", "Four groups: structure / function / narrative / vegetation", "IMAGE"),
-    ("step5-atmosphere-variants.jpg", "Three atmosphere variants", "Dawn fog / flat noon / warm dusk · same camera", "IMAGE"),
-    ("step6-doc-structure.jpg", "Document information architecture", "The structure of this page · six steps + appendix", "IMAGE"),
-    ("step6-hero-shot.jpg", "Final hero shot", "Portfolio cover image · hero atmosphere, locked", "IMAGE"),
 ]
 for name, title, sub, kind in IMAGES:
     img, d = draw_frame_base(title, sub, kind)
@@ -504,9 +500,6 @@ POSTERS = [
     ("step2-blockout-timelapse.jpg", "Step 02 - UE5 blockout (to be recorded)", "--:--"),
     ("step3-decompose-workflow.jpg", "Step 03 - asset pipeline (to be recorded)", "--:--"),
     ("step3-retopo-maya.jpg", "Step 03 - manual retopo (to be recorded)", "--:--"),
-    ("step4-dressing-walkthrough.jpg", "Step 04 - dressing and assembly (to be recorded)", "--:--"),
-    ("step5-lookdev.jpg", "Step 05 - look dev (to be recorded)", "--:--"),
-    ("step6-final-cinematic.jpg", "Step 06 - final film (to be recorded)", "--:--"),
 ]
 for name, title, dur in POSTERS:
     img = Image.new("RGB", (1920, 1080), BG)
